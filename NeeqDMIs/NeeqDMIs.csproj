@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5D8787AB-3ED2-4181-98EC-658814B19AE9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NeeqDMIs</RootNamespace>
+    <AssemblyName>NeeqDMIs</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ArduinoDriver, Version=2.4.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ArduinoDriver.2.4.6\lib\net452\ArduinoDriver.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RawInputProcessor, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\RawInputProcessor.1.0.0\lib\net40\RawInputProcessor.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Specialized, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Collections.Specialized.4.3.0\lib\net46\System.Collections.Specialized.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.FileVersionInfo, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Diagnostics.FileVersionInfo.4.3.0\lib\net46\System.Diagnostics.FileVersionInfo.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Diagnostics.TraceSource, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Diagnostics.TraceSource.4.3.0\lib\net46\System.Diagnostics.TraceSource.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.InteropServices.4.3.0\lib\net463\System.Runtime.InteropServices.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Overlapped, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Overlapped.4.3.0\lib\net46\System.Threading.Overlapped.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Thread, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.Thread.4.3.0\lib\net46\System.Threading.Thread.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.ThreadPool, Version=4.0.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Threading.ThreadPool.4.3.0\lib\net46\System.Threading.ThreadPool.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\Netytar\packages\WindowsBase.4.6.1055.0\lib\WindowsBase.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ATmega\ATmegaModule.cs" />
+    <Compile Include="ATmega\ISensorReaderBehavior.cs" />
+    <Compile Include="ATmega\SensorModule.cs" />
+    <Compile Include="DMIBox.cs" />
+    <Compile Include="Eyetracking\Eyetribe\EyeTribeModule.cs" />
+    <Compile Include="Eyetracking\Eyetribe\IEyeTribeGazePointBehavior.cs" />
+    <Compile Include="Eyetracking\Filters\ExpDecaying.cs" />
+    <Compile Include="Eyetracking\Filters\IFilter.cs" />
+    <Compile Include="Eyetracking\Filters\MASelectiveFilter.cs" />
+    <Compile Include="Eyetracking\Filters\MovingAverageFilter.cs" />
+    <Compile Include="Eyetracking\Filters\NoFilter.cs" />
+    <Compile Include="Eyetracking\Filters\PriorityMAFilter.cs" />
+    <Compile Include="Eyetracking\Tobii\ATobiiBlinkBehavior.cs" />
+    <Compile Include="Eyetracking\Tobii\ITobiiEyePositionBehavior.cs" />
+    <Compile Include="Eyetracking\Tobii\ITobiiGazePointBehavior.cs" />
+    <Compile Include="Eyetracking\Tobii\ITobiiHeadPoseBehavior.cs" />
+    <Compile Include="Eyetracking\Tobii\TobiiBlinkProcessor.cs" />
+    <Compile Include="Eyetracking\Tobii\TobiiModule.cs" />
+    <Compile Include="Eyetracking\Utils\Eyes.cs" />
+    <Compile Include="Eyetracking\Utils\MouseEmulator.cs" />
+    <Compile Include="Keyboard\AKeyboardBehavior.cs" />
+    <Compile Include="Keyboard\KeyboardModuleForms.cs" />
+    <Compile Include="Keyboard\KeyboardModuleWPF.cs" />
+    <Compile Include="Keyboard\VKeyCodes.cs" />
+    <Compile Include="Math\ExpDecaying.cs" />
+    <Compile Include="Math\IFilter.cs" />
+    <Compile Include="MIDI\IMidiModule.cs" />
+    <Compile Include="MIDI\MidiDeviceFinder.cs" />
+    <Compile Include="MIDI\MidiModuleNAudio.cs" />
+    <Compile Include="Mouse\MouseFunctions.cs" />
+    <Compile Include="Music\AbsNotes.cs" />
+    <Compile Include="Music\MidiNotes.cs" />
+    <Compile Include="Music\MusicModule.cs" />
+    <Compile Include="Music\PitchUtils.cs" />
+    <Compile Include="Music\Scale.cs" />
+    <Compile Include="Music\ScaleCodes.cs" />
+    <Compile Include="Music\ScalesFactory.cs" />
+    <Compile Include="Music\TempoUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Template\DMIBoxExample.cs" />
+    <Compile Include="Template\Rack.cs" />
+    <Compile Include="Utils\AngleBaseChanger.cs" />
+    <Compile Include="Utils\ValueNormalizerLong.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Instructions.txt" />
+    <Content Include="Libraries\IntelHexFormatReader.dll" />
+    <Content Include="Libraries\RawInput.dll" />
+    <Content Include="Libraries\RawInput.pdb" />
+    <Content Include="Libraries\RJCP.SerialPortStream.dll" />
+    <Content Include="Libraries\RJCP.SerialPortStream.pdb" />
+    <Content Include="Libraries\RJCP.SerialPortStream.xml" />
+    <Content Include="Libraries\Tobii.Interaction.Model.dll" />
+    <Content Include="Libraries\Tobii.Interaction.Net.dll" />
+    <Content Include="Libraries\XInputDotNetPure.dll" />
+    <Content Include="Libraries\XInputInterface.dll" />
+    <Content Include="Template\Instructions.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Template\EyeXBehaviors\" />
+    <Folder Include="Template\Instruments\" />
+    <Folder Include="Template\KeyboardBehaviors\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets" Condition="Exists('packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Questo progetto fa riferimento a uno o più pacchetti NuGet che non sono presenti in questo computer. Usare lo strumento di ripristino dei pacchetti NuGet per scaricarli. Per altre informazioni, vedere http://go.microsoft.com/fwlink/?LinkID=322105. Il file mancante è {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets'))" />
+  </Target>
+</Project>

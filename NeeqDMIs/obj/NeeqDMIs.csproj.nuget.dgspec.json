@@ -1,0 +1,101 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\root_X542U\\Frammenti software\\Visual Studio Projects\\NeeqDMIs\\NeeqDMIs.csproj": {}
+  },
+  "projects": {
+    "C:\\root_X542U\\Frammenti software\\Visual Studio Projects\\NeeqDMIs\\NeeqDMIs.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\root_X542U\\Frammenti software\\Visual Studio Projects\\NeeqDMIs\\NeeqDMIs.csproj",
+        "projectName": "NeeqDMIs",
+        "projectPath": "C:\\root_X542U\\Frammenti software\\Visual Studio Projects\\NeeqDMIs\\NeeqDMIs.csproj",
+        "packagesPath": "C:\\Users\\neequ\\.nuget\\packages\\",
+        "outputPath": "C:\\root_X542U\\Frammenti software\\Visual Studio Projects\\NeeqDMIs\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\neequ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net48"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net48": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net48": {
+          "dependencies": {
+            "ArduinoUploader": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "EyeTribe.ClientSdk": {
+              "target": "Package",
+              "version": "[0.9.77.6, )"
+            },
+            "IntelHexFormatReader": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "Microsoft.Win32.Registry": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "NAudio": {
+              "target": "Package",
+              "version": "[1.10.0, )"
+            },
+            "NLog": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "SerialPortStream": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "System.Runtime": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Runtime.Extensions": {
+              "target": "Package",
+              "version": "[4.3.1, )"
+            },
+            "System.Security.Principal.Windows": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "Tobii.Interaction": {
+              "target": "Package",
+              "version": "[0.7.3, )"
+            },
+            "XInput.Wrapper": {
+              "target": "Package",
+              "version": "[0.3.1, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
