@@ -1,5 +1,6 @@
 ﻿using NeeqDMIs.ATmega;
 using NeeqDMIs.Music;
+using NeeqDMIs.Keyboard;
 using Netytar.DMIbox;
 using System;
 using System.IO.Ports;
@@ -9,6 +10,8 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using Tobii.Interaction;
 using Tobii.Interaction.Wpf;
+using RawInputProcessor;
+
 
 namespace Netytar
 {
@@ -479,15 +482,65 @@ namespace Netytar
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
-            string testo = (string)button.Content;
+            string noteName = (string)button.Content;
+            int octaveNumber = 4;
+            NetychordsDMIBox.MidiChord chord = NetychordsDMIBox.StringToNote(noteName, octaveNumber);
+            //NetychordsDMIBox.ChordType chordtype = NetychordsDMIBox.ChordType.Major;
+            if (Rack.NetychordsDMIBox.playing == true)
+            {
+                Rack.NetychordsDMIBox.StopSelectedChord(Rack.NetychordsDMIBox.lastChord);
+            };
+
+            if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.Space))
+            {
+                Rack.NetychordsDMIBox.PlaySelectedChord(chord);
+            }
+            else if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space))
+            {
+                Rack.NetychordsDMIBox.StopSelectedChord(chord);
+            }
+        }
+
+
+        private void tabSolo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            /*System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
+            string noteName = (string)button.Content;
+            MidiNotes note = (MidiNotes)Enum.Parse(typeof(MidiNotes), noteName);
+            Rack.NetychordsDMIBox.PlaySelectedChordMajor(note);*/
+        }
+
+        private void Button_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            /*System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
+            string noteName = (string)button.Content;
+            MidiNotes note = (MidiNotes)Enum.Parse(typeof(MidiNotes), noteName);
+            Rack.NetychordsDMIBox.StopSelectedChordMajor(note);*/
+        }
+
+        private void CanvasNetytchords_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if ((e.Key == System.Windows.Input.Key.Space) && Rack.NetychordsDMIBox.playing == true)
+            {
+                Rack.NetychordsDMIBox.StopSelectedChord(Rack.NetychordsDMIBox.lastChord);
+            };
+        }
+
+        private void canvasNetytchords_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space) && Rack.NetychordsDMIBox.playing == true)
+            {
+                Rack.NetychordsDMIBox.StopSelectedChord(Rack.NetychordsDMIBox.lastChord);
+            }
         }
     }
 }

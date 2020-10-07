@@ -7,7 +7,7 @@
         
         mc:Ignorable="d"
         Title="MainWindow" WindowStyle="None" ResizeMode="NoResize"  
-        WindowStartupLocation="CenterScreen" WindowState="Maximized" Width="Auto" Height="Auto">
+        WindowStartupLocation="CenterScreen" WindowState="Maximized" Width="1366.222" Height="768.762">
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Images/Backgrounds/DarkWood.png" TileMode="Tile"/>
@@ -55,7 +55,7 @@
                         <Button Name="btnExit" Foreground="White" Click="btnExit_Click" Content="Exit" Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="22" IsCancel="True" >
                             <!-- tobii:Behaviors.IsGazeAware="True" -->
 
-                        <Button.Background>
+                            <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
                         </Button>
@@ -308,7 +308,7 @@
                 <ImageBrush ImageSource="Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
             </Border.Background>
 
-            <TabControl x:Name="tabSolo" Margin="-6,-6,6,6">
+            <TabControl x:Name="tabSolo" Margin="-6,-6,6,6" SelectionChanged="tabSolo_SelectionChanged">
                 <TabItem x:Name="tabNetychords"  Header="Netychords" Visibility="Collapsed">
                     <Grid>
                         <Grid.Background>
@@ -319,14 +319,55 @@
                             <RowDefinition Height="12*"/>
                         </Grid.RowDefinitions>
                         <ScrollViewer x:Name="scrlNetytchords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="0">
-                            <Canvas x:Name="canvasNetytchords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0">
-                                <Button Content="Pippo" Height="100" Width="75" Canvas.Left="100" Canvas.Top="100" Click="Button_Click" MouseEnter="Button_MouseEnter"/>
+                            <Canvas x:Name="canvasNetytchords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" MouseMove="canvasNetytchords_MouseMove">
+                                <Canvas.Background>
+                                    <SolidColorBrush Color="Black" Opacity="0"/>
+                                </Canvas.Background>
+                                <!--major buttons-->
+                                <Button Content="C" Height="35" Width="35" Canvas.Left="520" Canvas.Top="60" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="F" Height="35" Width="35" Canvas.Left="360" Canvas.Top="100" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="G" Height="35" Width="35" Canvas.Left="680" Canvas.Top="100" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="D" Height="35" Width="35" Canvas.Left="790" Canvas.Top="190" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="A#" Height="35" Width="35" Canvas.Left="250" Canvas.Top="190" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="D#" Height="35" Width="35" Canvas.Left="200" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="A" Height="35" Width="35" Canvas.Left="840" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="G#" Height="35" Width="35" Canvas.Left="250" Canvas.Top="470" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="E" Height="35" Width="35" Canvas.Left="790" Canvas.Top="470" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="C#" Height="35" Width="35" Canvas.Left="360" Canvas.Top="560" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="B" Height="35" Width="35" Canvas.Left="680" Canvas.Top="560" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="F#" Height="35" Width="35" Canvas.Left="520" Canvas.Top="600" MouseEnter="Button_MouseEnter"/>
+                                <!--minor buttons-->
+                                <Button Content="Am" Height="35" Width="35" Canvas.Left="520" Canvas.Top="140" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Dm" Height="35" Width="35" Canvas.Left="400" Canvas.Top="180" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Em" Height="35" Width="35" Canvas.Left="640" Canvas.Top="180" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Bm" Height="35" Width="35" Canvas.Left="710" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Gm" Height="35" Width="35" Canvas.Left="330" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Cm" Height="35" Width="35" Canvas.Left="280" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="F#m" Height="35" Width="35" Canvas.Left="760" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Fm" Height="35" Width="35" Canvas.Left="330" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="C#m" Height="35" Width="35" Canvas.Left="710" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="A#m" Height="35" Width="35" Canvas.Left="400" Canvas.Top="480" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="G#m" Height="35" Width="35" Canvas.Left="640" Canvas.Top="480" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="D#m" Height="35" Width="35" Canvas.Left="520" Canvas.Top="520" MouseEnter="Button_MouseEnter"/>
+                                <!--dominant seventh buttons-->
+                                <Button Content="B7" Height="35" Width="35" Canvas.Left="520" Canvas.Top="220" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="E7" Height="35" Width="35" Canvas.Left="450" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="F#7" Height="35" Width="35" Canvas.Left="590" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Db7" Height="35" Width="35" Canvas.Left="640" Canvas.Top="280" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="A7" Height="35" Width="35" Canvas.Left="400" Canvas.Top="280" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="D7" Height="35" Width="35" Canvas.Left="360" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Ab7" Height="35" Width="35" Canvas.Left="680" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="G7" Height="35" Width="35" Canvas.Left="400" Canvas.Top="380" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Eb7" Height="35" Width="35" Canvas.Left="640" Canvas.Top="380" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="C7" Height="35" Width="35" Canvas.Left="450" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="Bb7" Height="35" Width="35" Canvas.Left="590" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
+                                <Button Content="F7" Height="35" Width="35" Canvas.Left="520" Canvas.Top="440" MouseEnter="Button_MouseEnter"/>
                             </Canvas>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
 
-                <TabItem x:Name="tabNetytar"  Header="Netytar" Visibility="Collapsed">
+                <!--<TabItem x:Name="tabNetytar"  Header="Netytar" Visibility="Collapsed">
                     <Grid>
                         <Grid.Background>
                             <SolidColorBrush Color="Black"></SolidColorBrush>
@@ -338,7 +379,7 @@
                             <Canvas x:Name="canvasNetytar" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0"></Canvas>
                         </ScrollViewer>
                     </Grid>
-                </TabItem>
+                </TabItem>-->
             </TabControl>
         </Border>
 

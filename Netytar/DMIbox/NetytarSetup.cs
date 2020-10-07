@@ -68,15 +68,15 @@ namespace Netytar.DMIbox
 
 
             // SURFACE
-            IDimension dimension = new DimensionInvert();
-            IColorCode colorCode = new ColorCodeStandard();
-            IButtonsSettings buttonsSettings = new ButtonsSettingsInvert();
-            NetytarSurfaceDrawModes drawMode = NetytarSurfaceDrawModes.AllLines;
+            //IDimension dimension = new DimensionInvert();
+            //IColorCode colorCode = new ColorCodeStandard();
+            //IButtonsSettings buttonsSettings = new ButtonsSettingsInvert();
+            //NetytarSurfaceDrawModes drawMode = NetytarSurfaceDrawModes.AllLines;
 
-            Rack.NetytarDMIBox.AutoScroller = new AutoScroller(Rack.NetytarDMIBox.NetytarMainWindow.scrlNetytar, 0, 100, new ExpDecayingPointFilter(0.1f)); // OLD was 100, 0.1f
-            Rack.NetytarDMIBox.NetytarSurface = new NetytarSurface(Rack.NetytarDMIBox.NetytarMainWindow.canvasNetytar, dimension, colorCode, buttonsSettings, drawMode);
-            Rack.NetytarDMIBox.NetytarSurface.DrawButtons();
-            Rack.NetytarDMIBox.NetytarSurface.Scale = ScalesFactory.Cmaj;
+            //Rack.NetytarDMIBox.AutoScroller = new AutoScroller(Rack.NetytarDMIBox.NetytarMainWindow.scrlNetytar, 0, 100, new ExpDecayingPointFilter(0.1f)); // OLD was 100, 0.1f
+            //Rack.NetytarDMIBox.NetytarSurface = new NetytarSurface(Rack.NetytarDMIBox.NetytarMainWindow.canvasNetytar, dimension, colorCode, buttonsSettings, drawMode);
+            //Rack.NetytarDMIBox.NetytarSurface.DrawButtons();
+            //Rack.NetytarDMIBox.NetytarSurface.Scale = ScalesFactory.Cmaj;
         }
     }
 }
