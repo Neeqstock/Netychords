@@ -116,3 +116,14 @@ C:\Users\Matteo\Desktop\Netychords\Netytar\obj\Debug\Netytar.exe.config
 C:\Users\Matteo\Desktop\Netychords\Netytar\bin\Debug\RJCP.SerialPortStream.dll
 C:\Users\Matteo\Desktop\Netychords\Netytar\bin\Debug\RJCP.SerialPortStream.pdb
 C:\Users\Matteo\Desktop\Netychords\Netytar\bin\Debug\RJCP.SerialPortStream.xml
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar.csprojAssemblyReference.cache
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar.exe.config
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\MainWindow.baml
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\MainWindow.g.cs
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\App.g.cs
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar_Content.g.cs
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar_MarkupCompile.cache
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar.g.resources
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar.Properties.Resources.resources
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar.csproj.GenerateResource.cache
+C:\root_X542U\Frammenti software\Visual Studio Projects\Netytar_netychords\Netytar\obj\Debug\Netytar.csproj.CoreCompileInputs.cache

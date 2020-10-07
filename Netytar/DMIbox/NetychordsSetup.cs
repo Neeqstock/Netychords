@@ -1,14 +1,9 @@
-﻿using NeeqDMIs.ATmega;
-using NeeqDMIs.Eyetracking.Eyetribe;
+﻿using NeeqDMIs.Eyetracking.Eyetribe;
 using NeeqDMIs.Eyetracking.Filters;
 using NeeqDMIs.Eyetracking.Tobii;
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.MIDI;
-using NeeqDMIs.Music;
-using Netytar.DMIbox.KeyboardBehaviors;
-using Netytar.DMIbox.SensorBehaviors;
-using Netytar.DMIbox.TobiiBehaviors;
 using System;
 using System.Windows.Interop;
 using Tobii.Interaction.Framework;
@@ -38,8 +33,8 @@ namespace Netytar.DMIbox
             {
                 Rack.NetychordsDMIBox.TobiiModule = new TobiiModule(GazePointDataMode.Unfiltered);
                 Rack.NetychordsDMIBox.TobiiModule.Start();
-                Rack.NetychordsDMIBox.TobiiModule.HeadPoseBehaviors.Add(new HPBpitchPlay(10, 15, 1.5f, 30f));
-                Rack.NetychordsDMIBox.TobiiModule.HeadPoseBehaviors.Add(new HPBvelocityPlay(8, 12, 2f, 120f, 0.2f));
+                //Rack.NetychordsDMIBox.TobiiModule.HeadPoseBehaviors.Add(new HPBpitchPlay(10, 15, 1.5f, 30f));
+                //Rack.NetychordsDMIBox.TobiiModule.HeadPoseBehaviors.Add(new HPBvelocityPlay(8, 12, 2f, 120f, 0.2f));
             }
 
             if(Rack.NetychordsDMIBox.Eyetracker == Eyetracker.Eyetribe)
