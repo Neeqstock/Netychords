@@ -4,6 +4,7 @@ using NeeqDMIs.Eyetracking.Tobii;
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.MIDI;
+using Netytar.DMIbox.KeyboardBehaviors;
 using System;
 using System.Windows.Interop;
 using Tobii.Interaction.Framework;
@@ -46,8 +47,8 @@ namespace Netytar.DMIbox
             }
 
 
-            // MISCELLANEOUS
-            //Rack.DMIBox.SensorReader = new SensorModule("COM", 9600);
+            // BEHAVIORS
+            Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBplayStop());
 
         }
     }

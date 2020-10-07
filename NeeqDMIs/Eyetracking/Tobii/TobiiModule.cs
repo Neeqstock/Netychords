@@ -12,8 +12,6 @@ namespace NeeqDMIs.Eyetracking.Tobii
         private MouseEmulator mouseEmulator;
         public MouseEmulator MouseEmulator { get => mouseEmulator; }
 
-
-
         private GazePointData lastGazePointData;
         private EyePositionData lastEyePositionData;
         private HeadPoseData lastHeadPoseData;

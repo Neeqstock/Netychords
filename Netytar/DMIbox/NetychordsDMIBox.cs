@@ -1,7 +1,9 @@
-﻿using NeeqDMIs;
+﻿using NAudio.MediaFoundation;
+using NeeqDMIs;
 using NeeqDMIs.ATmega;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.Music;
+using Netytar.Utils;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
@@ -12,13 +14,6 @@ namespace Netytar
     /// </summary>
     public class NetychordsDMIBox : DMIBox
     {
-        public enum ChordType
-        {
-            Major,
-            Minor,
-            DominantSeventh,
-            DiminishedSeventh
-        };
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public KeyboardModuleWPF KeyboardModule;
         public MainWindow MainWindow { get; set; }
@@ -28,6 +23,48 @@ namespace Netytar
         private int velocity = 127;
         private int pressure = 127;
         private int modulation = 0;
+
+        private MidiChord chord = new MidiChord(MidiNotes.C0, ChordType.Major);
+        private bool keyDown = false;
+
+        public MidiChord Chord
+        {
+            get { return chord; }
+            set
+            {
+                if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
+                {
+                    if (keyDown)
+                    {
+                        StopChord(chord);
+                        PlayChord(value);
+                    }
+                    else
+                    {
+                        StopChord(chord);
+                    }
+                    chord = value;
+                }
+            }
+        }
+
+        public bool KeyDown
+        {
+            get { return keyDown; }
+            set
+            {
+                if (keyDown && !value)
+                {
+                    StopChord(chord);
+                    keyDown = value;
+                }else
+                if (!keyDown && value)
+                {
+                    PlayChord(chord);
+                    keyDown = value;
+                }
+            }
+        }
 
         public void ResetModulationAndPressure()
         {
@@ -77,87 +114,12 @@ namespace Netytar
             }
         }
 
-        public bool playing = false;
-        public MidiChord lastChord;
+        //public bool playing = false;
+        //public MidiChord lastChord = new MidiChord(MidiNotes.C4, ChordType.Major);
 
         public enum Notes { A, B, C, D, E, F, G};
 
-        public class MidiChord
-        {
-            public MidiNotes rootNote;
-            public ChordType chordType;
-
-            public MidiChord(MidiNotes root, ChordType type)
-            {
-                rootNote = root;
-                chordType = type;
-            }
-        };
-
-        public static MidiChord StringToNote (string note, int octaveNumber)
-        {
-            ChordType chordType;
-            string midiNote;
-
-                        
-            if (note.Contains("m"))
-            {
-                chordType = ChordType.Minor;
-            }
-            else {
-                if (note.Contains("7"))
-                {
-                    chordType = ChordType.DominantSeventh;
-                }
-                else
-                {
-                    chordType = ChordType.Major;
-                }
-            };
-
-            if (note.Contains("#"))
-            {
-                midiNote = "s" + note[0];
-            }
-            else if (note.Contains("b"))
-            {
-                midiNote = "s";
-                char oldnote = note[0];
-                switch (oldnote)
-                {
-                    case 'A':
-                        midiNote = midiNote + "G";
-                        break;
-                    case 'B':
-                        midiNote = midiNote + "A";
-                        break;
-                    case 'D':
-                        midiNote = midiNote + "C";
-                        break;
-                    case 'E':
-                        midiNote = midiNote + "D";
-                        break;
-                    case 'G':
-                        midiNote = midiNote + "F";
-                        break;
-                }
-            }
-            else 
-            {
-                midiNote = "" + note[0];
-            };
-            if (chordType == ChordType.DominantSeventh)
-            {
-                octaveNumber = 3;
-            }
-            midiNote = midiNote + octaveNumber.ToString();
-
-            MidiNotes rootNote = (MidiNotes)System.Enum.Parse(typeof(MidiNotes), midiNote);
-
-            return new MidiChord(rootNote, chordType);
-        }
-
-        public void StopSelectedChord(MidiChord chord)
+        public void StopChord(MidiChord chord)
         {
             if (chord.chordType == ChordType.Major)
             {
@@ -178,9 +140,9 @@ namespace Netytar
                 MidiModule.StopNote((int)chord.rootNote + 7);
                 MidiModule.StopNote((int)chord.rootNote + 10);
             };
-            playing = false;
+            /*playing = false;*/
         }
-        public void PlaySelectedChord(MidiChord chord)
+        public void PlayChord(MidiChord chord)
         {
             if (chord.chordType == ChordType.Major)
             {
@@ -201,9 +163,9 @@ namespace Netytar
                 MidiModule.PlayNote((int)chord.rootNote + 7, velocity);
                 MidiModule.PlayNote((int)chord.rootNote + 10, velocity);
             };
-            
+            /*
             playing = true;
-            lastChord = chord;
+            lastChord = chord;*/
         }
         private void SetPressure()
         {

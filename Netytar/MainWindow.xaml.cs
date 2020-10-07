@@ -1,4 +1,5 @@
 ﻿using Netytar.DMIbox;
+using Netytar.Utils;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,7 +17,7 @@ namespace Netytar
         private readonly SolidColorBrush WarningBrush = new SolidColorBrush(Colors.DarkRed);
         private readonly SolidColorBrush BlankBrush = new SolidColorBrush(Colors.Black);
 
-        private bool NetychordsStarted = false;
+        private bool netychordsStarted = false;
         
         private DispatcherTimer updater;
 
@@ -37,7 +38,7 @@ namespace Netytar
         /// </summary>
         private void UpdateWindow(object sender, EventArgs e)
         {
-            if (NetychordsStarted)
+            if (netychordsStarted)
             {
                // Put here all the stuff which needs to be updated!
             }
@@ -60,7 +61,7 @@ namespace Netytar
             CheckMidiPort();
 
             // LEAVE AT THE END! This keeps track of the started state
-            NetychordsStarted = true; 
+            netychordsStarted = true; 
         }
 
         /// <summary>
@@ -80,7 +81,7 @@ namespace Netytar
 
         private void btnMIDIchMinus_Click(object sender, RoutedEventArgs e)
         {
-            if (NetychordsStarted)
+            if (netychordsStarted)
             {
                 Rack.NetytarDMIBox.MidiModule.OutDevice--;
                 lblMIDIch.Text = "MP" + Rack.NetytarDMIBox.MidiModule.OutDevice.ToString();
@@ -91,7 +92,7 @@ namespace Netytar
 
         private void btnMIDIchPlus_Click(object sender, RoutedEventArgs e)
         {
-            if (NetychordsStarted)
+            if (netychordsStarted)
             {
                 Rack.NetytarDMIBox.MidiModule.OutDevice++;
                 lblMIDIch.Text = "MP" + Rack.NetytarDMIBox.MidiModule.OutDevice.ToString();
@@ -102,26 +103,24 @@ namespace Netytar
 
         private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
-            string noteName = (string)button.Content;
-            int octaveNumber = 4;
-            NetychordsDMIBox.MidiChord chord = NetychordsDMIBox.StringToNote(noteName, octaveNumber);
-            //NetychordsDMIBox.ChordType chordtype = NetychordsDMIBox.ChordType.Major;
-            if (Rack.NetychordsDMIBox.playing == true)
+            if (netychordsStarted)
             {
-                Rack.NetychordsDMIBox.StopSelectedChord(Rack.NetychordsDMIBox.lastChord);
-            };
+                //NetychordsDMIBox.SelectedChord = Contenuto del bottone;
 
-            if (System.Windows.Input.Keyboard.IsKeyDown(System.Windows.Input.Key.Space))
-            {
-                Rack.NetychordsDMIBox.PlaySelectedChord(chord);
-            }
-            else if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space))
-            {
-                Rack.NetychordsDMIBox.StopSelectedChord(chord);
+                System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
+                string noteName = (string)button.Content;
+                int octaveNumber = 4;
+                Rack.NetychordsDMIBox.Chord = MidiChord.StringToNote(noteName, octaveNumber);
+                //NetychordsDMIBox.ChordType chordtype = NetychordsDMIBox.ChordType.Major;
+                /*if (Rack.NetychordsDMIBox.playing == true)
+                {
+                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                };*/
+
+                
             }
         }
-
+        // [Corrente]
 
         private void tabSolo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -144,20 +143,16 @@ namespace Netytar
             Rack.NetychordsDMIBox.StopSelectedChordMajor(note);*/
         }
 
-        private void CanvasNetytchords_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if ((e.Key == System.Windows.Input.Key.Space) && Rack.NetychordsDMIBox.playing == true)
-            {
-                Rack.NetychordsDMIBox.StopSelectedChord(Rack.NetychordsDMIBox.lastChord);
-            };
-        }
 
         private void canvasNetytchords_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space) && Rack.NetychordsDMIBox.playing == true)
+            /*if (true == false)
             {
-                Rack.NetychordsDMIBox.StopSelectedChord(Rack.NetychordsDMIBox.lastChord);
-            }
+                if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space) && Rack.NetychordsDMIBox.playing == true)
+                {
+                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                }
+            }*/
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
