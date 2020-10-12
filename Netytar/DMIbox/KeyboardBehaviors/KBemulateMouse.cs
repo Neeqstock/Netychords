@@ -40,18 +40,18 @@ namespace Netytar
 
         private void SetStuff()
         {
-            switch (Rack.NetytarDMIBox.Eyetracker)
+            switch (Rack.NetychordsDMIBox.Eyetracker)
             {
 
                 case Eyetracker.Tobii:
-                    Rack.NetytarDMIBox.TobiiModule.MouseEmulator.EyetrackerToMouse = eyeTrackerToMouse;
-                    Rack.NetytarDMIBox.TobiiModule.MouseEmulator.CursorVisible = cursorVisible;
-                    Rack.NetytarDMIBox.AutoScroller.Enabled = autoScrollerEnabled;
+                    Rack.NetychordsDMIBox.TobiiModule.MouseEmulator.EyetrackerToMouse = eyeTrackerToMouse;
+                    Rack.NetychordsDMIBox.TobiiModule.MouseEmulator.CursorVisible = cursorVisible;
+                    Rack.NetychordsDMIBox.AutoScroller.Enabled = autoScrollerEnabled;
                     break;
                 case Eyetracker.Eyetribe:
-                    Rack.NetytarDMIBox.EyeTribeModule.MouseEmulator.EyetrackerToMouse = eyeTrackerToMouse;
-                    Rack.NetytarDMIBox.EyeTribeModule.MouseEmulator.CursorVisible = cursorVisible;
-                    Rack.NetytarDMIBox.AutoScroller.Enabled = autoScrollerEnabled;
+                    Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulator.EyetrackerToMouse = eyeTrackerToMouse;
+                    Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulator.CursorVisible = cursorVisible;
+                    Rack.NetychordsDMIBox.AutoScroller.Enabled = autoScrollerEnabled;
                     break;
                 default:
                     break;

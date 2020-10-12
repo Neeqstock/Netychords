@@ -8,11 +8,16 @@ namespace Netytar
         public List<Color> KeysColorCode { get; } = new List<Color>()
         {
             Colors.Red,
+            Colors.Tomato,
             Colors.Orange,
+            Colors.Gold,
             Colors.Yellow,
             Colors.LightGreen,
+            Colors.DarkGreen,
+            Colors.Azure,
             Colors.Blue,
             Colors.Purple,
+            Colors.Pink,
             Colors.Coral
         };
         public SolidColorBrush NotInScaleBrush { get; } = new SolidColorBrush(Color.FromArgb(20, 0, 0, 0));

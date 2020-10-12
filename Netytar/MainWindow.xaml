@@ -17,7 +17,6 @@
             <ColumnDefinition Width="1147*"/>
         </Grid.ColumnDefinitions>
 
-
         <Border VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="20,60,10,0" Width="Auto" Height="Auto" BorderThickness="4" BorderBrush="White" Grid.Column="0">
             <Border.Background>
                 <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
@@ -88,6 +87,35 @@
                         </Button>
                     </Border>
                 </Grid>
+
+                <Grid Grid.Row="2" Margin="5,1,5,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListBox x:Name="lstOctaveChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="WhiteSmoke">
+                        <ListBoxItem>
+                            1
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            2
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            3
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            4
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            5
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            6
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            7
+                        </ListBoxItem>
+                    </ListBox>
+                </Grid>
             </Grid>
         </Border>
 
@@ -108,8 +136,8 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="12*"/>
                         </Grid.RowDefinitions>
-                        <ScrollViewer x:Name="scrlNetytchords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="0">
-                            <Canvas x:Name="canvasNetytchords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" MouseMove="canvasNetytchords_MouseMove">
+                        <ScrollViewer x:Name="scrlNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="0">
+                            <Canvas x:Name="canvasNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" MouseMove="canvasNetytchords_MouseMove">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="Black" Opacity="0"/>
                                 </Canvas.Background>

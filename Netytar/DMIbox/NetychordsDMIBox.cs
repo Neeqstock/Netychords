@@ -4,6 +4,7 @@ using NeeqDMIs.ATmega;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.Music;
 using Netytar.Utils;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
@@ -24,8 +25,9 @@ namespace Netytar
         private int pressure = 127;
         private int modulation = 0;
 
-        private MidiChord chord = new MidiChord(MidiNotes.C0, ChordType.Major);
+        private MidiChord chord = new MidiChord(MidiNotes.C4, ChordType.Major);
         private bool keyDown = false;
+        public string octaveNumber = "4";
 
         public MidiChord Chord
         {
@@ -114,58 +116,20 @@ namespace Netytar
             }
         }
 
-        //public bool playing = false;
-        //public MidiChord lastChord = new MidiChord(MidiNotes.C4, ChordType.Major);
-
-        public enum Notes { A, B, C, D, E, F, G};
-
         public void StopChord(MidiChord chord)
         {
-            if (chord.chordType == ChordType.Major)
+            for (int i = 0; i < chord.interval.Count; i++)
             {
-                MidiModule.StopNote((int)chord.rootNote);
-                MidiModule.StopNote((int)chord.rootNote + 4);
-                MidiModule.StopNote((int)chord.rootNote + 7);
+                MidiModule.StopNote((int)chord.rootNote + chord.interval[i]);
             }
-            else if (chord.chordType == ChordType.Minor)
-            {
-                MidiModule.StopNote((int)chord.rootNote);
-                MidiModule.StopNote((int)chord.rootNote + 3);
-                MidiModule.StopNote((int)chord.rootNote + 7);
-            }
-            else if (chord.chordType == ChordType.DominantSeventh)
-            {
-                MidiModule.StopNote((int)chord.rootNote);
-                MidiModule.StopNote((int)chord.rootNote + 4);
-                MidiModule.StopNote((int)chord.rootNote + 7);
-                MidiModule.StopNote((int)chord.rootNote + 10);
-            };
-            /*playing = false;*/
         }
         public void PlayChord(MidiChord chord)
         {
-            if (chord.chordType == ChordType.Major)
+            for (int i = 0; i < chord.interval.Count; i++)
             {
-                MidiModule.PlayNote((int)chord.rootNote, velocity);
-                MidiModule.PlayNote((int)chord.rootNote + 4, velocity);
-                MidiModule.PlayNote((int)chord.rootNote + 7, velocity);
+                MidiModule.PlayNote((int)chord.rootNote + chord.interval[i], velocity);
             }
-            else if (chord.chordType == ChordType.Minor)
-            {
-                MidiModule.PlayNote((int)chord.rootNote, velocity);
-                MidiModule.PlayNote((int)chord.rootNote + 3, velocity);
-                MidiModule.PlayNote((int)chord.rootNote + 7, velocity);
-            }
-            else if (chord.chordType == ChordType.DominantSeventh)
-            {
-                MidiModule.PlayNote((int)chord.rootNote, velocity);
-                MidiModule.PlayNote((int)chord.rootNote + 4, velocity);
-                MidiModule.PlayNote((int)chord.rootNote + 7, velocity);
-                MidiModule.PlayNote((int)chord.rootNote + 10, velocity);
-            };
-            /*
-            playing = true;
-            lastChord = chord;*/
+            
         }
         private void SetPressure()
         {
@@ -175,6 +139,12 @@ namespace Netytar
         {
             MidiModule.SetModulation(Modulation);
         }
+        #endregion
+
+        #region Graphic components
+        private AutoScroller autoScroller;
+        public AutoScroller AutoScroller { get => autoScroller; set => autoScroller = value; }
+
         #endregion
     }
 

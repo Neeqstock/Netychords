@@ -11,32 +11,47 @@ namespace Netytar.Utils
     {
         public MidiNotes rootNote;
         public ChordType chordType;
+        public List<int> interval;
 
         public MidiChord(MidiNotes root, ChordType type)
         {
             rootNote = root;
             chordType = type;
+            interval = GenerateInterval(type);
         }
-        public static MidiChord StringToNote(string note, int octaveNumber)
+
+        public List<int> GenerateInterval(ChordType type)
+        {
+            List<int> temp = new List<int> ();
+
+            temp.Add(0);
+
+            if (type == ChordType.Major) { temp.Add(4); temp.Add(7); };
+            if (type == ChordType.Minor) { temp.Add(3); temp.Add(7); };
+            if (type == ChordType.MajorSeventh) { temp.Add(4); temp.Add(7); temp.Add(11); };
+            if (type == ChordType.MajorSeventh) { temp.Add(3); temp.Add(7); temp.Add(10); };
+            if (type == ChordType.DominantSeventh) { temp.Add(4); temp.Add(7); temp.Add(10); };
+            if (type == ChordType.DiminishedSeventh) { temp.Add(3); temp.Add(6); temp.Add(9); };
+            if (type == ChordType.Sus2) { temp.Add(2); temp.Add(7); };
+            if (type == ChordType.Sus4) { temp.Add(5); temp.Add(7); };
+            if (type == ChordType.Augmented) { temp.Add(4); temp.Add(8); };
+            if (type == ChordType.DominantNinth) { temp.Add(4); temp.Add(7); temp.Add(14); };
+            if (type == ChordType.DominantEleventh) { temp.Add(4); temp.Add(7); temp.Add(14); temp.Add(17); };
+
+            return temp;
+        }
+
+        public static MidiChord StringToNote(string note, string octaveNumber)
         {
             ChordType chordType;
             string midiNote;
 
 
-            if (note.Contains("m"))
-            {
-                chordType = ChordType.Minor;
-            }
+            if (note.Contains("m")) { chordType = ChordType.Minor; }
             else
             {
-                if (note.Contains("7"))
-                {
-                    chordType = ChordType.DominantSeventh;
-                }
-                else
-                {
-                    chordType = ChordType.Major;
-                }
+                if (note.Contains("7")) { chordType = ChordType.DominantSeventh; }
+                else { chordType = ChordType.Major; }
             };
 
             if (note.Contains("#"))
@@ -72,9 +87,9 @@ namespace Netytar.Utils
             };
             if (chordType == ChordType.DominantSeventh)
             {
-                octaveNumber = 3;
+                octaveNumber = (int.Parse(octaveNumber) - 1).ToString();
             }
-            midiNote = midiNote + octaveNumber.ToString();
+            midiNote = midiNote + octaveNumber;
 
             MidiNotes rootNote = (MidiNotes)System.Enum.Parse(typeof(MidiNotes), midiNote);
 
@@ -86,7 +101,14 @@ namespace Netytar.Utils
     {
         Major,
         Minor,
+        MajorSeventh,
+        MinorSeventh,
         DominantSeventh,
-        DiminishedSeventh
+        DiminishedSeventh,
+        Sus2,
+        Sus4,
+        Augmented,
+        DominantNinth,
+        DominantEleventh,
     };
 }

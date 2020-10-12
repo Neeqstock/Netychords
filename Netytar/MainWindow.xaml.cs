@@ -109,8 +109,8 @@ namespace Netytar
 
                 System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
                 string noteName = (string)button.Content;
-                int octaveNumber = 4;
-                Rack.NetychordsDMIBox.Chord = MidiChord.StringToNote(noteName, octaveNumber);
+                //int octaveNumber = 4;
+                Rack.NetychordsDMIBox.Chord = MidiChord.StringToNote(noteName, Rack.NetychordsDMIBox.octaveNumber);
                 //NetychordsDMIBox.ChordType chordtype = NetychordsDMIBox.ChordType.Major;
                 /*if (Rack.NetychordsDMIBox.playing == true)
                 {
@@ -158,6 +158,11 @@ namespace Netytar
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void LstOctaveChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.octaveNumber = ((ListBoxItem)lstOctaveChanger.SelectedItem).Content.ToString();
         }
     }
 }

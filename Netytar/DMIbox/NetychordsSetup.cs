@@ -49,6 +49,11 @@ namespace Netytar.DMIbox
 
             // BEHAVIORS
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBplayStop());
+            Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBemulateMouse());
+
+            //SURFACE
+            Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new ExpDecayingPointFilter(0.1f));
+
 
         }
     }
