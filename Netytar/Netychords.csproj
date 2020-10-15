@@ -89,6 +89,7 @@
     <Compile Include="DMIbox\NetychordsDMIBox.cs" />
     <Compile Include="DMIbox\NetychordsSetup.cs" />
     <Compile Include="Surface\AutoScroller.cs" />
+    <Compile Include="Surface\ButtonsSettings\ButtonSettingsChords.cs" />
     <Compile Include="Surface\ButtonsSettings\ButtonsSettingsInvert.cs" />
     <Compile Include="Surface\ButtonsSettings\ButtonsSettingsStandard.cs" />
     <Compile Include="Surface\ButtonsSettings\IButtonsSettings.cs" />
@@ -103,7 +104,9 @@
     <Compile Include="Surface\LineFlashTimer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Surface\NetychordsButton.cs" />
     <Compile Include="Surface\NetytarButton.cs" />
+    <Compile Include="Surface\NetychordsSurface.cs" />
     <Compile Include="Surface\NetytarSurface.cs" />
     <Compile Include="Surface\RhythmFlasher.cs" />
     <Compile Include="Utils\MidiChord.cs" />

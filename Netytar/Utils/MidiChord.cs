@@ -29,7 +29,7 @@ namespace Netytar.Utils
             if (type == ChordType.Major) { temp.Add(4); temp.Add(7); };
             if (type == ChordType.Minor) { temp.Add(3); temp.Add(7); };
             if (type == ChordType.MajorSeventh) { temp.Add(4); temp.Add(7); temp.Add(11); };
-            if (type == ChordType.MajorSeventh) { temp.Add(3); temp.Add(7); temp.Add(10); };
+            if (type == ChordType.MinorSeventh) { temp.Add(3); temp.Add(7); temp.Add(10); };
             if (type == ChordType.DominantSeventh) { temp.Add(4); temp.Add(7); temp.Add(10); };
             if (type == ChordType.DiminishedSeventh) { temp.Add(3); temp.Add(6); temp.Add(9); };
             if (type == ChordType.Sus2) { temp.Add(2); temp.Add(7); };
@@ -41,18 +41,10 @@ namespace Netytar.Utils
             return temp;
         }
 
-        public static MidiChord StringToNote(string note, string octaveNumber)
+        public static MidiChord ChordFactory(string note, string octaveNumber, ChordType chordType)
         {
-            ChordType chordType;
             string midiNote;
 
-
-            if (note.Contains("m")) { chordType = ChordType.Minor; }
-            else
-            {
-                if (note.Contains("7")) { chordType = ChordType.DominantSeventh; }
-                else { chordType = ChordType.Major; }
-            };
 
             if (note.Contains("#"))
             {
@@ -85,10 +77,10 @@ namespace Netytar.Utils
             {
                 midiNote = "" + note[0];
             };
-            if (chordType == ChordType.DominantSeventh)
+            /*if (chordType == ChordType.DominantSeventh)
             {
                 octaveNumber = (int.Parse(octaveNumber) - 1).ToString();
-            }
+            }*/
             midiNote = midiNote + octaveNumber;
 
             MidiNotes rootNote = (MidiNotes)System.Enum.Parse(typeof(MidiNotes), midiNote);
@@ -99,14 +91,14 @@ namespace Netytar.Utils
 
     public enum ChordType
     {
-        Major,
-        Minor,
+        Major,//
+        Minor,//
         MajorSeventh,
         MinorSeventh,
-        DominantSeventh,
+        DominantSeventh,//
         DiminishedSeventh,
-        Sus2,
-        Sus4,
+        Sus2,//
+        Sus4,//
         Augmented,
         DominantNinth,
         DominantEleventh,

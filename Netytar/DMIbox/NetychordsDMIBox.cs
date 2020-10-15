@@ -28,6 +28,8 @@ namespace Netytar
         private MidiChord chord = new MidiChord(MidiNotes.C4, ChordType.Major);
         private bool keyDown = false;
         public string octaveNumber = "4";
+        public string firstNote = "C";
+        public string isPlaying = "";
 
         public MidiChord Chord
         {
@@ -40,10 +42,13 @@ namespace Netytar
                     {
                         StopChord(chord);
                         PlayChord(value);
+                        isPlaying = "Playing";
+
                     }
                     else
                     {
                         StopChord(chord);
+                        isPlaying = "";
                     }
                     chord = value;
                 }
@@ -59,11 +64,14 @@ namespace Netytar
                 {
                     StopChord(chord);
                     keyDown = value;
-                }else
+                    isPlaying = "";
+                }
+                else
                 if (!keyDown && value)
                 {
                     PlayChord(chord);
                     keyDown = value;
+                    isPlaying = "Playing";
                 }
             }
         }
@@ -145,6 +153,8 @@ namespace Netytar
         private AutoScroller autoScroller;
         public AutoScroller AutoScroller { get => autoScroller; set => autoScroller = value; }
 
+        private NetychordsSurface netychordsSurface;
+        public NetychordsSurface NetychordsSurface { get => netychordsSurface; set => netychordsSurface = value; }
         #endregion
     }
 

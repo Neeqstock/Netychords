@@ -91,8 +91,47 @@
                 <Grid Grid.Row="2" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="lstOctaveChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="WhiteSmoke">
+                    <ListBox x:Name="lstNoteChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstNoteChanger_SelectionChanged" Background="Black" Foreground="WhiteSmoke">
+                        <ListBoxItem>
+                            C
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            C#
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            D
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            D#
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            E
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            F
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            F#
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            G
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            G#
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            A
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            A#
+                        </ListBoxItem>
+                        <ListBoxItem>
+                            B
+                        </ListBoxItem>
+                    </ListBox>
+                    <ListBox x:Name="lstOctaveChanger" Grid.Column="1" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="WhiteSmoke">
                         <ListBoxItem>
                             1
                         </ListBoxItem>
@@ -116,6 +155,20 @@
                         </ListBoxItem>
                     </ListBox>
                 </Grid>
+                <Grid Grid.Row="3" Margin="5,1,5,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
+                        <TextBlock Name="lblIsPlaying" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="28" TextAlignment="Center" Text="" >
+                        </TextBlock>
+                    </Border>
+                    <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
+                        <TextBlock Name="lblPlayedNote" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="28" TextAlignment="Center" Text="">
+                        </TextBlock>
+                    </Border>
+                </Grid>
             </Grid>
         </Border>
 
@@ -137,11 +190,13 @@
                             <RowDefinition Height="12*"/>
                         </Grid.RowDefinitions>
                         <ScrollViewer x:Name="scrlNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="0">
-                            <Canvas x:Name="canvasNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" MouseMove="canvasNetytchords_MouseMove">
+                            <Canvas x:Name="canvasNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="2000" Height="2000" MouseMove="canvasNetytchords_MouseMove">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="Black" Opacity="0"/>
                                 </Canvas.Background>
-                                <!--major buttons-->
+                                <!--
+                                <Button Content="C" Height="35" Width="35" Canvas.Left="2520" Canvas.Top="2260" MouseEnter="Button_MouseEnter"/>
+    
                                 <Button Content="C" Height="35" Width="35" Canvas.Left="520" Canvas.Top="60" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="F" Height="35" Width="35" Canvas.Left="360" Canvas.Top="100" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="G" Height="35" Width="35" Canvas.Left="680" Canvas.Top="100" MouseEnter="Button_MouseEnter"/>
@@ -154,7 +209,7 @@
                                 <Button Content="C#" Height="35" Width="35" Canvas.Left="360" Canvas.Top="560" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="B" Height="35" Width="35" Canvas.Left="680" Canvas.Top="560" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="F#" Height="35" Width="35" Canvas.Left="520" Canvas.Top="600" MouseEnter="Button_MouseEnter"/>
-                                <!--minor buttons-->
+                                
                                 <Button Content="Am" Height="35" Width="35" Canvas.Left="520" Canvas.Top="140" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="Dm" Height="35" Width="35" Canvas.Left="400" Canvas.Top="180" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="Em" Height="35" Width="35" Canvas.Left="640" Canvas.Top="180" MouseEnter="Button_MouseEnter"/>
@@ -167,7 +222,7 @@
                                 <Button Content="A#m" Height="35" Width="35" Canvas.Left="400" Canvas.Top="480" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="G#m" Height="35" Width="35" Canvas.Left="640" Canvas.Top="480" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="D#m" Height="35" Width="35" Canvas.Left="520" Canvas.Top="520" MouseEnter="Button_MouseEnter"/>
-                                <!--dominant seventh buttons-->
+                                
                                 <Button Content="B7" Height="35" Width="35" Canvas.Left="520" Canvas.Top="220" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="E7" Height="35" Width="35" Canvas.Left="450" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="F#7" Height="35" Width="35" Canvas.Left="590" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
@@ -180,10 +235,12 @@
                                 <Button Content="C7" Height="35" Width="35" Canvas.Left="450" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="Bb7" Height="35" Width="35" Canvas.Left="590" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
                                 <Button Content="F7" Height="35" Width="35" Canvas.Left="520" Canvas.Top="440" MouseEnter="Button_MouseEnter"/>
+                                -->
                             </Canvas>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
+                <Button Content="Button" Height="36" Width="38"/>
 
                 <!--<TabItem x:Name="tabNetytar"  Header="Netytar" Visibility="Collapsed">
                     <Grid>

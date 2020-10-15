@@ -184,6 +184,7 @@ namespace Netytar
                     netytarButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
                     netytarButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0xFF, 0xFF, 0xFF));
                     netytarButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
+                    
                     Canvas.SetLeft(netytarButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netytarButtons[row, col].Occluder, Y - occluderOffset);
 

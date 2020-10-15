@@ -53,7 +53,14 @@ namespace Netytar.DMIbox
 
             //SURFACE
             Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new ExpDecayingPointFilter(0.1f));
+            IDimension dimension = new DimensionInvert();
+            IColorCode colorCode = new ColorCodeStandard();
+            IButtonsSettings buttonsSettings = new ButtonsSettingsChords();
 
+            NetychordsSurfaceDrawModes drawMode = NetychordsSurfaceDrawModes.NoLines;
+
+            Rack.NetychordsDMIBox.NetychordsSurface = new NetychordsSurface(Rack.NetychordsDMIBox.MainWindow.canvasNetychords, dimension, colorCode, buttonsSettings, drawMode);
+            Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
 
         }
     }

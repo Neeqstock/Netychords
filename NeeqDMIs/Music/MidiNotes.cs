@@ -152,6 +152,20 @@ namespace NeeqDMIs.Music
             return temp + octaveNumber;
         }
 
+        public static string ToStringNoOctave(this MidiNotes note)
+        {
+            string temp = note.ToString();
+            temp = temp.Remove(temp.Length - 1);
+
+            if (temp.Contains('s'))
+            {
+                temp = temp.Remove(0, 1);
+                temp = temp + "#";
+            }
+
+            return temp;
+        }
+
         /// <summary>
         /// Removes the octave notation from the note, returning the absolute note.
         /// </summary>

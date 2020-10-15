@@ -1,4 +1,5 @@
-﻿using Netytar.DMIbox;
+﻿using NeeqDMIs.Music;
+using Netytar.DMIbox;
 using Netytar.Utils;
 using System;
 using System.Windows;
@@ -40,7 +41,9 @@ namespace Netytar
         {
             if (netychordsStarted)
             {
-               // Put here all the stuff which needs to be updated!
+                lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
+                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.rootNote.ToStandardString();
+                
             }
         }
 
@@ -110,7 +113,7 @@ namespace Netytar
                 System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
                 string noteName = (string)button.Content;
                 //int octaveNumber = 4;
-                Rack.NetychordsDMIBox.Chord = MidiChord.StringToNote(noteName, Rack.NetychordsDMIBox.octaveNumber);
+                //Rack.NetychordsDMIBox.Chord = MidiChord.StringToNote(noteName, Rack.NetychordsDMIBox.octaveNumber);
                 //NetychordsDMIBox.ChordType chordtype = NetychordsDMIBox.ChordType.Major;
                 /*if (Rack.NetychordsDMIBox.playing == true)
                 {
@@ -163,6 +166,25 @@ namespace Netytar
         private void LstOctaveChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Rack.NetychordsDMIBox.octaveNumber = ((ListBoxItem)lstOctaveChanger.SelectedItem).Content.ToString();
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+            }
+        }
+
+        private void lstNoteChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.firstNote = ((ListBoxItem)lstNoteChanger.SelectedItem).Content.ToString();
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+            }
         }
     }
 }
