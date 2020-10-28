@@ -23,7 +23,7 @@ namespace Netytar
         public SolidColorBrush NotInScaleBrush { get; } = new SolidColorBrush(Color.FromArgb(20, 0, 0, 0));
         public SolidColorBrush MinorBrush { get; } = new SolidColorBrush(Colors.Blue);
         public SolidColorBrush MajorBrush { get; } = new SolidColorBrush(Colors.Red);
-        public SolidColorBrush HighlightBrush { get; } = new SolidColorBrush(Colors.White);
+        public SolidColorBrush HighlightBrush { get; } = new SolidColorBrush(Colors.Black);
         public SolidColorBrush TransparentBrush { get; } = new SolidColorBrush(Colors.Transparent);
     }
 }

@@ -1,4 +1,6 @@
-﻿using NAudio.MediaFoundation;
+﻿using EyeTribe.ClientSdk.Data;
+using HANDMIs_TestSuite.Utils;
+using NAudio.MediaFoundation;
 using NeeqDMIs;
 using NeeqDMIs.ATmega;
 using NeeqDMIs.Keyboard;
@@ -13,12 +15,12 @@ namespace Netytar
     /// <summary>
     /// DMIBox for Netytar, implementing the internal logic of the instrument.
     /// </summary>
-    public class NetychordsDMIBox : DMIBox
+    public class NetychordsDMIBox : NeeqDMIs.DMIBox
     {
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public KeyboardModuleWPF KeyboardModule;
         public MainWindow MainWindow { get; set; }
-
+        
         #region Instrument logic
         //private bool blow = false;
         private int velocity = 127;
@@ -30,6 +32,9 @@ namespace Netytar
         public string octaveNumber = "4";
         public string firstNote = "C";
         public string isPlaying = "";
+        public string layout = "Fifth circle";
+        public List<string> arbitraryLines = new List<string>();
+
 
         public MidiChord Chord
         {
@@ -155,6 +160,95 @@ namespace Netytar
 
         private NetychordsSurface netychordsSurface;
         public NetychordsSurface NetychordsSurface { get => netychordsSurface; set => netychordsSurface = value; }
+        #endregion
+
+        #region HeadSensor
+
+        #region Extra sensors
+        public SensorModule HeadTrackerModule { get; set; }
+        #endregion       
+
+        public string Str_HeadTrackerRaw { get; set; } = "Test";
+        public string Str_HeadTrackerCalib { get; set; } = "Test";
+        public HeadTrackerData HeadTrackerData { get; set; } = new HeadTrackerData();
+
+        private int headTrackerPortNumber = 0;
+        public int HeadTrackerPortNumber
+        {
+            get
+            {
+                return headTrackerPortNumber;
+            }
+            set
+            {
+                if (value < 0)
+                {
+                    headTrackerPortNumber = 0;
+                }
+                else
+                {
+                    headTrackerPortNumber = value;
+                }
+            }
+        }
+        public ControlDirection Direction { get; private set; }
+        public Canvas XCanvas { get; set; }
+        public int XCursorCenter { get; set; }
+
+        public long XCursorValue
+        {
+            set
+            {
+                //if(value < 0)
+                //{
+                //   XCursorCenter = (int)(XBarLeft);
+                //}
+                //else if(value > GlobalValues.BarWidth)
+                //{
+                //    XCursorCenter = (int)(XBarLeft + GlobalValues.BarWidth);
+                //}
+                //else
+                //{
+                XCursorCenter = (int)(XBarLeft + value);
+                //}
+
+            }
+        }
+
+        public double XBarLeft { get; set; }
+        public double XBarRight { get; set; }
+
+        private ControlModes controlMode;
+        public ControlModes ControlMode
+        {
+            get { return controlMode; }
+            set
+            {
+                Direction = value.GetDirection();
+                controlMode = value;
+            }
+        }
+        public bool TestStarted { get; set; } = false;
+        public double ScreenWidth { get; set; } = 1920;
+        public double ScreenHeight { get; set; } = 1080;
+        public GazeData EyeTribeGPData { get; set; }
+        public int DistancesIndex { get; set; } = 0;
+        public int PitchInverter { get; set; } = 1;
+        public int RollInverter { get; set; } = 1;
+        public bool InvertPitchRoll { get; set; } = false;
+
+        public List<TargetDistance> TargetDistances = new List<TargetDistance>()
+        {
+            new TargetDistance(300),
+            new TargetDistance(300),
+            new TargetDistance(500),
+            new TargetDistance(500),
+            new TargetDistance(700),
+            new TargetDistance(700),
+            new TargetDistance(900),
+            new TargetDistance(900),
+        };
+
         #endregion
     }
 

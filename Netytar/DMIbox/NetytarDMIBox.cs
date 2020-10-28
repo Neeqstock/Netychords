@@ -9,7 +9,7 @@ namespace Netytar
     /// <summary>
     /// DMIBox for Netytar, implementing the internal logic of the instrument.
     /// </summary>
-    public class NetytarDMIBox : DMIBox
+    public class NetytarDMIBox : NeeqDMIs.DMIBox
     {
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public KeyboardModuleWPF KeyboardModule;

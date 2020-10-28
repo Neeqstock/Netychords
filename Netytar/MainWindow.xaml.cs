@@ -1,7 +1,8 @@
 ﻿using NeeqDMIs.Music;
-using Netytar.DMIbox;
+using Netytar.DMIBox;
 using Netytar.Utils;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -108,16 +109,16 @@ namespace Netytar
         {
             if (netychordsStarted)
             {
-                //NetychordsDMIBox.SelectedChord = Contenuto del bottone;
+                //DMIBox.SelectedChord = Contenuto del bottone;
 
                 System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
                 string noteName = (string)button.Content;
                 //int octaveNumber = 4;
-                //Rack.NetychordsDMIBox.Chord = MidiChord.StringToNote(noteName, Rack.NetychordsDMIBox.octaveNumber);
-                //NetychordsDMIBox.ChordType chordtype = NetychordsDMIBox.ChordType.Major;
-                /*if (Rack.NetychordsDMIBox.playing == true)
+                //Rack.DMIBox.Chord = MidiChord.StringToNote(noteName, Rack.DMIBox.octaveNumber);
+                //DMIBox.ChordType chordtype = DMIBox.ChordType.Major;
+                /*if (Rack.DMIBox.playing == true)
                 {
-                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                    Rack.DMIBox.StopChord(Rack.DMIBox.lastChord);
                 };*/
 
                 
@@ -135,7 +136,7 @@ namespace Netytar
             /*System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
             string noteName = (string)button.Content;
             MidiNotes note = (MidiNotes)Enum.Parse(typeof(MidiNotes), noteName);
-            Rack.NetychordsDMIBox.PlaySelectedChordMajor(note);*/
+            Rack.DMIBox.PlaySelectedChordMajor(note);*/
         }
 
         private void Button_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
@@ -143,7 +144,7 @@ namespace Netytar
             /*System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
             string noteName = (string)button.Content;
             MidiNotes note = (MidiNotes)Enum.Parse(typeof(MidiNotes), noteName);
-            Rack.NetychordsDMIBox.StopSelectedChordMajor(note);*/
+            Rack.DMIBox.StopSelectedChordMajor(note);*/
         }
 
 
@@ -151,9 +152,9 @@ namespace Netytar
         {
             /*if (true == false)
             {
-                if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space) && Rack.NetychordsDMIBox.playing == true)
+                if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space) && Rack.DMIBox.playing == true)
                 {
-                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                    Rack.DMIBox.StopChord(Rack.DMIBox.lastChord);
                 }
             }*/
         }
@@ -170,8 +171,8 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
         }
 
@@ -182,8 +183,108 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+        }
+
+        private void Margins_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+        }
+
+        private void lstLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.layout = ((ListBoxItem)lstLayout.SelectedItem).Content.ToString();
+
+            if (Rack.NetychordsDMIBox.layout == "Arbitrary")
+            {
+                SetupComboBox();
+                FirstRow.IsEnabled = true;
+            }
+            else
+            {
+                System.Collections.Generic.List<ComboBox> boxes = new System.Collections.Generic.List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
+                for (int i = 0; i < 11; i++)
+                {
+                    boxes[i].IsEnabled = false;
+                    boxes[i].SelectedItem = null;
+                }
+            }
+
+            if (netychordsStarted && Rack.NetychordsDMIBox.layout != "Arbitrary")
+            {
+                Rack.NetychordsDMIBox.arbitraryLines = new List<string>();
+
+                arbitraryStart.IsEnabled = false;
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+        }
+
+        private void SetupComboBox()
+        {
+            System.Collections.Generic.List<ComboBox> boxes = new System.Collections.Generic.List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
+            for (int i = 0; i < 11; i++)
+            {
+                for (int j=0; j < 11; j++)
+                {
+                    boxes[i].Items.Add(((ChordType)j).ToString());
+                }
+            }
+            
+
+        }
+
+
+        private void selectorRow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            List<ComboBox> boxes = new List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
+            for (int i = 0; i < 11; i++)
+            {
+                if (sender == boxes[i] && i != 10)
+                {
+                    boxes[i + 1].IsEnabled = true;
+                    //Rack.DMIBox.arbitraryLines.Add(boxes[i].SelectedItem.ToString());
+                    break;
+                }
+                
+            }
+            if (arbitraryStart.IsEnabled == false) arbitraryStart.IsEnabled = true;
+        }
+
+        private void arbitraryStart_Click(object sender, RoutedEventArgs e)
+        {
+            List<ComboBox> boxes = new List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
+            Rack.NetychordsDMIBox.arbitraryLines.Clear();
+
+            for (int i = 0; i < 11; i++)
+            {
+                if (boxes[i].SelectedItem != null)
+                {
+                    Rack.NetychordsDMIBox.arbitraryLines.Add(boxes[i].SelectedItem.ToString());
+                }
+                else
+                {
+                    break;
+                }
+
+            }
+            if (netychordsStarted)
+            {
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                arbitraryStart.IsEnabled = false;
             }
         }
     }

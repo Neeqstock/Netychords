@@ -544,7 +544,7 @@ namespace Netytar
             {
                 Point point1 = new Point(Canvas.GetLeft(CheckedButton) + 6, Canvas.GetTop(CheckedButton) + 6);
                 Point point2 = new Point(Canvas.GetLeft(lastCheckedButton) + 6, Canvas.GetTop(lastCheckedButton) + 6);
-                IndependentLineFlashTimer timer = new IndependentLineFlashTimer(point1, point2, canvas, Colors.NavajoWhite);
+                IndependentLineFlashTimer timer = new IndependentLineFlashTimer(point1, point2, canvas, Colors.Black);
             }
             
         }

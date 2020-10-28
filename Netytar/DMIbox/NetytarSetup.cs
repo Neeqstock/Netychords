@@ -6,12 +6,12 @@ using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.MIDI;
 using NeeqDMIs.Music;
-using Netytar.DMIbox.KeyboardBehaviors;
+using Netytar.DMIBox.KeyboardBehaviors;
 using System;
 using System.Windows.Interop;
 using Tobii.Interaction.Framework;
 
-namespace Netytar.DMIbox
+namespace Netytar.DMIBox
 {
     /*
     public class NetytarSetup

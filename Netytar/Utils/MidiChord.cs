@@ -93,8 +93,8 @@ namespace Netytar.Utils
     {
         Major,//
         Minor,//
-        MajorSeventh,
-        MinorSeventh,
+        MajorSeventh,//
+        MinorSeventh,//
         DominantSeventh,//
         DiminishedSeventh,
         Sus2,//

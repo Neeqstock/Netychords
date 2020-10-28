@@ -31,7 +31,7 @@
                     <RowDefinition Height="80*"/>
                     <RowDefinition Height="51*"/>
                     <RowDefinition Height="66*"/>
-                    <RowDefinition Height="59*"/>
+                    <RowDefinition Height="209*"/>
                     <RowDefinition Height="58*"/>
                     <RowDefinition Height="59*"/>
                 </Grid.RowDefinitions>
@@ -94,7 +94,7 @@
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
                     <ListBox x:Name="lstNoteChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstNoteChanger_SelectionChanged" Background="Black" Foreground="WhiteSmoke">
-                        <ListBoxItem>
+                        <ListBoxItem Name="C">
                             C
                         </ListBoxItem>
                         <ListBoxItem>
@@ -168,6 +168,90 @@
                         <TextBlock Name="lblPlayedNote" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="28" TextAlignment="Center" Text="">
                         </TextBlock>
                     </Border>
+                </Grid>
+                <Grid Grid.Row="4" Margin="5,1,5,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="1,1,1,1">
+                        <TextBlock Name="falseMargin" Margin="0,5,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="Vertical">
+                        </TextBlock>
+                    </Border>
+                    <Border HorizontalAlignment="Stretch" Margin="0,32,0,25" Width="Auto" BorderThickness="0" BorderBrush="White" Grid.Column="1">
+                        <!--<Border.Background>
+                            <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
+                        </Border.Background>-->
+                        <Slider Name="Margins" Maximum="1" Minimum="0" TickFrequency="1" TickPlacement="BottomRight" ValueChanged="Margins_ValueChanged" Value="1"/>
+                    </Border>
+                    <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="1,1,1,1">
+                        <TextBlock Name="trueMargin" Margin="0,5,0,0" Background="Black" Foreground="LightGreen" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="Diagonal">
+                        </TextBlock>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="5" Margin="5,1,5,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <ListBox x:Name="lstLayout" Grid.Column="0" Margin="5,1,5,1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstLayout_SelectionChanged"  Background="Black" Foreground="WhiteSmoke">
+                            <ListBoxItem>
+                                Stradella
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Fifth circle
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Arbitrary
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Pop
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Rock
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Jazz
+                            </ListBoxItem>
+                            <ListBoxItem>
+                                Classical
+                            </ListBoxItem>
+                        </ListBox>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                            <RowDefinition Height = "1*"/>
+                        </Grid.RowDefinitions>
+                        <ComboBox Name="FirstRow" Grid.Row="0" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="SecondRow" Grid.Row="1" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="ThirdRow" Grid.Row="2" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="FourthRow" Grid.Row="3" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="FifthRow" Grid.Row="4" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="SixthRow" Grid.Row="5" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="SeventhRow" Grid.Row="6" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="EighthRow" Grid.Row="7" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="NinthRow" Grid.Row="8" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="TenthRow" Grid.Row="9" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <ComboBox Name="EleventhRow" Grid.Row="10" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
+                        <Button x:Name="arbitraryStart" Grid.Row="11" Foreground="White" Content="Start"  Width="Auto" Height="Auto" Margin="0,1,1,0" FontSize="10" IsCancel="True" IsEnabled="False" Click="arbitraryStart_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
+                            </Button.Background>
+                        </Button>
+                    </Grid>
                 </Grid>
             </Grid>
         </Border>
@@ -259,6 +343,6 @@
         </Border>
 
         <Label x:Name="lblRhythm" Content="Settings" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" FontFamily="Magneto" FontSize="28" Foreground="White" Height="44" Width="162"/>
-        <Label x:Name="lblSolo" Content="Solo" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" FontFamily="Magneto" FontSize="28" Foreground="White" Grid.Column="1" Height="44" Width="80"/>
+        <Label x:Name="lblSolo" Content="Chords" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" FontFamily="Magneto" FontSize="28" Foreground="White" Grid.Column="1" Height="44" Width="120"/>
     </Grid>
 </Window>

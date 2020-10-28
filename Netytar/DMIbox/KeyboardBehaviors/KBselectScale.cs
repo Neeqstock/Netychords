@@ -2,7 +2,7 @@
 using NeeqDMIs.Music;
 using RawInputProcessor;
 
-namespace Netytar.DMIbox.KeyboardBehaviors
+namespace Netytar.DMIBox.KeyboardBehaviors
 {
     class KBselectScale : AKeyboardBehavior
     {

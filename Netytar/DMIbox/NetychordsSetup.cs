@@ -1,15 +1,16 @@
-﻿using NeeqDMIs.Eyetracking.Eyetribe;
+﻿using NeeqDMIs.ATmega;
+using NeeqDMIs.Eyetracking.Eyetribe;
 using NeeqDMIs.Eyetracking.Filters;
 using NeeqDMIs.Eyetracking.Tobii;
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.MIDI;
-using Netytar.DMIbox.KeyboardBehaviors;
+using Netytar.DMIBox.KeyboardBehaviors;
 using System;
 using System.Windows.Interop;
 using Tobii.Interaction.Framework;
 
-namespace Netytar.DMIbox
+namespace Netytar.DMIBox
 {
     public class NetychordsSetup
     {
@@ -46,8 +47,12 @@ namespace Netytar.DMIbox
                 Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulatorGazeMode = GazeMode.Raw;
             }
 
+            // MODULES
+            //IntPtr windowHandle = new WindowInteropHelper(Rack.NetychordsDMIBox.TestMainWindow).Handle;
 
-            // BEHAVIORS
+            Rack.NetychordsDMIBox.HeadTrackerModule = new SensorModule("COM", 115200);
+
+            // BEHAVIORS 
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBplayStop());
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBemulateMouse());
 
