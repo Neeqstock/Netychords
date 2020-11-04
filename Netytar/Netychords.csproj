@@ -171,17 +171,20 @@
     </ApplicationDefinition>
     <Compile Include="Behaviors\HeadSensor\HSreadSerial.cs" />
     <Compile Include="ControlMode.cs" />
+    <Compile Include="DMIbox\CalibrateSetup.cs" />
     <Compile Include="GlobalValues.cs" />
     <Compile Include="DMIbox\KeyboardBehaviors\KBplayStop.cs" />
     <Compile Include="DMIbox\NetychordsDMIBox.cs" />
     <Compile Include="DMIbox\NetychordsSetup.cs" />
     <Compile Include="Surface\AutoScroller.cs" />
+    <Compile Include="Surface\ButtonsSettings\ButtonSettingsCalibrate.cs" />
     <Compile Include="Surface\ButtonsSettings\ButtonSettingsChords.cs" />
     <Compile Include="Surface\ButtonsSettings\ButtonsSettingsInvert.cs" />
     <Compile Include="Surface\ButtonsSettings\ButtonsSettingsStandard.cs" />
     <Compile Include="Surface\ButtonsSettings\IButtonsSettings.cs" />
     <Compile Include="Surface\ColorCodes\ColorCodeStandard.cs" />
     <Compile Include="Surface\ColorCodes\IColorCode.cs" />
+    <Compile Include="Surface\Dimensions\DimensionCalibration.cs" />
     <Compile Include="Surface\Dimensions\DimensionInvert.cs" />
     <Compile Include="Surface\Dimensions\DimensionLaptop.cs" />
     <Compile Include="Surface\Dimensions\IDimension.cs" />
@@ -191,7 +194,9 @@
     <Compile Include="Surface\LineFlashTimer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Surface\CalibrateButton.cs" />
     <Compile Include="Surface\NetychordsButton.cs" />
+    <Compile Include="Surface\CalibrationSurface.cs" />
     <Compile Include="Surface\NetytarButton.cs" />
     <Compile Include="Surface\NetychordsSurface.cs" />
     <Compile Include="Surface\NetytarSurface.cs" />

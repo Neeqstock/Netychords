@@ -1,4 +1,5 @@
 ﻿using NeeqDMIs.Utils;
+using System.Collections.Generic;
 
 namespace HANDMIs_TestSuite.Utils
 {
@@ -7,6 +8,7 @@ namespace HANDMIs_TestSuite.Utils
         private AngleBaseChanger pitchTransf;
         private AngleBaseChanger yawTransf;
         private AngleBaseChanger rollTransf;
+        public List<double> Yaws = new List<double>();
         public double Pitch { get; set; }
         public double Yaw { get; set; }
         public double Roll { get; set; }

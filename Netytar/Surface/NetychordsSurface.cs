@@ -55,7 +55,7 @@ namespace Netytar
         private SolidColorBrush transparentBrush = new SolidColorBrush(Colors.Transparent);
 
         private int generativePitch;
-        private int nCols;
+        public int nCols;
         private int nRows;
         private int startPositionX;
         private int startPositionY;

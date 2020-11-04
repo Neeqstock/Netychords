@@ -5,6 +5,7 @@ using NeeqDMIs.Eyetracking.Tobii;
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.MIDI;
+using Netytar.Behaviors.Sensor;
 using Netytar.DMIBox.KeyboardBehaviors;
 using System;
 using System.Windows.Interop;
@@ -49,12 +50,12 @@ namespace Netytar.DMIBox
 
             // MODULES
             //IntPtr windowHandle = new WindowInteropHelper(Rack.NetychordsDMIBox.TestMainWindow).Handle;
-
             Rack.NetychordsDMIBox.HeadTrackerModule = new SensorModule("COM", 115200);
 
             // BEHAVIORS 
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBplayStop());
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBemulateMouse());
+            Rack.NetychordsDMIBox.HeadTrackerModule.Behaviors.Add(new HSreadSerial());
 
             //SURFACE
             Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new ExpDecayingPointFilter(0.1f));
@@ -66,7 +67,6 @@ namespace Netytar.DMIBox
 
             Rack.NetychordsDMIBox.NetychordsSurface = new NetychordsSurface(Rack.NetychordsDMIBox.MainWindow.canvasNetychords, dimension, colorCode, buttonsSettings, drawMode);
             Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-
         }
     }
 }

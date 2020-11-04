@@ -28,6 +28,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="58*"/>
                     <RowDefinition Height="58*"/>
+                    <RowDefinition Height="58*"/>
                     <RowDefinition Height="80*"/>
                     <RowDefinition Height="51*"/>
                     <RowDefinition Height="66*"/>
@@ -43,8 +44,9 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
+                    
                     <Border Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
-                        <Button x:Name="btnStart" Foreground="White" Content="Start" Click="StartNetytar"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="22" IsCancel="True" >
+                        <Button x:Name="btnStart" Foreground="White" Content="Start" Click="StartNetytar"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -88,7 +90,34 @@
                     </Border>
                 </Grid>
 
-                <Grid Grid.Row="2" Margin="5,1,5,1">
+                <Grid Grid.Row="2" Margin="5,5,5,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Visibility="Visible" Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
+                        <Button Name="btnSensorPortMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="30" IsCancel="True" Click="btnSensorPortMinus_Click" >
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
+                            </Button.Background>
+                        </Button>
+                    </Border>
+                    <Border Visibility="Visible" Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
+                        <TextBlock Name="txtSensorPort" Margin="0,14,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="">
+                        </TextBlock>
+                    </Border>
+                    <Border Visibility="Visible"  Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
+                        <Button Name="btnSensorPortPlus" Foreground="White" Content="u" Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="30" IsCancel="True" Click="btnSensorPortPlus_Click">
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
+                            </Button.Background>
+                        </Button>
+                    </Border>
+
+                </Grid>
+
+                <Grid Grid.Row="3" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
@@ -155,7 +184,7 @@
                         </ListBoxItem>
                     </ListBox>
                 </Grid>
-                <Grid Grid.Row="3" Margin="5,1,5,1">
+                <Grid Grid.Row="4" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
@@ -169,7 +198,7 @@
                         </TextBlock>
                     </Border>
                 </Grid>
-                <Grid Grid.Row="4" Margin="5,1,5,1">
+                <Grid Grid.Row="5" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
@@ -190,7 +219,7 @@
                         </TextBlock>
                     </Border>
                 </Grid>
-                <Grid Grid.Row="5" Margin="5,1,5,1">
+                <Grid Grid.Row="6" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
@@ -252,6 +281,15 @@
                             </Button.Background>
                         </Button>
                     </Grid>
+                </Grid>
+                <Grid Grid.Row="7" Margin="5,1,5,1">
+                    <Border Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
+                        <Button x:Name="btnCalibrate" Foreground="White" Content="Calibrate" Click="btnCalibrate_Click"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
+                            </Button.Background>
+                        </Button>
+                    </Border>
                 </Grid>
             </Grid>
         </Border>

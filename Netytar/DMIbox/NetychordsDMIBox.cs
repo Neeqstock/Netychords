@@ -6,6 +6,7 @@ using NeeqDMIs.ATmega;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.Music;
 using Netytar.Utils;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
@@ -20,7 +21,12 @@ namespace Netytar
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public KeyboardModuleWPF KeyboardModule;
         public MainWindow MainWindow { get; set; }
-        
+        public DateTime startcalibration = new DateTime(2020, 01, 01, 00, 00, 00);
+
+
+        public bool calibrateStarted = false;
+        public bool calibrateEnded = false;
+
         #region Instrument logic
         //private bool blow = false;
         private int velocity = 127;
@@ -160,13 +166,15 @@ namespace Netytar
 
         private NetychordsSurface netychordsSurface;
         public NetychordsSurface NetychordsSurface { get => netychordsSurface; set => netychordsSurface = value; }
+
+
+        private CalibrationSurface calibrationSurface;
+        public CalibrationSurface CalibrationSurface { get => calibrationSurface; set => calibrationSurface = value; }
         #endregion
 
         #region HeadSensor
 
-        #region Extra sensors
         public SensorModule HeadTrackerModule { get; set; }
-        #endregion       
 
         public string Str_HeadTrackerRaw { get; set; } = "Test";
         public string Str_HeadTrackerCalib { get; set; } = "Test";
@@ -191,51 +199,6 @@ namespace Netytar
                 }
             }
         }
-        public ControlDirection Direction { get; private set; }
-        public Canvas XCanvas { get; set; }
-        public int XCursorCenter { get; set; }
-
-        public long XCursorValue
-        {
-            set
-            {
-                //if(value < 0)
-                //{
-                //   XCursorCenter = (int)(XBarLeft);
-                //}
-                //else if(value > GlobalValues.BarWidth)
-                //{
-                //    XCursorCenter = (int)(XBarLeft + GlobalValues.BarWidth);
-                //}
-                //else
-                //{
-                XCursorCenter = (int)(XBarLeft + value);
-                //}
-
-            }
-        }
-
-        public double XBarLeft { get; set; }
-        public double XBarRight { get; set; }
-
-        private ControlModes controlMode;
-        public ControlModes ControlMode
-        {
-            get { return controlMode; }
-            set
-            {
-                Direction = value.GetDirection();
-                controlMode = value;
-            }
-        }
-        public bool TestStarted { get; set; } = false;
-        public double ScreenWidth { get; set; } = 1920;
-        public double ScreenHeight { get; set; } = 1080;
-        public GazeData EyeTribeGPData { get; set; }
-        public int DistancesIndex { get; set; } = 0;
-        public int PitchInverter { get; set; } = 1;
-        public int RollInverter { get; set; } = 1;
-        public bool InvertPitchRoll { get; set; } = false;
 
         public List<TargetDistance> TargetDistances = new List<TargetDistance>()
         {
@@ -248,6 +211,47 @@ namespace Netytar
             new TargetDistance(900),
             new TargetDistance(900),
         };
+
+        public bool isCalibrated = false;
+        private List<double> calibrationData = new List<double>();
+        public double minYaw = 0;
+        public double maxYaw = 0;
+
+        public void CalibrationHeadSensor()
+        {
+
+            if (Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded && Rack.NetychordsDMIBox.HeadTrackerData.Yaws.Count != 0)
+            {
+                calibrationData = Rack.NetychordsDMIBox.HeadTrackerData.Yaws;
+                minYaw = calibrationData[0];
+                maxYaw = calibrationData[0];
+                for (int i=1; i<calibrationData.Count; i++)
+                {
+                    if (calibrationData[i] < minYaw)
+                    {
+                        minYaw = calibrationData[i];
+                    }
+                    else if (calibrationData[i] > maxYaw)
+                    {
+                        maxYaw = calibrationData[i];
+                    }
+                }
+            }
+        }
+
+        public double startStrum;
+        public double endStrum;
+        public bool isStartedStrum = false;
+        public bool isEndedStrum = false;
+        public DateTime startingTime;
+        public DateTime endingTime;
+        public directionStrum dirStrum;
+        public enum directionStrum
+        {
+            Right,
+            Left
+        }
+
 
         #endregion
     }

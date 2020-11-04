@@ -1,4 +1,5 @@
-﻿using NeeqDMIs.Music;
+﻿using NeeqDMIs.Eyetracking.Filters;
+using NeeqDMIs.Music;
 using Netytar.DMIBox;
 using Netytar.Utils;
 using System;
@@ -20,7 +21,23 @@ namespace Netytar
         private readonly SolidColorBrush BlankBrush = new SolidColorBrush(Colors.Black);
 
         private bool netychordsStarted = false;
-        
+        private bool calibrateStarted = false;
+        private bool calibrateEnded = false;
+
+        private int sensorPort = 3;
+        public int SensorPort
+        {
+            get { return sensorPort; }
+            set
+            {
+                if (value > 0)
+                {
+                    sensorPort = value;
+                }
+            }
+        }
+
+
         private DispatcherTimer updater;
 
         public MainWindow()
@@ -43,8 +60,20 @@ namespace Netytar
             if (netychordsStarted)
             {
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
-                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.rootNote.ToStandardString();
-                
+                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.rootNote.ToStandardString(); 
+            }
+            
+            if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
+            {
+                TimeSpan calibrationLimit = new TimeSpan(0,0,3);
+                TimeSpan calibration = DateTime.Now.Subtract(Rack.NetychordsDMIBox.startcalibration);
+                if (calibration >= calibrationLimit)
+                {
+                    canvasNetychords.Children.Clear();
+                    Rack.NetychordsDMIBox.calibrateEnded = true;
+                    Rack.NetychordsDMIBox.CalibrationHeadSensor();
+                    Rack.NetychordsDMIBox.HeadTrackerData.Yaws = new List<double>();
+                }
             }
         }
 
@@ -53,19 +82,46 @@ namespace Netytar
         /// </summary>
         private void StartNetytar(object sender, RoutedEventArgs e)
         {
-            // Launches the Setup class
-            NetychordsSetup netychordsSetup = new NetychordsSetup(this);
-            netychordsSetup.Setup();
+            if (Rack.NetychordsDMIBox.calibrateStarted)
+            {
+                canvasNetychords.Children.Clear();
+            }
+            if (!netychordsStarted)
+            {
+                // Launches the Setup class
+                NetychordsSetup netychordsSetup = new NetychordsSetup(this);
+                netychordsSetup.Setup();
 
-            // Changes the aspect of the Start button
-            btnStart.IsEnabled = false;
-            btnStart.Foreground = new SolidColorBrush(Colors.Black);
+                // Changes the aspect of the Start button
+                btnStart.IsEnabled = false;
+                btnStart.Foreground = new SolidColorBrush(Colors.Black);
+                Rack.NetychordsDMIBox.startcalibration = DateTime.Now;
+                // Checks the selected MIDI port is available
+                CheckMidiPort();
+                InitializeSensorPortText();
 
-            // Checks the selected MIDI port is available
-            CheckMidiPort();
 
-            // LEAVE AT THE END! This keeps track of the started state
-            netychordsStarted = true; 
+                // LEAVE AT THE END! This keeps track of the started state
+                netychordsStarted = true;
+            }
+            else
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new ExpDecayingPointFilter(0.1f));
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                IDimension dimension = new DimensionInvert();
+                IColorCode colorCode = new ColorCodeStandard();
+                IButtonsSettings buttonsSettings = new ButtonsSettingsChords();
+
+                NetychordsSurfaceDrawModes drawMode = NetychordsSurfaceDrawModes.NoLines;
+                Rack.NetychordsDMIBox.NetychordsSurface = new NetychordsSurface(Rack.NetychordsDMIBox.MainWindow.canvasNetychords, dimension, colorCode, buttonsSettings, drawMode);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                //canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                btnStart.IsEnabled = false;
+                btnStart.Foreground = new SolidColorBrush(Colors.Black);
+            }
+
+            
         }
 
         /// <summary>
@@ -87,8 +143,8 @@ namespace Netytar
         {
             if (netychordsStarted)
             {
-                Rack.NetytarDMIBox.MidiModule.OutDevice--;
-                lblMIDIch.Text = "MP" + Rack.NetytarDMIBox.MidiModule.OutDevice.ToString();
+                Rack.NetychordsDMIBox.MidiModule.OutDevice--;
+                lblMIDIch.Text = "MP" + Rack.NetychordsDMIBox.MidiModule.OutDevice.ToString();
 
                 CheckMidiPort();
             }
@@ -98,8 +154,8 @@ namespace Netytar
         {
             if (netychordsStarted)
             {
-                Rack.NetytarDMIBox.MidiModule.OutDevice++;
-                lblMIDIch.Text = "MP" + Rack.NetytarDMIBox.MidiModule.OutDevice.ToString();
+                Rack.NetychordsDMIBox.MidiModule.OutDevice++;
+                lblMIDIch.Text = "MP" + Rack.NetychordsDMIBox.MidiModule.OutDevice.ToString();
 
                 CheckMidiPort();
             }
@@ -131,22 +187,6 @@ namespace Netytar
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            /*System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
-            string noteName = (string)button.Content;
-            MidiNotes note = (MidiNotes)Enum.Parse(typeof(MidiNotes), noteName);
-            Rack.DMIBox.PlaySelectedChordMajor(note);*/
-        }
-
-        private void Button_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            /*System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
-            string noteName = (string)button.Content;
-            MidiNotes note = (MidiNotes)Enum.Parse(typeof(MidiNotes), noteName);
-            Rack.DMIBox.StopSelectedChordMajor(note);*/
-        }
-
 
         private void canvasNetytchords_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -171,6 +211,7 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -286,6 +327,66 @@ namespace Netytar
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
                 arbitraryStart.IsEnabled = false;
             }
+        }
+
+        private void btnCalibrate_Click(object sender, RoutedEventArgs e)
+        {
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+            }
+            // Launches the Setup class
+            CalibrateSetup calibrateSetup = new CalibrateSetup(this);
+            calibrateSetup.Setup();
+
+            // Changes the aspect of the Start button
+            btnCalibrate.IsEnabled = false;
+            btnCalibrate.Foreground = new SolidColorBrush(Colors.Black);
+            btnStart.IsEnabled = true;
+            btnStart.Foreground = new SolidColorBrush(Colors.White);
+
+            Rack.NetychordsDMIBox.calibrateStarted = true;
+            Rack.NetychordsDMIBox.startcalibration = DateTime.Now;
+        }
+
+        private void btnSensorPortMinus_Click(object sender, RoutedEventArgs e)
+        {
+            if (netychordsStarted)
+            {
+                SensorPort--;
+                UpdateSensorConnection();
+            }
+        }
+
+        private void btnSensorPortPlus_Click(object sender, RoutedEventArgs e)
+        {
+            if (netychordsStarted)
+            {
+                SensorPort++;
+                UpdateSensorConnection();
+            }
+        }
+
+        private void UpdateSensorConnection()
+        {
+            txtSensorPort.Text = Rack.NetychordsDMIBox.HeadTrackerModule.PortPrefix + SensorPort.ToString();
+
+            if (Rack.NetychordsDMIBox.HeadTrackerModule.Connect(SensorPort))
+            {
+                txtSensorPort.Foreground = ActiveBrush;
+            }
+            else
+            {
+                txtSensorPort.Foreground = WarningBrush;
+            }
+        }
+
+
+        private void InitializeSensorPortText()
+        {
+            txtSensorPort.Foreground = WarningBrush;
+            txtSensorPort.Text = Rack.NetychordsDMIBox.HeadTrackerModule.PortPrefix + SensorPort;
+            UpdateSensorConnection();
         }
     }
 }
