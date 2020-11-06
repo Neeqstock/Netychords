@@ -11,18 +11,22 @@ namespace Netytar.DMIBox.KeyboardBehaviors
 
         public override int ReceiveEvent(RawInputEventArgs e)
         {
-            if (e.VirtualKey == (ushort)space && e.KeyPressState == KeyPressState.Down && !isDown)
+            if (!Rack.NetychordsDMIBox.HeadTrackerModule.Connect(Rack.NetychordsDMIBox.MainWindow.SensorPort))
             {
-                Rack.NetychordsDMIBox.KeyDown = true;
-                isDown = true;
-                return 0;
+                if (e.VirtualKey == (ushort)space && e.KeyPressState == KeyPressState.Down && !isDown)
+                {
+                    Rack.NetychordsDMIBox.KeyDown = true;
+                    isDown = true;
+                    return 0;
+                }
+                if (e.VirtualKey == (ushort)space && e.KeyPressState == KeyPressState.Up)
+                {
+                    Rack.NetychordsDMIBox.KeyDown = false;
+                    isDown = false;
+                    return 0;
+                };
             }
-            if (e.VirtualKey == (ushort)space && e.KeyPressState == KeyPressState.Up)
-            {
-                Rack.NetychordsDMIBox.KeyDown = false;
-                isDown = false;
-                return 0;
-            };
+                
             return 1;
         }
     }

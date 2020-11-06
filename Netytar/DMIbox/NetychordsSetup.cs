@@ -52,7 +52,7 @@ namespace Netytar.DMIBox
             //IntPtr windowHandle = new WindowInteropHelper(Rack.NetychordsDMIBox.TestMainWindow).Handle;
             Rack.NetychordsDMIBox.HeadTrackerModule = new SensorModule("COM", 115200);
 
-            // BEHAVIORS 
+            // BEHAVIORS
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBplayStop());
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBemulateMouse());
             Rack.NetychordsDMIBox.HeadTrackerModule.Behaviors.Add(new HSreadSerial());

@@ -136,6 +136,11 @@ namespace Netytar
             highlighter.StrokeThickness = dimensions.HighlightStrokeDim;
             highlighter.Stroke = colorCode.HighlightBrush;
 
+            
+        }
+
+        public void DrawButtons()
+        {
             if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
             {
                 starterNote = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem).Content.ToString();
@@ -152,15 +157,11 @@ namespace Netytar
             }
             else
             {
-                nCols = 96 - 12*4;
+                nCols = 96 - 12 * 4;
                 starterOctave = Rack.NetychordsDMIBox.octaveNumber;
             }
 
             firstChord = MidiChord.ChordFactory(starterNote, starterOctave, ChordType.Major);
-        }
-
-        public void DrawButtons()
-        {
             int halfSpacer = horizontalSpacer / 2;
             int spacer = horizontalSpacer;
             int firstSpacer = 0;
@@ -1192,6 +1193,7 @@ namespace Netytar
         {
             if(sender != CheckedButton)
             {
+                Rack.NetychordsDMIBox.lastChord = Rack.NetychordsDMIBox.Chord;
                 Rack.NetychordsDMIBox.Chord = sender.Chord;
 
                 lastCheckedButton = checkedButton;

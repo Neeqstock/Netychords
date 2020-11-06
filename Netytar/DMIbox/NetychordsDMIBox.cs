@@ -34,12 +34,14 @@ namespace Netytar
         private int modulation = 0;
 
         private MidiChord chord = new MidiChord(MidiNotes.C4, ChordType.Major);
+        public MidiChord lastChord;
         private bool keyDown = false;
         public string octaveNumber = "4";
         public string firstNote = "C";
         public string isPlaying = "";
         public string layout = "Fifth circle";
         public List<string> arbitraryLines = new List<string>();
+        public bool strummed = false;
 
 
         public MidiChord Chord
@@ -47,21 +49,45 @@ namespace Netytar
             get { return chord; }
             set
             {
-                if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
+                if (!Rack.NetychordsDMIBox.HeadTrackerModule.Connect(Rack.NetychordsDMIBox.MainWindow.SensorPort))
                 {
-                    if (keyDown)
+                    if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
                     {
-                        StopChord(chord);
-                        PlayChord(value);
-                        isPlaying = "Playing";
+                        if (keyDown)
+                        {
+                            StopChord(chord);
+                            PlayChord(value);
+                            isPlaying = "Playing";
+                            isEndedStrum = false;
 
+                        }
+                        else
+                        {
+                            StopChord(chord);
+                            isPlaying = "";
+                        }
+                        chord = value;
                     }
-                    else
-                    {
-                        StopChord(chord);
-                        isPlaying = "";
+                }
+                else
+                {
+                    if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
+                    {/*
+                        if (keyDown)
+                        {
+                            StopChord(chord);
+                            PlayChord(value);
+                            isPlaying = "Playing";
+                            isEndedStrum = false;
+
+                        }
+                        else
+                        {
+                            StopChord(chord);
+                            isPlaying = "";
+                        }*/
+                        chord = value;
                     }
-                    chord = value;
                 }
             }
         }
@@ -213,29 +239,17 @@ namespace Netytar
         };
 
         public bool isCalibrated = false;
-        private List<double> calibrationData = new List<double>();
-        public double minYaw = 0;
-        public double maxYaw = 0;
+        public double minYaw;
+        public double maxYaw;
 
         public void CalibrationHeadSensor()
         {
 
-            if (Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded && Rack.NetychordsDMIBox.HeadTrackerData.Yaws.Count != 0)
+            if (Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded && !isCalibrated)
             {
-                calibrationData = Rack.NetychordsDMIBox.HeadTrackerData.Yaws;
-                minYaw = calibrationData[0];
-                maxYaw = calibrationData[0];
-                for (int i=1; i<calibrationData.Count; i++)
-                {
-                    if (calibrationData[i] < minYaw)
-                    {
-                        minYaw = calibrationData[i];
-                    }
-                    else if (calibrationData[i] > maxYaw)
-                    {
-                        maxYaw = calibrationData[i];
-                    }
-                }
+                minYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw - 5;
+                maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw + 5;
+                isCalibrated = true;
             }
         }
 
@@ -251,10 +265,6 @@ namespace Netytar
             Right,
             Left
         }
-
-
         #endregion
     }
-
-
 }

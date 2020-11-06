@@ -27,14 +27,14 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="58*"/>
-                    <RowDefinition Height="58*"/>
-                    <RowDefinition Height="58*"/>
-                    <RowDefinition Height="80*"/>
-                    <RowDefinition Height="51*"/>
-                    <RowDefinition Height="66*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="60*"/>
+                    <RowDefinition Height="45*"/>
                     <RowDefinition Height="209*"/>
                     <RowDefinition Height="58*"/>
-                    <RowDefinition Height="59*"/>
+                    <RowDefinition Height="69*"/>
                 </Grid.RowDefinitions>
 
 
@@ -44,7 +44,7 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    
+
                     <Border Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
                         <Button x:Name="btnStart" Foreground="White" Content="Start" Click="StartNetytar"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
                             <Button.Background>
@@ -70,19 +70,19 @@
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
-                        <Button x:Name="btnMIDIchMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,1,1,0" FontFamily="Wingdings 3" FontSize="30" IsCancel="True" Click="btnMIDIchMinus_Click" >
+                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <Button x:Name="btnMIDIchMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,1,1,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnMIDIchMinus_Click" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
                         </Button>
                     </Border>
-                    <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
-                        <TextBlock Name="lblMIDIch" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="28" TextAlignment="Center" Text="MP1">
+                    <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <TextBlock Name="lblMIDIch" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="MP1">
                         </TextBlock>
                     </Border>
-                    <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
-                        <Button x:Name="btnMIDIchPlus" Foreground="White" Content="u"  Width="Auto" Height="Auto" FontFamily="Wingdings 3" FontSize="30" IsCancel="True" Click="btnMIDIchPlus_Click" >
+                    <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <Button x:Name="btnMIDIchPlus" Foreground="White" Content="u"  Width="Auto" Height="Auto" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnMIDIchPlus_Click" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -96,19 +96,19 @@
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Visibility="Visible" Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
-                        <Button Name="btnSensorPortMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="30" IsCancel="True" Click="btnSensorPortMinus_Click" >
+                    <Border Visibility="Visible" Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <Button Name="btnSensorPortMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnSensorPortMinus_Click" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
                         </Button>
                     </Border>
-                    <Border Visibility="Visible" Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
+                    <Border Visibility="Visible" Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
                         <TextBlock Name="txtSensorPort" Margin="0,14,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="">
                         </TextBlock>
                     </Border>
-                    <Border Visibility="Visible"  Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
-                        <Button Name="btnSensorPortPlus" Foreground="White" Content="u" Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="30" IsCancel="True" Click="btnSensorPortPlus_Click">
+                    <Border Visibility="Visible"  Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <Button Name="btnSensorPortPlus" Foreground="White" Content="u" Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnSensorPortPlus_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -122,79 +122,79 @@
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <ListBox x:Name="lstNoteChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstNoteChanger_SelectionChanged" Background="Black" Foreground="WhiteSmoke">
-                        <ListBoxItem Name="C">
+                    <ComboBox x:Name="lstNoteChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstNoteChanger_SelectionChanged" Background="Black" Foreground="Black">
+                        <ComboBoxItem Name="C">
                             C
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             C#
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             D
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             D#
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             E
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             F
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             F#
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             G
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             G#
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             A
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             A#
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             B
-                        </ListBoxItem>
-                    </ListBox>
-                    <ListBox x:Name="lstOctaveChanger" Grid.Column="1" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="WhiteSmoke">
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <ComboBox x:Name="lstOctaveChanger" Grid.Column="1" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="Black">
+                        <ComboBoxItem>
                             1
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             2
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             3
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             4
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             5
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             6
-                        </ListBoxItem>
-                        <ListBoxItem>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
                             7
-                        </ListBoxItem>
-                    </ListBox>
+                        </ComboBoxItem>
+                    </ComboBox>
                 </Grid>
                 <Grid Grid.Row="4" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
-                        <TextBlock Name="lblIsPlaying" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="28" TextAlignment="Center" Text="" >
+                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <TextBlock Name="lblIsPlaying" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="" >
                         </TextBlock>
                     </Border>
-                    <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="60" Margin="1,1,1,1">
-                        <TextBlock Name="lblPlayedNote" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="28" TextAlignment="Center" Text="">
+                    <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <TextBlock Name="lblPlayedNote" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="">
                         </TextBlock>
                     </Border>
                 </Grid>
@@ -204,17 +204,17 @@
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="1,1,1,1">
+                    <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="0,0,0,0">
                         <TextBlock Name="falseMargin" Margin="0,5,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="Vertical">
                         </TextBlock>
                     </Border>
-                    <Border HorizontalAlignment="Stretch" Margin="0,32,0,25" Width="Auto" BorderThickness="0" BorderBrush="White" Grid.Column="1">
+                    <Border HorizontalAlignment="Stretch" Margin="0,12,4,0" Width="Auto" Height="20" BorderThickness="0" BorderBrush="White" Grid.Column="1" Grid.RowSpan="2">
                         <!--<Border.Background>
                             <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
                         </Border.Background>-->
-                        <Slider Name="Margins" Maximum="1" Minimum="0" TickFrequency="1" TickPlacement="BottomRight" ValueChanged="Margins_ValueChanged" Value="1"/>
+                        <Slider Name="Margins" Maximum="1" Minimum="0" TickFrequency="1" TickPlacement="None" ValueChanged="Margins_ValueChanged" Value="1"/>
                     </Border>
-                    <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="1,1,1,1">
+                    <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="0,0,0,0">
                         <TextBlock Name="trueMargin" Margin="0,5,0,0" Background="Black" Foreground="LightGreen" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="Diagonal">
                         </TextBlock>
                     </Border>

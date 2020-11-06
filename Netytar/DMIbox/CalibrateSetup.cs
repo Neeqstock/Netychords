@@ -25,10 +25,10 @@ namespace Netytar.DMIBox
 
             // MODULES
             //IntPtr windowHandle = new WindowInteropHelper(Rack.NetychordsDMIBox.TestMainWindow).Handle;
-            //Rack.NetychordsDMIBox.HeadTrackerModule = new SensorModule("COM", 115200);
+            Rack.NetychordsDMIBox.HeadTrackerModule = new SensorModule("COM", 115200);
 
             // BEHAVIORS 
-            //Rack.NetychordsDMIBox.HeadTrackerModule.Behaviors.Add(new HSreadSerial());
+            Rack.NetychordsDMIBox.HeadTrackerModule.Behaviors.Add(new HSreadSerial());
 
             //SURFACE
             //Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new ExpDecayingPointFilter(0.1f));
@@ -37,7 +37,6 @@ namespace Netytar.DMIBox
             IButtonsSettings buttonsSettings = new ButtonsSettingsCalibrate();
 
             Rack.NetychordsDMIBox.CalibrationSurface = new CalibrationSurface(Rack.NetychordsDMIBox.MainWindow.canvasNetychords, dimension, colorCode, buttonsSettings);
-            Rack.NetychordsDMIBox.CalibrationSurface.DrawButtons();
 
         }
     }

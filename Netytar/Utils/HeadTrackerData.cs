@@ -8,8 +8,8 @@ namespace HANDMIs_TestSuite.Utils
         private AngleBaseChanger pitchTransf;
         private AngleBaseChanger yawTransf;
         private AngleBaseChanger rollTransf;
-        public List<double> Yaws = new List<double>();
         public double Pitch { get; set; }
+        public double CalibrationYaw { get; set; }
         public double Yaw { get; set; }
         public double Roll { get; set; }
         public double TranspPitch { get { return pitchTransf.Transform(Pitch); } }

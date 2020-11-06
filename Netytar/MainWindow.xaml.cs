@@ -24,7 +24,7 @@ namespace Netytar
         private bool calibrateStarted = false;
         private bool calibrateEnded = false;
 
-        private int sensorPort = 3;
+        private int sensorPort = 1;
         public int SensorPort
         {
             get { return sensorPort; }
@@ -37,6 +37,7 @@ namespace Netytar
             }
         }
 
+        public bool NetychordsStarted { get => netychordsStarted; set => netychordsStarted = value; }
 
         private DispatcherTimer updater;
 
@@ -65,14 +66,13 @@ namespace Netytar
             
             if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
             {
-                TimeSpan calibrationLimit = new TimeSpan(0,0,3);
+                TimeSpan calibrationLimit = new TimeSpan(0,0,30);
                 TimeSpan calibration = DateTime.Now.Subtract(Rack.NetychordsDMIBox.startcalibration);
                 if (calibration >= calibrationLimit)
                 {
                     canvasNetychords.Children.Clear();
                     Rack.NetychordsDMIBox.calibrateEnded = true;
                     Rack.NetychordsDMIBox.CalibrationHeadSensor();
-                    Rack.NetychordsDMIBox.HeadTrackerData.Yaws = new List<double>();
                 }
             }
         }
@@ -211,7 +211,7 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -336,17 +336,51 @@ namespace Netytar
                 canvasNetychords.Children.Clear();
             }
             // Launches the Setup class
+            
+            bool finded = false;
+
             CalibrateSetup calibrateSetup = new CalibrateSetup(this);
             calibrateSetup.Setup();
 
-            // Changes the aspect of the Start button
-            btnCalibrate.IsEnabled = false;
-            btnCalibrate.Foreground = new SolidColorBrush(Colors.Black);
-            btnStart.IsEnabled = true;
-            btnStart.Foreground = new SolidColorBrush(Colors.White);
 
-            Rack.NetychordsDMIBox.calibrateStarted = true;
-            Rack.NetychordsDMIBox.startcalibration = DateTime.Now;
+            for (int i = 1; i<15; i++)
+            {
+                if (!Rack.NetychordsDMIBox.HeadTrackerModule.Connect(Rack.NetychordsDMIBox.MainWindow.SensorPort))
+                {
+                    sensorPort++;
+                }
+                else
+                {
+                    finded = true;
+                    UpdateSensorConnection();
+                    break;
+                }
+            }
+
+            if (finded)
+            {
+                Rack.NetychordsDMIBox.CalibrationSurface.DrawButtons();
+
+                InitializeSensorPortText();
+
+
+                // Changes the aspect of the Start button
+                btnCalibrate.IsEnabled = false;
+                btnCalibrate.Foreground = new SolidColorBrush(Colors.Black);
+                btnStart.IsEnabled = true;
+                btnStart.Foreground = new SolidColorBrush(Colors.White);
+
+                Rack.NetychordsDMIBox.calibrateStarted = true;
+                Rack.NetychordsDMIBox.startcalibration = DateTime.Now;
+            }
+            else
+            {
+                btnCalibrate.IsEnabled = false;
+                btnCalibrate.Foreground = new SolidColorBrush(Colors.Red);
+                btnCalibrate.Content = "Not found";
+                sensorPort = 1;
+            }
+
         }
 
         private void btnSensorPortMinus_Click(object sender, RoutedEventArgs e)
