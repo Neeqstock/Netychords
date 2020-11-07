@@ -84,8 +84,11 @@ namespace Netytar.Behaviors.Sensor
                                     {
                                         Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
                                     }*/
+                                    //Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.NetychordsSurface.LastCheckedButton.Chord);
+
+                                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
                                     Rack.NetychordsDMIBox.PlayChord(Rack.NetychordsDMIBox.Chord);
-                                    
+                                    Rack.NetychordsDMIBox.lastChord = Rack.NetychordsDMIBox.Chord;
                                 }
                                 break;
 
@@ -109,12 +112,15 @@ namespace Netytar.Behaviors.Sensor
                                     Rack.NetychordsDMIBox.isEndedStrum = true;
                                     Rack.NetychordsDMIBox.isStartedStrum = false;
                                     //Rack.NetychordsDMIBox.Velocity = 60;
-                                    /*if (Rack.NetychordsDMIBox.lastChord != null && Rack.NetychordsDMIBox.lastChord != Rack.NetychordsDMIBox.Chord)
+                                    //Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.NetychordsSurface.LastCheckedButton.Chord);
+                                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                                    Rack.NetychordsDMIBox.PlayChord(Rack.NetychordsDMIBox.Chord);
+                                    Rack.NetychordsDMIBox.lastChord = Rack.NetychordsDMIBox.Chord;
+                                    /*
+                                    if (Rack.NetychordsDMIBox.lastChord != null && Rack.NetychordsDMIBox.lastChord != Rack.NetychordsDMIBox.Chord)
                                     {
                                         Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
-
                                     }*/
-                                    Rack.NetychordsDMIBox.PlayChord(Rack.NetychordsDMIBox.Chord);
 
                                 }
                                 break;

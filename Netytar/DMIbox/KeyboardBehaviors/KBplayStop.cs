@@ -11,7 +11,7 @@ namespace Netytar.DMIBox.KeyboardBehaviors
 
         public override int ReceiveEvent(RawInputEventArgs e)
         {
-            if (!Rack.NetychordsDMIBox.HeadTrackerModule.Connect(Rack.NetychordsDMIBox.MainWindow.SensorPort))
+            if (Rack.NetychordsDMIBox.keyboardEmulator)
             {
                 if (e.VirtualKey == (ushort)space && e.KeyPressState == KeyPressState.Down && !isDown)
                 {

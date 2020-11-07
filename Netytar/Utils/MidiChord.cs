@@ -41,6 +41,59 @@ namespace Netytar.Utils
             return temp;
         }
 
+        public string ChordName()
+        {
+            string name = rootNote.ToStringNoOctave() + ChordTypeAbbreviation();
+            return name;
+        }
+
+        public string ChordTypeAbbreviation()
+        {
+            ChordType type = chordType;
+            string name;
+            switch (type)
+            {
+                case ChordType.Major:
+                    name = "";
+                    break;
+                case ChordType.Minor:
+                    name = "m";
+                    break;
+                case ChordType.Augmented:
+                    name = "aug";
+                    break;
+                case ChordType.DiminishedSeventh:
+                    name = "dim7";
+                    break;
+                case ChordType.DominantEleventh:
+                    name = "11";
+                    break;
+                case ChordType.DominantNinth:
+                    name = "9";
+                    break;
+                case ChordType.DominantSeventh:
+                    name = "7";
+                    break;
+                case ChordType.MajorSeventh:
+                    name = "maj7";
+                    break;
+                case ChordType.MinorSeventh:
+                    name = "min7";
+                    break;
+                case ChordType.Sus2:
+                    name = "sus2";
+                    break;
+                case ChordType.Sus4:
+                    name = "sus4";
+                    break;
+                default:
+                    name = "";
+                    break;
+            }
+
+            return name;
+        }
+
         public static MidiChord ChordFactory(string note, string octaveNumber, ChordType chordType)
         {
             string midiNote;
@@ -57,19 +110,19 @@ namespace Netytar.Utils
                 switch (oldnote)
                 {
                     case 'A':
-                        midiNote = midiNote + "G";
+                        midiNote += "G";
                         break;
                     case 'B':
-                        midiNote = midiNote + "A";
+                        midiNote += "A";
                         break;
                     case 'D':
-                        midiNote = midiNote + "C";
+                        midiNote += "C";
                         break;
                     case 'E':
-                        midiNote = midiNote + "D";
+                        midiNote += "D";
                         break;
                     case 'G':
-                        midiNote = midiNote + "F";
+                        midiNote += "F";
                         break;
                 }
             }
@@ -81,7 +134,7 @@ namespace Netytar.Utils
             {
                 octaveNumber = (int.Parse(octaveNumber) - 1).ToString();
             }*/
-            midiNote = midiNote + octaveNumber;
+            midiNote += octaveNumber;
 
             MidiNotes rootNote = (MidiNotes)System.Enum.Parse(typeof(MidiNotes), midiNote);
 

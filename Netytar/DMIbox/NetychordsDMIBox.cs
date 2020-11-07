@@ -42,6 +42,7 @@ namespace Netytar
         public string layout = "Fifth circle";
         public List<string> arbitraryLines = new List<string>();
         public bool strummed = false;
+        public bool keyboardEmulator = true;
 
 
         public MidiChord Chord
@@ -49,7 +50,7 @@ namespace Netytar
             get { return chord; }
             set
             {
-                if (!Rack.NetychordsDMIBox.HeadTrackerModule.Connect(Rack.NetychordsDMIBox.MainWindow.SensorPort))
+                if (keyboardEmulator)
                 {
                     if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
                     {
@@ -247,8 +248,8 @@ namespace Netytar
 
             if (Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded && !isCalibrated)
             {
-                minYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw - 5;
-                maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw + 5;
+                minYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw - 7;
+                maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw + 7;
                 isCalibrated = true;
             }
         }

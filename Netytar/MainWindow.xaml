@@ -53,7 +53,7 @@
                         </Button>
                     </Border>
                     <Border Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
-                        <Button Name="btnExit" Foreground="White" Click="btnExit_Click" Content="Exit" Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="22" IsCancel="True" >
+                        <Button Name="btnExit" Foreground="White" Click="BtnExit_Click" Content="Exit" Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="22" IsCancel="True" >
                             <!-- tobii:Behaviors.IsGazeAware="True" -->
 
                             <Button.Background>
@@ -71,7 +71,7 @@
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
                     <Border Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
-                        <Button x:Name="btnMIDIchMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,1,1,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnMIDIchMinus_Click" >
+                        <Button x:Name="btnMIDIchMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,1,1,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="BtnMIDIchMinus_Click" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -82,7 +82,7 @@
                         </TextBlock>
                     </Border>
                     <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
-                        <Button x:Name="btnMIDIchPlus" Foreground="White" Content="u"  Width="Auto" Height="Auto" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnMIDIchPlus_Click" >
+                        <Button x:Name="btnMIDIchPlus" Foreground="White" Content="u"  Width="Auto" Height="Auto" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="BtnMIDIchPlus_Click" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -92,23 +92,24 @@
 
                 <Grid Grid.Row="2" Margin="5,5,5,5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width = "1*"/>
-                        <ColumnDefinition Width = "1*"/>
-                        <ColumnDefinition Width = "1*"/>
+                        <ColumnDefinition Width = "0*"/>
+                        <ColumnDefinition Width="58*"/>
+                        <ColumnDefinition Width = "57*"/>
+                        <ColumnDefinition Width = "57*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Visibility="Visible" Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
-                        <Button Name="btnSensorPortMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnSensorPortMinus_Click" >
+                    <Border Visibility="Visible" Background="Black" Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,2,0.6,2.985" Grid.ColumnSpan="2">
+                        <Button Name="btnSensorPortMinus" Foreground="White" Content="t"  Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="BtnSensorPortMinus_Click" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
                         </Button>
                     </Border>
-                    <Border Visibility="Visible" Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                    <Border Visibility="Visible" Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1.4,2,1.462,2.985">
                         <TextBlock Name="txtSensorPort" Margin="0,14,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="">
                         </TextBlock>
                     </Border>
-                    <Border Visibility="Visible"  Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
-                        <Button Name="btnSensorPortPlus" Foreground="White" Content="u" Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="btnSensorPortPlus_Click">
+                    <Border Visibility="Visible"  Background="Black" Grid.Column="3" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="0.538,2,1.323,2.985">
+                        <Button Name="btnSensorPortPlus" Foreground="White" Content="u" Width="Auto" Height="Auto" Margin="0,0,0,0" FontFamily="Wingdings 3" FontSize="20" IsCancel="True" Click="BtnSensorPortPlus_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -122,7 +123,7 @@
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <ComboBox x:Name="lstNoteChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstNoteChanger_SelectionChanged" Background="Black" Foreground="Black">
+                    <ComboBox x:Name="lstNoteChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstNoteChanger_SelectionChanged" Background="Black" Foreground="Black">
                         <ComboBoxItem Name="C">
                             C
                         </ComboBoxItem>
@@ -208,7 +209,7 @@
                         <TextBlock Name="falseMargin" Margin="0,5,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="Vertical">
                         </TextBlock>
                     </Border>
-                    <Border HorizontalAlignment="Stretch" Margin="0,12,4,0" Width="Auto" Height="20" BorderThickness="0" BorderBrush="White" Grid.Column="1" Grid.RowSpan="2">
+                    <Border HorizontalAlignment="Stretch" Margin="0,0,4,0" Width="Auto" Height="20" BorderThickness="0" BorderBrush="White" Grid.Column="1" Grid.RowSpan="2">
                         <!--<Border.Background>
                             <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
                         </Border.Background>-->
@@ -225,7 +226,7 @@
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <ListBox x:Name="lstLayout" Grid.Column="0" Margin="5,1,5,1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstLayout_SelectionChanged"  Background="Black" Foreground="WhiteSmoke">
+                        <ListBox x:Name="lstLayout" Grid.Column="0" Margin="5,1,5,1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstLayout_SelectionChanged"  Background="Black" Foreground="WhiteSmoke">
                             <ListBoxItem>
                                 Stradella
                             </ListBoxItem>
@@ -264,18 +265,18 @@
                             <RowDefinition Height = "1*"/>
                             <RowDefinition Height = "1*"/>
                         </Grid.RowDefinitions>
-                        <ComboBox Name="FirstRow" Grid.Row="0" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="SecondRow" Grid.Row="1" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="ThirdRow" Grid.Row="2" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="FourthRow" Grid.Row="3" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="FifthRow" Grid.Row="4" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="SixthRow" Grid.Row="5" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="SeventhRow" Grid.Row="6" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="EighthRow" Grid.Row="7" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="NinthRow" Grid.Row="8" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="TenthRow" Grid.Row="9" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <ComboBox Name="EleventhRow" Grid.Row="10" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="selectorRow_SelectionChanged"/>
-                        <Button x:Name="arbitraryStart" Grid.Row="11" Foreground="White" Content="Start"  Width="Auto" Height="Auto" Margin="0,1,1,0" FontSize="10" IsCancel="True" IsEnabled="False" Click="arbitraryStart_Click">
+                        <ComboBox Name="FirstRow" Grid.Row="0" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="SecondRow" Grid.Row="1" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="ThirdRow" Grid.Row="2" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="FourthRow" Grid.Row="3" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="FifthRow" Grid.Row="4" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="SixthRow" Grid.Row="5" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="SeventhRow" Grid.Row="6" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="EighthRow" Grid.Row="7" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="NinthRow" Grid.Row="8" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="TenthRow" Grid.Row="9" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <ComboBox Name="EleventhRow" Grid.Row="10" Width="Auto" Height="Auto" IsEnabled="False" FontSize="10" SelectionChanged="SelectorRow_SelectionChanged"/>
+                        <Button x:Name="arbitraryStart" Grid.Row="11" Foreground="White" Content="Start"  Width="Auto" Height="Auto" Margin="0,1,1,0" FontSize="10" IsCancel="True" IsEnabled="False" Click="ArbitraryStart_Click">
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/DarkWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -284,7 +285,7 @@
                 </Grid>
                 <Grid Grid.Row="7" Margin="5,1,5,1">
                     <Border Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
-                        <Button x:Name="btnCalibrate" Foreground="White" Content="Calibrate" Click="btnCalibrate_Click"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
+                        <Button x:Name="btnCalibrate" Foreground="White" Content="Calibrate" Click="BtnCalibrate_Click"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
                             <Button.Background>
                                 <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
@@ -301,7 +302,7 @@
                 <ImageBrush ImageSource="Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
             </Border.Background>
 
-            <TabControl x:Name="tabSolo" Margin="-6,-6,6,6" SelectionChanged="tabSolo_SelectionChanged">
+            <TabControl x:Name="tabSolo" Margin="-6,-6,6,6" SelectionChanged="TabSolo_SelectionChanged">
                 <TabItem x:Name="tabNetychords"  Header="Netychords" Visibility="Collapsed">
                     <Grid>
                         <Grid.Background>
@@ -312,7 +313,7 @@
                             <RowDefinition Height="12*"/>
                         </Grid.RowDefinitions>
                         <ScrollViewer x:Name="scrlNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="0">
-                            <Canvas x:Name="canvasNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="2000" Height="2000" MouseMove="canvasNetytchords_MouseMove">
+                            <Canvas x:Name="canvasNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="2000" Height="2000" MouseMove="CanvasNetytchords_MouseMove">
                                 <Canvas.Background>
                                     <SolidColorBrush Color="Black" Opacity="0"/>
                                 </Canvas.Background>

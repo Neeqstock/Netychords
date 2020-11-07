@@ -558,7 +558,6 @@ namespace Netytar
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
                             default:
-                                thisChordType = ChordType.Major;
                                 break;
                         }
                     }
@@ -697,7 +696,6 @@ namespace Netytar
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
                             default:
-                                thisChordType = ChordType.Major;
                                 break;
                         }
                     }
@@ -921,7 +919,6 @@ namespace Netytar
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
                             default:
-                                thisChordType = ChordType.Major;
                                 break;
                         }
                     }
@@ -1118,7 +1115,6 @@ namespace Netytar
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
                             default:
-                                thisChordType = ChordType.Major;
                                 break;
                         }
                     }
@@ -1225,7 +1221,7 @@ namespace Netytar
             
         }
 
-        private void disposeImage(object sender, RoutedEventArgs e)
+        private void DisposeImage(object sender, RoutedEventArgs e)
         {
             canvas.Children.Remove(((Image)sender));
         }
@@ -1239,19 +1235,19 @@ namespace Netytar
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x00, 0x00));
                     break;
                 case "C#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x63, 0x47));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xa9, 0x8a, 0x4d));
                     break;
                 case "D":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xA5, 0x00));
                     break;
                 case "D#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xD7, 0x00));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xD7, 0x00));//
                     break;
                 case "E":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xFF, 0x00));
                     break;
                 case "F":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x90, 0xEE, 0x90));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x90, 0xEE, 0x90));//
                     break;
                 case "F#":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0xFF, 0x00));
@@ -1260,16 +1256,16 @@ namespace Netytar
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0xFF, 0xFF));
                     break;
                 case "G#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xF0, 0x00, 0xFF));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x00, 0xFF));
                     break;
                 case "A":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0x00, 0xFF));
                     break;
                 case "A#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xC0, 0xCB));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xC0, 0xCB));//
                     break;
                 case "B":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x00, 0xFF));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x6F, 0x00, 0xFF));
                     break;
                 default:
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xFF, 0xFF));

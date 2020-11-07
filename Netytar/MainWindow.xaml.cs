@@ -18,11 +18,14 @@ namespace Netytar
     { 
         private readonly SolidColorBrush ActiveBrush = new SolidColorBrush(Colors.LightGreen);
         private readonly SolidColorBrush WarningBrush = new SolidColorBrush(Colors.DarkRed);
-        private readonly SolidColorBrush BlankBrush = new SolidColorBrush(Colors.Black);
+        //private readonly SolidColorBrush BlankBrush = new SolidColorBrush(Colors.Black);
 
         private bool netychordsStarted = false;
         private bool calibrateStarted = false;
         private bool calibrateEnded = false;
+        private bool clickedButton = false;
+        DateTime clicked;
+
 
         private int sensorPort = 1;
         public int SensorPort
@@ -61,7 +64,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
-                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.rootNote.ToStandardString(); 
+                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName(); 
             }
             
             if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
@@ -73,6 +76,20 @@ namespace Netytar
                     canvasNetychords.Children.Clear();
                     Rack.NetychordsDMIBox.calibrateEnded = true;
                     Rack.NetychordsDMIBox.CalibrationHeadSensor();
+                }
+            }
+
+            if (clickedButton)
+            {
+                TimeSpan limit = new TimeSpan(0, 0, 0, 0, 30);
+                TimeSpan button = DateTime.Now.Subtract(clicked);
+                if (button >= limit)
+                {
+                    btnMIDIchMinus.IsEnabled = true;
+                    btnMIDIchPlus.IsEnabled = true;
+                    btnSensorPortMinus.IsEnabled = true;
+                    btnSensorPortPlus.IsEnabled = true;
+                    clickedButton = false;
                 }
             }
         }
@@ -139,23 +156,28 @@ namespace Netytar
             }
         }
 
-        private void btnMIDIchMinus_Click(object sender, RoutedEventArgs e)
+        private void BtnMIDIchMinus_Click(object sender, RoutedEventArgs e)
         {
             if (netychordsStarted)
             {
                 Rack.NetychordsDMIBox.MidiModule.OutDevice--;
                 lblMIDIch.Text = "MP" + Rack.NetychordsDMIBox.MidiModule.OutDevice.ToString();
-
+                clicked = DateTime.Now;
+                clickedButton = true;
+                btnMIDIchMinus.IsEnabled = false;
                 CheckMidiPort();
             }
         }
 
-        private void btnMIDIchPlus_Click(object sender, RoutedEventArgs e)
+        private void BtnMIDIchPlus_Click(object sender, RoutedEventArgs e)
         {
             if (netychordsStarted)
             {
                 Rack.NetychordsDMIBox.MidiModule.OutDevice++;
                 lblMIDIch.Text = "MP" + Rack.NetychordsDMIBox.MidiModule.OutDevice.ToString();
+                clicked = DateTime.Now;
+                clickedButton = true;
+                btnMIDIchPlus.IsEnabled = false;
 
                 CheckMidiPort();
             }
@@ -180,15 +202,16 @@ namespace Netytar
                 
             }
         }
+
         // [Corrente]
 
-        private void tabSolo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TabSolo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
 
 
-        private void canvasNetytchords_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void CanvasNetytchords_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             /*if (true == false)
             {
@@ -199,7 +222,7 @@ namespace Netytar
             }*/
         }
 
-        private void btnExit_Click(object sender, RoutedEventArgs e)
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
@@ -217,7 +240,7 @@ namespace Netytar
             }
         }
 
-        private void lstNoteChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LstNoteChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Rack.NetychordsDMIBox.firstNote = ((ListBoxItem)lstNoteChanger.SelectedItem).Content.ToString();
             if (netychordsStarted)
@@ -240,7 +263,7 @@ namespace Netytar
             }
         }
 
-        private void lstLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void LstLayout_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Rack.NetychordsDMIBox.layout = ((ListBoxItem)lstLayout.SelectedItem).Content.ToString();
 
@@ -286,7 +309,7 @@ namespace Netytar
         }
 
 
-        private void selectorRow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void SelectorRow_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             List<ComboBox> boxes = new List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
             for (int i = 0; i < 11; i++)
@@ -302,7 +325,7 @@ namespace Netytar
             if (arbitraryStart.IsEnabled == false) arbitraryStart.IsEnabled = true;
         }
 
-        private void arbitraryStart_Click(object sender, RoutedEventArgs e)
+        private void ArbitraryStart_Click(object sender, RoutedEventArgs e)
         {
             List<ComboBox> boxes = new List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
             Rack.NetychordsDMIBox.arbitraryLines.Clear();
@@ -329,7 +352,7 @@ namespace Netytar
             }
         }
 
-        private void btnCalibrate_Click(object sender, RoutedEventArgs e)
+        private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
         {
             if (netychordsStarted)
             {
@@ -372,32 +395,41 @@ namespace Netytar
 
                 Rack.NetychordsDMIBox.calibrateStarted = true;
                 Rack.NetychordsDMIBox.startcalibration = DateTime.Now;
+                Rack.NetychordsDMIBox.keyboardEmulator = false;
             }
             else
             {
                 btnCalibrate.IsEnabled = false;
                 btnCalibrate.Foreground = new SolidColorBrush(Colors.Red);
+                btnStart.IsEnabled = true;
+                btnStart.Foreground = new SolidColorBrush(Colors.White);
                 btnCalibrate.Content = "Not found";
                 sensorPort = 1;
             }
 
         }
 
-        private void btnSensorPortMinus_Click(object sender, RoutedEventArgs e)
+        private void BtnSensorPortMinus_Click(object sender, RoutedEventArgs e)
         {
             if (netychordsStarted)
             {
                 SensorPort--;
                 UpdateSensorConnection();
+                clicked = DateTime.Now;
+                clickedButton = true;
+                btnSensorPortMinus.IsEnabled = false;
             }
         }
 
-        private void btnSensorPortPlus_Click(object sender, RoutedEventArgs e)
+        private void BtnSensorPortPlus_Click(object sender, RoutedEventArgs e)
         {
             if (netychordsStarted)
             {
                 SensorPort++;
                 UpdateSensorConnection();
+                clicked = DateTime.Now;
+                clickedButton = true;
+                btnSensorPortPlus.IsEnabled = false;
             }
         }
 
@@ -414,7 +446,6 @@ namespace Netytar
                 txtSensorPort.Foreground = WarningBrush;
             }
         }
-
 
         private void InitializeSensorPortText()
         {
