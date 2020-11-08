@@ -36,10 +36,11 @@ namespace Netytar.Behaviors.Sensor
                     if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw <= Rack.NetychordsDMIBox.maxYaw && Rack.NetychordsDMIBox.HeadTrackerData.Yaw >= Rack.NetychordsDMIBox.minYaw)
                     {
                         Rack.NetychordsDMIBox.startStrum = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
+                        Rack.NetychordsDMIBox.isEndedStrum = false;
                     }
-                    else if (!Rack.NetychordsDMIBox.isStartedStrum)
+                    else if (!Rack.NetychordsDMIBox.isStartedStrum && !Rack.NetychordsDMIBox.isEndedStrum)
                     {
-                        if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw < 0)
+                        if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw < Rack.NetychordsDMIBox.minYaw)
                         {
                             Rack.NetychordsDMIBox.dirStrum = NetychordsDMIBox.directionStrum.Left;
                             Rack.NetychordsDMIBox.startingTime = DateTime.Now;
@@ -47,7 +48,7 @@ namespace Netytar.Behaviors.Sensor
                             Rack.NetychordsDMIBox.isEndedStrum = false;
                             lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
                         }
-                        else if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw > 0)
+                        else if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw > Rack.NetychordsDMIBox.maxYaw)
                         {
                             Rack.NetychordsDMIBox.dirStrum = NetychordsDMIBox.directionStrum.Right;
                             Rack.NetychordsDMIBox.startingTime = DateTime.Now;
@@ -66,20 +67,10 @@ namespace Netytar.Behaviors.Sensor
                                     Rack.NetychordsDMIBox.endStrum = lastYaw;
                                     Rack.NetychordsDMIBox.endingTime = DateTime.Now;
                                     double distance = Math.Abs(Rack.NetychordsDMIBox.endStrum - Rack.NetychordsDMIBox.startStrum);
-                                    TimeSpan time = Rack.NetychordsDMIBox.endingTime - Rack.NetychordsDMIBox.startingTime;
-                                    int speed = (int)(distance / time.Seconds);
-                                    int midiVelocity;
-                                    if (speed < 1)
-                                    {
-                                        midiVelocity = 127 * speed;
-                                    }
-                                    else
-                                    {
-                                        midiVelocity = 127 * (speed + 90) / (speed + 100);
-                                    }
+                                    int midiVelocity = (int)(40 + 1.4*distance);
                                     Rack.NetychordsDMIBox.isEndedStrum = true;
                                     Rack.NetychordsDMIBox.isStartedStrum = false;
-                                    //Rack.NetychordsDMIBox.Velocity = 60;
+                                    Rack.NetychordsDMIBox.Velocity = midiVelocity;
                                     /*if (Rack.NetychordsDMIBox.lastChord != null && Rack.NetychordsDMIBox.lastChord != Rack.NetychordsDMIBox.Chord)
                                     {
                                         Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
@@ -90,6 +81,11 @@ namespace Netytar.Behaviors.Sensor
                                     Rack.NetychordsDMIBox.PlayChord(Rack.NetychordsDMIBox.Chord);
                                     Rack.NetychordsDMIBox.lastChord = Rack.NetychordsDMIBox.Chord;
                                 }
+                                else
+                                {
+                                    lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
+
+                                }
                                 break;
 
                             case NetychordsDMIBox.directionStrum.Right:
@@ -98,20 +94,10 @@ namespace Netytar.Behaviors.Sensor
                                     Rack.NetychordsDMIBox.endStrum = lastYaw;
                                     Rack.NetychordsDMIBox.endingTime = DateTime.Now;
                                     double distance = Math.Abs(Rack.NetychordsDMIBox.endStrum - Rack.NetychordsDMIBox.startStrum);
-                                    TimeSpan time = Rack.NetychordsDMIBox.endingTime - Rack.NetychordsDMIBox.startingTime;
-                                    int speed = (int)(distance / time.Seconds);
-                                    int midiVelocity;
-                                    if (speed < 1)
-                                    {
-                                        midiVelocity = 127 * speed;
-                                    }
-                                    else
-                                    {
-                                        midiVelocity = 127 * (speed + 90) / (speed + 100);
-                                    }
+                                    int midiVelocity = (int)(40 + 1.4 * distance);
                                     Rack.NetychordsDMIBox.isEndedStrum = true;
                                     Rack.NetychordsDMIBox.isStartedStrum = false;
-                                    //Rack.NetychordsDMIBox.Velocity = 60;
+                                    Rack.NetychordsDMIBox.Velocity = midiVelocity;
                                     //Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.NetychordsSurface.LastCheckedButton.Chord);
                                     Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
                                     Rack.NetychordsDMIBox.PlayChord(Rack.NetychordsDMIBox.Chord);
@@ -121,6 +107,12 @@ namespace Netytar.Behaviors.Sensor
                                     {
                                         Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
                                     }*/
+
+                                }
+
+                                else
+                                {
+                                    lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
 
                                 }
                                 break;

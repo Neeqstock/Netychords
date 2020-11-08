@@ -382,6 +382,6 @@
         </Border>
 
         <Label x:Name="lblRhythm" Content="Settings" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" FontFamily="Magneto" FontSize="28" Foreground="White" Height="44" Width="162"/>
-        <Label x:Name="lblSolo" Content="Chords" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" FontFamily="Magneto" FontSize="28" Foreground="White" Grid.Column="1" Height="44" Width="120"/>
+        <Label x:Name="lblSolo" Content="Netychords" HorizontalAlignment="Right" Margin="0,5,5,0" VerticalAlignment="Top" FontFamily="Magneto" FontSize="28" Foreground="White" Grid.Column="1" Height="44" Width="200"/>
     </Grid>
 </Window>
