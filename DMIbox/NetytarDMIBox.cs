@@ -12,7 +12,7 @@ namespace Netytar
     public class NetytarDMIBox : NeeqDMIs.DMIBox
     {
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
-        public KeyboardModuleWPF KeyboardModule;
+        public KeyboardModule KeyboardModule;
         public MainWindow NetytarMainWindow { get; set; }
 
         private string testString;

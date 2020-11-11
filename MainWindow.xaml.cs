@@ -1,4 +1,5 @@
-﻿using NeeqDMIs.Eyetracking.Filters;
+﻿using NeeqDMIs.Eyetracking;
+using NeeqDMIs.Eyetracking.PointFilters;
 using NeeqDMIs.Music;
 using Netytar.DMIBox;
 using Netytar.Utils;
@@ -124,7 +125,7 @@ namespace Netytar
             else
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new ExpDecayingPointFilter(0.1f));
+                Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new PointFilterMAExpDecaying(0.1f));
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
                 IDimension dimension = new DimensionInvert();
                 IColorCode colorCode = new ColorCodeStandard();

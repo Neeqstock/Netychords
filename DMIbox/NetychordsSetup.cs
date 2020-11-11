@@ -1,6 +1,6 @@
 ﻿using NeeqDMIs.ATmega;
 using NeeqDMIs.Eyetracking.Eyetribe;
-using NeeqDMIs.Eyetracking.Filters;
+using NeeqDMIs.Eyetracking;
 using NeeqDMIs.Eyetracking.Tobii;
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
@@ -10,6 +10,7 @@ using Netytar.DMIBox.KeyboardBehaviors;
 using System;
 using System.Windows.Interop;
 using Tobii.Interaction.Framework;
+using NeeqDMIs.Eyetracking.PointFilters;
 
 namespace Netytar.DMIBox
 {
@@ -24,7 +25,7 @@ namespace Netytar.DMIBox
         {
             // KEYBOARD MODULE
             IntPtr windowHandle = new WindowInteropHelper(Rack.NetychordsDMIBox.MainWindow).Handle;
-            Rack.NetychordsDMIBox.KeyboardModule = new KeyboardModuleWPF(windowHandle);
+            Rack.NetychordsDMIBox.KeyboardModule = new KeyboardModule(windowHandle);
 
             // MIDI
             Rack.NetychordsDMIBox.MidiModule = new MidiModuleNAudio(1, 1);
@@ -44,7 +45,7 @@ namespace Netytar.DMIBox
             {
                 Rack.NetychordsDMIBox.EyeTribeModule = new EyeTribeModule();
                 Rack.NetychordsDMIBox.EyeTribeModule.Start();
-                Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulator = new MouseEmulator(new NoFilter());
+                Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulator = new MouseEmulator(new PointFilterBypass());
                 Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulatorGazeMode = GazeMode.Raw;
             }
 
@@ -58,7 +59,7 @@ namespace Netytar.DMIBox
             Rack.NetychordsDMIBox.HeadTrackerModule.Behaviors.Add(new HSreadSerial());
 
             //SURFACE
-            Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new ExpDecayingPointFilter(0.1f));
+            Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new PointFilterMAExpDecaying(0.1f));
             IDimension dimension = new DimensionInvert();
             IColorCode colorCode = new ColorCodeStandard();
             IButtonsSettings buttonsSettings = new ButtonsSettingsChords();

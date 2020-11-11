@@ -43,7 +43,7 @@ namespace Netytar.Utils
 
         public string ChordName()
         {
-            string name = rootNote.ToStringNoOctave() + ChordTypeAbbreviation();
+            string name = rootNote.ToStandardString().Remove(rootNote.ToStandardString().Length - 1) + ChordTypeAbbreviation();
             return name;
         }
 

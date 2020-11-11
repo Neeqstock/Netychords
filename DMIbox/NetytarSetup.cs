@@ -1,6 +1,6 @@
 ﻿using NeeqDMIs.ATmega;
 using NeeqDMIs.Eyetracking.Eyetribe;
-using NeeqDMIs.Eyetracking.Filters;
+using NeeqDMIs.Eyetracking;
 using NeeqDMIs.Eyetracking.Tobii;
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;

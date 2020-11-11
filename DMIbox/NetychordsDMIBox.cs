@@ -19,7 +19,7 @@ namespace Netytar
     public class NetychordsDMIBox : NeeqDMIs.DMIBox
     {
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
-        public KeyboardModuleWPF KeyboardModule;
+        public KeyboardModule KeyboardModule;
         public MainWindow MainWindow { get; set; }
         public DateTime startcalibration = new DateTime(2020, 01, 01, 00, 00, 00);
 

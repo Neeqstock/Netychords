@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Netychords", "Netychords.cs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NeeqDMIs", "..\NeeqDMIs\NeeqDMIs.csproj", "{5D8787AB-3ED2-4181-98EC-658814B19AE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HANDMIsTestSuite", "..\HANDMIs_TestSuite\HANDMIsTestSuite.csproj", "{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,14 +31,6 @@ Global
 		{5D8787AB-3ED2-4181-98EC-658814B19AE9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5D8787AB-3ED2-4181-98EC-658814B19AE9}.Release|x86.ActiveCfg = Release|Any CPU
 		{5D8787AB-3ED2-4181-98EC-658814B19AE9}.Release|x86.Build.0 = Release|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Debug|x86.Build.0 = Debug|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Release|x86.ActiveCfg = Release|Any CPU
-		{4F765F73-79FC-415F-81E5-A6CBC8D9A11E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

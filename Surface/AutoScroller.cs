@@ -1,5 +1,6 @@
 ﻿using MicroLibrary;
-using NeeqDMIs.Eyetracking.Filters;
+using NeeqDMIs.Eyetracking;
+using NeeqDMIs.Eyetracking.PointFilters;
 using System;
 using System.Drawing;
 using System.Windows.Controls;

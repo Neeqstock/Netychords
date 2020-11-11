@@ -1229,7 +1229,8 @@ namespace Netytar
 
         private void NoteToColor(NetychordsButton button)
         {
-            switch (actualChord.rootNote.ToStringNoOctave())
+            string n = actualChord.rootNote.ToStandardString();
+            switch (n.Remove(n.Length - 1))
             {
                 case "C":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x00, 0x00));
