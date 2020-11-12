@@ -150,18 +150,54 @@ namespace Netytar
                 starterNote = "C";
             }
 
-            if (Rack.NetychordsDMIBox.MainWindow.lstOctaveChanger.SelectedItem != null)
+            if (true)//Rack.NetychordsDMIBox.MainWindow.lstOctaveChanger.SelectedItem != null)
             {
-                starterOctave = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstOctaveChanger.SelectedItem).Content.ToString();
-                nCols = 96 - 12 * Int32.Parse(starterOctave);
+                //starterOctave = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstOctaveChanger.SelectedItem).Content.ToString();
+               // nCols = 96 - 12 * Int32.Parse(starterOctave);
+                nCols = 12;
+
             }
             else
             {
-                nCols = 96 - 12 * 4;
-                starterOctave = Rack.NetychordsDMIBox.octaveNumber;
+                //nCols = 96 - 12 * 4;
+                nCols = 12;
+                //starterOctave = Rack.NetychordsDMIBox.octaveNumber;
             }
 
-            firstChord = MidiChord.ChordFactory(starterNote, starterOctave, ChordType.Major);
+            /*if ((bool)Rack.NetychordsDMIBox.MainWindow.one.IsChecked)
+            {
+                starterOctave = "1";
+            }
+            else if ((bool)Rack.NetychordsDMIBox.MainWindow.two.IsChecked)
+            {
+                starterOctave = "2";
+            }
+            else if ((bool)Rack.NetychordsDMIBox.MainWindow.three.IsChecked)
+            {
+                starterOctave = "3";
+            }
+            else if ((bool)Rack.NetychordsDMIBox.MainWindow.four.IsChecked)
+            {
+                starterOctave = "4";
+            }
+            else if ((bool)Rack.NetychordsDMIBox.MainWindow.five.IsChecked)
+            {
+                starterOctave = "5";
+            }
+            else if ((bool)Rack.NetychordsDMIBox.MainWindow.six.IsChecked)
+            {
+                starterOctave = "6";
+            }
+            else if ((bool)Rack.NetychordsDMIBox.MainWindow.seven.IsChecked)
+            {
+                starterOctave = "7";
+            }
+            else
+            {
+                starterOctave = "4";
+            }*/
+
+            firstChord = MidiChord.ChordFactory(starterNote, "2", ChordType.Major);
             int halfSpacer = horizontalSpacer / 2;
             int spacer = horizontalSpacer;
             int firstSpacer = 0;
@@ -221,14 +257,19 @@ namespace Netytar
                         {
                             isPairRow = true;
                         }
+                        verticalSpacer = -70;
+                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
+
                     }
                     else
                     {
                         spacer = 90;
                         firstSpacer = 0;
                         isPairRow = true;
+                        verticalSpacer = 90;
+                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
-                    
+
                     #endregion
 
                     NetychordsButtons[row, col] = new NetychordsButton(this);
@@ -1135,7 +1176,16 @@ namespace Netytar
                     }                    
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y = startPositionY + verticalSpacer * row;
+                    int Y;
+                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    {
+                        Y = startPositionY + verticalSpacer * row;
+                    }
+                    else
+                    {
+                        Y = startPositionY - verticalSpacer * row;
+
+                    }
                     Canvas.SetLeft(NetychordsButtons[row, col], X);
                     Canvas.SetTop(NetychordsButtons[row, col], Y);
 

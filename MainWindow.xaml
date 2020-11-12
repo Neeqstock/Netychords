@@ -121,7 +121,9 @@
                 <Grid Grid.Row="3" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
+                        <!--<ColumnDefinition Width = "1*"/>-->
                         <ColumnDefinition Width = "1*"/>
+
                     </Grid.ColumnDefinitions>
                     <ComboBox x:Name="lstNoteChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstNoteChanger_SelectionChanged" Background="Black" Foreground="Black">
                         <ComboBoxItem Name="C">
@@ -161,7 +163,7 @@
                             B
                         </ComboBoxItem>
                     </ComboBox>
-                    <ComboBox x:Name="lstOctaveChanger" Grid.Column="1" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="Black">
+                    <!--<ComboBox x:Name="lstOctaveChanger" Grid.Column="1" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="Black">
                         <ComboBoxItem>
                             1
                         </ComboBoxItem>
@@ -183,6 +185,23 @@
                         <ComboBoxItem>
                             7
                         </ComboBoxItem>
+                    </ComboBox>-->
+                    <ComboBox x:Name="lstReeds" Grid.Column="2" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="Black">
+                        <CheckBox x:Name="one" Checked="one_Checked" Unchecked="one_Unchecked">
+                            1
+                        </CheckBox>
+                        <CheckBox x:Name="two" Checked="two_Checked" Unchecked="two_Unchecked">
+                            2
+                        </CheckBox>
+                        <CheckBox x:Name="three" Checked="three_Checked" Unchecked="three_Unchecked">
+                            3
+                        </CheckBox>
+                        <CheckBox x:Name="four" Checked="four_Checked" Unchecked="four_Unchecked">
+                            4
+                        </CheckBox>
+                        <CheckBox x:Name="five" Checked="five_Checked" Unchecked="five_Unchecked">
+                            5
+                        </CheckBox>
                     </ComboBox>
                 </Grid>
                 <Grid Grid.Row="4" Margin="5,1,5,1">
@@ -290,6 +309,15 @@
                                 <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
                             </Button.Background>
                         </Button>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="8" Margin="5,1,5,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
+                        <TextBlock Name="lblYaw" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="">
+                        </TextBlock>
                     </Border>
                 </Grid>
             </Grid>

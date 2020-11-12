@@ -62,12 +62,14 @@ namespace Netytar
         /// </summary>
         private void UpdateWindow(object sender, EventArgs e)
         {
+            
             if (netychordsStarted)
             {
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
-                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName(); 
+                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName();
+                //lblYaw.Text = Rack.NetychordsDMIBox.Str_HeadTrackerCalib;
             }
-            
+
             if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
             {
                 TimeSpan calibrationLimit = new TimeSpan(0,0,30);
@@ -76,6 +78,7 @@ namespace Netytar
                 {
                     canvasNetychords.Children.Clear();
                     Rack.NetychordsDMIBox.calibrateEnded = true;
+                    Rack.NetychordsDMIBox.HeadTrackerData.SetDeltaForAll();
                     Rack.NetychordsDMIBox.CalibrationHeadSensor();
                 }
             }
@@ -230,7 +233,7 @@ namespace Netytar
 
         private void LstOctaveChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Rack.NetychordsDMIBox.octaveNumber = ((ListBoxItem)lstOctaveChanger.SelectedItem).Content.ToString();
+            /*Rack.NetychordsDMIBox.octaveNumber = ((ListBoxItem)lstOctaveChanger.SelectedItem).Content.ToString();
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
@@ -238,7 +241,7 @@ namespace Netytar
                 //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
-            }
+            }*/
         }
 
         private void LstNoteChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -454,5 +457,142 @@ namespace Netytar
             txtSensorPort.Text = Rack.NetychordsDMIBox.HeadTrackerModule.PortPrefix + SensorPort;
             UpdateSensorConnection();
         }
+
+        private void one_Checked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Add(0);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+            lblYaw.Text = Rack.NetychordsDMIBox.reeds[0].ToString();
+        }
+
+        private void two_Checked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Add(1);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+        }
+
+        private void three_Checked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Add(2); 
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+
+        private void four_Checked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Add(3);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+
+        private void five_Checked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Add(4);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+
+
+        private void one_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Remove(0);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+        private void two_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Remove(1);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+        private void three_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Remove(2);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+        private void four_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Remove(3);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+        private void five_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.reeds.Remove(4);
+            if (netychordsStarted)
+            {
+                canvasNetychords.Children.Clear();
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
+                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+            }
+
+        }
+
     }
 }

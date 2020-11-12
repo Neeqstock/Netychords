@@ -7,6 +7,7 @@ namespace HANDMIs_TestSuite.Utils
     {
         private AngleBaseChanger pitchTransf;
         private AngleBaseChanger yawTransf;
+        private AngleBaseChanger calibrationYawTransf;
         private AngleBaseChanger rollTransf;
         public double Pitch { get; set; }
         public double CalibrationYaw { get; set; }
@@ -14,6 +15,7 @@ namespace HANDMIs_TestSuite.Utils
         public double Roll { get; set; }
         public double TranspPitch { get { return pitchTransf.Transform(Pitch); } }
         public double TranspYaw { get { return yawTransf.Transform(Yaw); } }
+        public double TranspCalibrationYaw { get { return calibrationYawTransf.Transform(CalibrationYaw); } }
         public double TranspRoll { get { return rollTransf.Transform(Roll); } }
         public double Velocity { get; set; }
 
@@ -21,6 +23,7 @@ namespace HANDMIs_TestSuite.Utils
         {
             pitchTransf = new AngleBaseChanger();
             yawTransf = new AngleBaseChanger();
+            calibrationYawTransf = new AngleBaseChanger();
             rollTransf = new AngleBaseChanger();
         }
 
@@ -33,6 +36,7 @@ namespace HANDMIs_TestSuite.Utils
         {
             pitchTransf.Delta = Pitch;
             yawTransf.Delta = Yaw;
+            calibrationYawTransf.Delta = CalibrationYaw;
             rollTransf.Delta = Roll;
             //MessageBox.Show(yawTransf.Delta.ToString(CultureInfo.InvariantCulture) + "\n" + yawTransf.getDeltaBar());
         }

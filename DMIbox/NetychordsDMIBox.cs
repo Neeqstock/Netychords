@@ -32,6 +32,7 @@ namespace Netytar
         private int velocity = 127;
         private int pressure = 127;
         private int modulation = 0;
+        public List<int> reeds = new List<int>();
 
         private MidiChord chord = new MidiChord(MidiNotes.C4, ChordType.Major);
         public MidiChord lastChord;
@@ -164,16 +165,61 @@ namespace Netytar
 
         public void StopChord(MidiChord chord)
         {
-            for (int i = 0; i < chord.interval.Count; i++)
+            /*for (int i = 0; i < chord.interval.Count; i++)
             {
                 MidiModule.StopNote((int)chord.rootNote + chord.interval[i]);
+            }*/
+
+            for (int i = 12; i < 128; i++)
+            {
+                MidiModule.StopNote(i);
             }
         }
         public void PlayChord(MidiChord chord)
         {
+            List<int> notes = new List<int>();
+
             for (int i = 0; i < chord.interval.Count; i++)
             {
-                MidiModule.PlayNote((int)chord.rootNote + chord.interval[i], velocity);
+                int thisNote = (int)chord.rootNote + chord.interval[i];
+
+                for (int j=0; j<5; j++)
+                {
+                    int minInterval = 36 + j * 12;
+                    int maxInterval = 47 + j * 12;
+
+                    if (Rack.NetychordsDMIBox.reeds.Contains(j))
+                    {
+                        if (thisNote + (j+1)*12 <= maxInterval && thisNote + (j+1)*12 >= minInterval)
+                        {
+                            if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j+1)*12)))
+                            {
+                                notes.Add((int)chord.rootNote + chord.interval[i] + (j+1)*12);
+                            }
+                        }
+                        if (thisNote + j*12 <= maxInterval && thisNote + j*12 >= minInterval)
+                        {
+                            if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j) * 12)))
+                            {
+                                notes.Add((int)chord.rootNote + chord.interval[i] + j*12);
+                            }
+                        }
+                        if (thisNote + (j-1)*12 <= maxInterval && thisNote + (j-1)*12 >= minInterval)
+                        {
+                            if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j - 1) * 12)))
+                            {
+                                notes.Add((int)chord.rootNote + chord.interval[i] + (j-1)*12);
+                            }
+                        }
+                    }
+                }
+                //MidiModule.PlayNote((int)chord.rootNote + chord.interval[i], velocity);
+            }
+
+
+            for (int i = 0; i < notes.Count; i++)
+            {
+                MidiModule.PlayNote(notes[i], velocity);
             }
             
         }
@@ -227,7 +273,7 @@ namespace Netytar
             }
         }
 
-        public List<TargetDistance> TargetDistances = new List<TargetDistance>()
+        /*public List<TargetDistance> TargetDistances = new List<TargetDistance>()
         {
             new TargetDistance(300),
             new TargetDistance(300),
@@ -237,7 +283,7 @@ namespace Netytar
             new TargetDistance(700),
             new TargetDistance(900),
             new TargetDistance(900),
-        };
+        };*/
 
         public bool isCalibrated = false;
         public double minYaw;
@@ -248,8 +294,8 @@ namespace Netytar
 
             if (Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded && !isCalibrated)
             {
-                minYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw - 7;
-                maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw + 7;
+                minYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw - 5;
+                maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw + 5;
                 isCalibrated = true;
             }
         }
@@ -269,3 +315,4 @@ namespace Netytar
         #endregion
     }
 }
+    

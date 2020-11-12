@@ -77,7 +77,10 @@ namespace Netytar.Behaviors.Sensor
                                     }*/
                                     //Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.NetychordsSurface.LastCheckedButton.Chord);
 
-                                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                                    if (Rack.NetychordsDMIBox.lastChord != null)
+                                    {
+                                        Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                                    }
                                     Rack.NetychordsDMIBox.PlayChord(Rack.NetychordsDMIBox.Chord);
                                     Rack.NetychordsDMIBox.lastChord = Rack.NetychordsDMIBox.Chord;
                                 }
@@ -99,7 +102,10 @@ namespace Netytar.Behaviors.Sensor
                                     Rack.NetychordsDMIBox.isStartedStrum = false;
                                     Rack.NetychordsDMIBox.Velocity = midiVelocity;
                                     //Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.NetychordsSurface.LastCheckedButton.Chord);
-                                    Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                                    if (Rack.NetychordsDMIBox.lastChord != null)
+                                    {
+                                        Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.lastChord);
+                                    }
                                     Rack.NetychordsDMIBox.PlayChord(Rack.NetychordsDMIBox.Chord);
                                     Rack.NetychordsDMIBox.lastChord = Rack.NetychordsDMIBox.Chord;
                                     /*
@@ -120,8 +126,8 @@ namespace Netytar.Behaviors.Sensor
                     }
                 }
             }
-            Rack.NetychordsDMIBox.Str_HeadTrackerRaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.Pitch + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.Roll + "\n";
-            Rack.NetychordsDMIBox.Str_HeadTrackerCalib = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.TranspPitch + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.TranspRoll + "\n";
+            Rack.NetychordsDMIBox.Str_HeadTrackerRaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw + "";// + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.Pitch + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.Roll + "\n";
+            Rack.NetychordsDMIBox.Str_HeadTrackerCalib = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw + "";// "\n" + Rack.NetychordsDMIBox.HeadTrackerData.TranspPitch + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.TranspRoll + "\n";
         }
 
     }
