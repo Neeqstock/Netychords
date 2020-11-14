@@ -26,6 +26,7 @@ namespace Netytar
         private bool calibrateEnded = false;
         private bool clickedButton = false;
         DateTime clicked;
+        DateTime centering = new DateTime(2020,01,01,0,0,0);
 
 
         private int sensorPort = 1;
@@ -67,19 +68,19 @@ namespace Netytar
             {
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
                 lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName();
-                //lblYaw.Text = Rack.NetychordsDMIBox.Str_HeadTrackerCalib;
+                lblYaw.Text = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw.ToString();
             }
 
             if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
             {
-                TimeSpan calibrationLimit = new TimeSpan(0,0,30);
+                TimeSpan calibrationLimit = new TimeSpan(0,0,45);
                 TimeSpan calibration = DateTime.Now.Subtract(Rack.NetychordsDMIBox.startcalibration);
                 if (calibration >= calibrationLimit)
                 {
-                    canvasNetychords.Children.Clear();
-                    Rack.NetychordsDMIBox.calibrateEnded = true;
-                    Rack.NetychordsDMIBox.HeadTrackerData.SetDeltaForAll();
-                    Rack.NetychordsDMIBox.CalibrationHeadSensor();
+                    //Rack.NetychordsDMIBox.CalibrationSurface.DrawButtons();
+                    btnCalibrate.Foreground = new SolidColorBrush(Colors.Green);
+                    btnCalibrate.Content = "Sensor ready!";
+
                 }
             }
 
@@ -386,7 +387,10 @@ namespace Netytar
 
             if (finded)
             {
-                Rack.NetychordsDMIBox.CalibrationSurface.DrawButtons();
+
+                btnCalibrate.Foreground = new SolidColorBrush(Colors.Green);
+                btnCalibrate.Content = "Please wait";
+                //Rack.NetychordsDMIBox.CalibrationSurface.DrawButtons();
 
                 InitializeSensorPortText();
 
@@ -594,5 +598,13 @@ namespace Netytar
 
         }
 
+        private void BtnCenter_Click(object sender, RoutedEventArgs e)
+        {
+            Rack.NetychordsDMIBox.calibrateEnded = true;
+            Rack.NetychordsDMIBox.HeadTrackerData.SetDeltaForAll();
+            Rack.NetychordsDMIBox.CalibrationHeadSensor();
+            btnCalibrate.Content = "Calibrated";
+
+        }
     }
 }

@@ -33,28 +33,28 @@ namespace Netytar.Behaviors.Sensor
 
                 if (Rack.NetychordsDMIBox.isCalibrated && Rack.NetychordsDMIBox.MainWindow.NetychordsStarted)
                 {
-                    if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw <= Rack.NetychordsDMIBox.maxYaw && Rack.NetychordsDMIBox.HeadTrackerData.Yaw >= Rack.NetychordsDMIBox.minYaw)
+                    if (Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw <= Rack.NetychordsDMIBox.maxYaw && Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw >= Rack.NetychordsDMIBox.minYaw)
                     {
-                        Rack.NetychordsDMIBox.startStrum = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
+                        Rack.NetychordsDMIBox.startStrum = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw;
                         Rack.NetychordsDMIBox.isEndedStrum = false;
                     }
                     else if (!Rack.NetychordsDMIBox.isStartedStrum && !Rack.NetychordsDMIBox.isEndedStrum)
                     {
-                        if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw < Rack.NetychordsDMIBox.minYaw)
+                        if (Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw < Rack.NetychordsDMIBox.minYaw)
                         {
                             Rack.NetychordsDMIBox.dirStrum = NetychordsDMIBox.directionStrum.Left;
                             Rack.NetychordsDMIBox.startingTime = DateTime.Now;
                             Rack.NetychordsDMIBox.isStartedStrum = true;
                             Rack.NetychordsDMIBox.isEndedStrum = false;
-                            lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
+                            lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw;
                         }
-                        else if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw > Rack.NetychordsDMIBox.maxYaw)
+                        else if (Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw > Rack.NetychordsDMIBox.maxYaw)
                         {
                             Rack.NetychordsDMIBox.dirStrum = NetychordsDMIBox.directionStrum.Right;
                             Rack.NetychordsDMIBox.startingTime = DateTime.Now;
                             Rack.NetychordsDMIBox.isStartedStrum = true;
                             Rack.NetychordsDMIBox.isEndedStrum = false;
-                            lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
+                            lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw;
                         }
                     }
                     else if (!Rack.NetychordsDMIBox.isEndedStrum)
@@ -62,7 +62,7 @@ namespace Netytar.Behaviors.Sensor
                         switch (Rack.NetychordsDMIBox.dirStrum)
                         {
                             case NetychordsDMIBox.directionStrum.Left:
-                                if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw > lastYaw)
+                                if (Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw > lastYaw)
                                 {
                                     Rack.NetychordsDMIBox.endStrum = lastYaw;
                                     Rack.NetychordsDMIBox.endingTime = DateTime.Now;
@@ -86,13 +86,13 @@ namespace Netytar.Behaviors.Sensor
                                 }
                                 else
                                 {
-                                    lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
+                                    lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw;
 
                                 }
                                 break;
 
                             case NetychordsDMIBox.directionStrum.Right:
-                                if (Rack.NetychordsDMIBox.HeadTrackerData.Yaw < lastYaw)
+                                if (Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw < lastYaw)
                                 {
                                     Rack.NetychordsDMIBox.endStrum = lastYaw;
                                     Rack.NetychordsDMIBox.endingTime = DateTime.Now;
@@ -118,7 +118,7 @@ namespace Netytar.Behaviors.Sensor
 
                                 else
                                 {
-                                    lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw;
+                                    lastYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw;
 
                                 }
                                 break;

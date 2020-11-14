@@ -8,6 +8,7 @@ using NeeqDMIs.Music;
 using Netytar.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 
@@ -178,6 +179,20 @@ namespace Netytar
         public void PlayChord(MidiChord chord)
         {
             List<int> notes = new List<int>();
+            int minInterval;
+            int maxInterval;
+
+            /*switch (chord.rootNote.ToStandardString().Remove(chord.rootNote.ToStandardString().Length - 1))
+            {
+                case "C":
+                    minInterval = 36;
+                    maxInterval = 47;
+                    break;
+                case "C#":
+                    minInterval = 37;
+                    maxInterval = 48;
+                    break;
+            }*/
 
             for (int i = 0; i < chord.interval.Count; i++)
             {
@@ -185,12 +200,12 @@ namespace Netytar
 
                 for (int j=0; j<5; j++)
                 {
-                    int minInterval = 36 + j * 12;
-                    int maxInterval = 47 + j * 12;
+                    minInterval = 36 + j * 12;
+                    maxInterval = 47 + j * 12;
 
                     if (Rack.NetychordsDMIBox.reeds.Contains(j))
                     {
-                        if (thisNote + (j+1)*12 <= maxInterval && thisNote + (j+1)*12 >= minInterval)
+                        if ((thisNote + (j+1)*12 <= maxInterval && thisNote + (j+1)*12 >= minInterval))
                         {
                             if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j+1)*12)))
                             {
@@ -214,6 +229,13 @@ namespace Netytar
                     }
                 }
                 //MidiModule.PlayNote((int)chord.rootNote + chord.interval[i], velocity);
+            }
+
+            if(!(Rack.NetychordsDMIBox.reeds.Count == 0))
+            {
+
+                int min = Rack.NetychordsDMIBox.reeds.Min();
+                notes.Add((int)chord.rootNote + (min - 1) * 12);
             }
 
 
@@ -294,8 +316,8 @@ namespace Netytar
 
             if (Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded && !isCalibrated)
             {
-                minYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw - 5;
-                maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw + 5;
+                minYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspCalibrationYaw - 8;
+                maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspCalibrationYaw + 8;
                 isCalibrated = true;
             }
         }
