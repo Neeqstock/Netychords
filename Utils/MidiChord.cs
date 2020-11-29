@@ -54,13 +54,16 @@ namespace Netytar.Utils
 
             if (type == ChordType.Major) { temp.Add(4); temp.Add(7); };
             if (type == ChordType.Minor) { temp.Add(3); temp.Add(7); };
+            if (type == ChordType.MajorSixth) { temp.Add(4); temp.Add(7); temp.Add(9); };
+            if (type == ChordType.MinorSixth) { temp.Add(3); temp.Add(7); temp.Add(9); };
+            if (type == ChordType.SemiDiminished) { temp.Add(3); temp.Add(6); temp.Add(10); };
             if (type == ChordType.MajorSeventh) { temp.Add(4); temp.Add(7); temp.Add(11); };
             if (type == ChordType.MinorSeventh) { temp.Add(3); temp.Add(7); temp.Add(10); };
             if (type == ChordType.DominantSeventh) { temp.Add(4); temp.Add(7); temp.Add(10); };
             if (type == ChordType.DiminishedSeventh) { temp.Add(3); temp.Add(6); temp.Add(9); };
             if (type == ChordType.Sus2) { temp.Add(2); temp.Add(7); };
             if (type == ChordType.Sus4) { temp.Add(5); temp.Add(7); };
-            if (type == ChordType.Augmented) { temp.Add(4); temp.Add(8); };
+            /*if (type == ChordType.Augmented) { temp.Add(4); temp.Add(8); };*/
             if (type == ChordType.DominantNinth) { temp.Add(4); temp.Add(7); temp.Add(14); };
             if (type == ChordType.DominantEleventh) { temp.Add(4); temp.Add(7); temp.Add(14); temp.Add(17); };
 
@@ -88,9 +91,9 @@ namespace Netytar.Utils
                 case ChordType.Minor:
                     name = "m";
                     break;
-                case ChordType.Augmented:
+                /*case ChordType.Augmented:
                     name = "aug";
-                    break;
+                    break;*/
                 case ChordType.DiminishedSeventh:
                     name = "dim7";
                     break;
@@ -114,6 +117,15 @@ namespace Netytar.Utils
                     break;
                 case ChordType.Sus4:
                     name = "sus4";
+                    break;
+                case ChordType.MajorSixth:
+                    name = "6";
+                    break;
+                case ChordType.MinorSixth:
+                    name = "m6";
+                    break;
+                case ChordType.SemiDiminished:
+                    name = "m7b5";
                     break;
                 default:
                     name = "";
@@ -181,8 +193,11 @@ namespace Netytar.Utils
         DiminishedSeventh,
         Sus2,//
         Sus4,//
-        Augmented,
+        //Augmented,
         DominantNinth,
         DominantEleventh,
+        SemiDiminished,
+        MajorSixth,
+        MinorSixth
     };
 }

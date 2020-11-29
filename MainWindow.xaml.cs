@@ -304,7 +304,8 @@ namespace Netytar
             System.Collections.Generic.List<ComboBox> boxes = new System.Collections.Generic.List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
             for (int i = 0; i < 11; i++)
             {
-                for (int j=0; j < 11; j++)
+                boxes[i].Items.Clear();
+                for (int j=0; j < 13; j++)
                 {
                     boxes[i].Items.Add(((ChordType)j).ToString());
                 }

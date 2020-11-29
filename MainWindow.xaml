@@ -235,7 +235,7 @@
                         <Slider Name="Margins" Maximum="1" Minimum="0" TickFrequency="1" TickPlacement="None" ValueChanged="Margins_ValueChanged" Value="1"/>
                     </Border>
                     <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="0,0,0,0">
-                        <TextBlock Name="trueMargin" Margin="0,5,0,0" Background="Black" Foreground="LightGreen" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="Diagonal">
+                        <TextBlock Name="trueMargin" Margin="0,5,0,0" Background="Black" Foreground="LightGreen" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="Grid">
                         </TextBlock>
                     </Border>
                 </Grid>
@@ -250,7 +250,7 @@
                                 Stradella
                             </ListBoxItem>
                             <ListBoxItem>
-                                Fifth circle
+                                Circle fifths
                             </ListBoxItem>
                             <ListBoxItem>
                                 Arbitrary
@@ -264,9 +264,9 @@
                             <ListBoxItem>
                                 Jazz
                             </ListBoxItem>
-                            <ListBoxItem>
+                            <!--<ListBoxItem>
                                 Classical
-                            </ListBoxItem>
+                            </ListBoxItem>-->
                         </ListBox>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -311,16 +311,19 @@
                         </Button>
                     </Border>
                 </Grid>
-                <Grid Grid.Row="8" Margin="5,1,5,1">
+                <Grid Grid.Row="8" Margin="5,5,5,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnCentering" Foreground="White" Content="Center" Click="BtnCenter_Click"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
-                        <Button.Background>
-                            <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
-                        </Button.Background>
-                    </Button>
+
+                    <Border Grid.Column="0" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
+                        <Button x:Name="btnCentering" Foreground="White" Content="Center" Click="BtnCenter_Click"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
+                            <Button.Background>
+                                <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
+                            </Button.Background>
+                        </Button>
+                    </Border>
                     <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="50" Margin="1,1,1,1">
                         <TextBlock Name="lblYaw" Margin="0,10,0,0" Background="Black" Foreground="LightCoral" FontFamily="Digital-7 Italic" FontSize="25" TextAlignment="Center" Text="">
                         </TextBlock>
