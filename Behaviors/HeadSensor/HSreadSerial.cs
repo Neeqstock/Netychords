@@ -66,7 +66,7 @@ namespace Netytar.Behaviors.Sensor
                                 {
                                     Rack.NetychordsDMIBox.endStrum = lastYaw;
                                     Rack.NetychordsDMIBox.endingTime = DateTime.Now;
-                                    double distance = Math.Abs(Rack.NetychordsDMIBox.endStrum - Rack.NetychordsDMIBox.startStrum);
+                                    double distance = Math.Abs(Rack.NetychordsDMIBox.endStrum - Rack.NetychordsDMIBox.minYaw);
                                     int midiVelocity = (int)(40 + 1.4*distance);
                                     Rack.NetychordsDMIBox.isEndedStrum = true;
                                     Rack.NetychordsDMIBox.isStartedStrum = false;
@@ -96,7 +96,7 @@ namespace Netytar.Behaviors.Sensor
                                 {
                                     Rack.NetychordsDMIBox.endStrum = lastYaw;
                                     Rack.NetychordsDMIBox.endingTime = DateTime.Now;
-                                    double distance = Math.Abs(Rack.NetychordsDMIBox.endStrum - Rack.NetychordsDMIBox.startStrum);
+                                    double distance = Math.Abs(Rack.NetychordsDMIBox.endStrum - Rack.NetychordsDMIBox.maxYaw);
                                     int midiVelocity = (int)(40 + 1.4 * distance);
                                     Rack.NetychordsDMIBox.isEndedStrum = true;
                                     Rack.NetychordsDMIBox.isStartedStrum = false;
