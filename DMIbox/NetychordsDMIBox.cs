@@ -348,9 +348,11 @@ namespace Netytar
                 {
                     startStrum = HeadTrackerData.TranspYaw;
                     isEndedStrum = false;
+                    inDeadZone = true;
                 }
                 else if (!isStartedStrum && !isEndedStrum)
                 {
+                    inDeadZone = false;
                     if (HeadTrackerData.TranspYaw < minYaw)
                     {
                         dirStrum = NetychordsDMIBox.directionStrum.Left;
