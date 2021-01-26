@@ -22,8 +22,8 @@ namespace Netytar
         //private readonly SolidColorBrush BlankBrush = new SolidColorBrush(Colors.Black);
 
         private bool netychordsStarted = false;
-        private bool calibrateStarted = false;
-        private bool calibrateEnded = false;
+        /*private bool calibrateStarted = false;
+        private bool calibrateEnded = false;*/
         private bool clickedButton = false;
         DateTime clicked;
         DateTime centering = new DateTime(2020,01,01,0,0,0);
@@ -71,7 +71,7 @@ namespace Netytar
                 lblYaw.Text = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw.ToString();
             }
 
-            if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
+            /*if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
             {
                 TimeSpan calibrationLimit = new TimeSpan(0,0,45);
                 TimeSpan calibration = DateTime.Now.Subtract(Rack.NetychordsDMIBox.startcalibration);
@@ -82,7 +82,7 @@ namespace Netytar
                     btnCalibrate.Content = "Sensor ready!";
 
                 }
-            }
+            }*/
 
             if (clickedButton)
             {
@@ -104,10 +104,10 @@ namespace Netytar
         /// </summary>
         private void StartNetytar(object sender, RoutedEventArgs e)
         {
-            if (Rack.NetychordsDMIBox.calibrateStarted)
+            /*if (Rack.NetychordsDMIBox.calibrateStarted)
             {
                 canvasNetychords.Children.Clear();
-            }
+            }*/
             if (!netychordsStarted)
             {
                 // Launches the Setup class
@@ -117,7 +117,7 @@ namespace Netytar
                 // Changes the aspect of the Start button
                 btnStart.IsEnabled = false;
                 btnStart.Foreground = new SolidColorBrush(Colors.Black);
-                Rack.NetychordsDMIBox.startcalibration = DateTime.Now;
+                /*Rack.NetychordsDMIBox.startcalibration = DateTime.Now;*/
                 // Checks the selected MIDI port is available
                 CheckMidiPort();
                 InitializeSensorPortText();
@@ -134,6 +134,7 @@ namespace Netytar
                 IDimension dimension = new DimensionInvert();
                 IColorCode colorCode = new ColorCodeStandard();
                 IButtonsSettings buttonsSettings = new ButtonsSettingsChords();
+                
 
                 NetychordsSurfaceDrawModes drawMode = NetychordsSurfaceDrawModes.NoLines;
                 Rack.NetychordsDMIBox.NetychordsSurface = new NetychordsSurface(Rack.NetychordsDMIBox.MainWindow.canvasNetychords, dimension, colorCode, buttonsSettings, drawMode);
@@ -358,7 +359,7 @@ namespace Netytar
             }
         }
 
-        private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
+        /*private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
         {
             if (netychordsStarted)
             {
@@ -416,7 +417,7 @@ namespace Netytar
                 sensorPort = 1;
             }
 
-        }
+        }*/
 
         private void BtnSensorPortMinus_Click(object sender, RoutedEventArgs e)
         {
@@ -601,10 +602,10 @@ namespace Netytar
 
         private void BtnCenter_Click(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.calibrateEnded = true;
+            /*Rack.NetychordsDMIBox.calibrateEnded = true;*/
             Rack.NetychordsDMIBox.HeadTrackerData.SetDeltaForAll();
             Rack.NetychordsDMIBox.CalibrationHeadSensor();
-            btnCalibrate.Content = "Calibrated";
+            /*btnCalibrate.Content = "Calibrated";*/
 
         }
     }

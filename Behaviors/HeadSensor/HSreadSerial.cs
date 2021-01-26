@@ -9,7 +9,6 @@ namespace Netytar.Behaviors.Sensor
         private string[] split;
         private double lastYaw;
 
-
         public void ReceiveSensorRead(string val)
         {
             if (val.Contains("%"))
@@ -24,14 +23,14 @@ namespace Netytar.Behaviors.Sensor
                 split = val.Split('!');
 
                 Rack.NetychordsDMIBox.HeadTrackerData.Yaw = double.Parse(split[0], CultureInfo.InvariantCulture);
-                if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
+                /*if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
                 {
                     Rack.NetychordsDMIBox.HeadTrackerData.CalibrationYaw = double.Parse(split[0], CultureInfo.InvariantCulture);
-                }
+                }*/
                 Rack.NetychordsDMIBox.HeadTrackerData.Pitch = double.Parse(split[1], CultureInfo.InvariantCulture);
                 Rack.NetychordsDMIBox.HeadTrackerData.Roll = double.Parse(split[2], CultureInfo.InvariantCulture);
 
-                if (Rack.NetychordsDMIBox.isCalibrated && Rack.NetychordsDMIBox.MainWindow.NetychordsStarted)
+                if (Rack.NetychordsDMIBox.isCentered && Rack.NetychordsDMIBox.MainWindow.NetychordsStarted)
                 {
                     if (Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw <= Rack.NetychordsDMIBox.maxYaw && Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw >= Rack.NetychordsDMIBox.minYaw)
                     {

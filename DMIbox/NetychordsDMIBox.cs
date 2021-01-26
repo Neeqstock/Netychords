@@ -22,11 +22,11 @@ namespace Netytar
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public KeyboardModule KeyboardModule;
         public MainWindow MainWindow { get; set; }
-        public DateTime startcalibration = new DateTime(2020, 01, 01, 00, 00, 00);
+        /*public DateTime startcalibration = new DateTime(2020, 01, 01, 00, 00, 00);*/
 
 
-        public bool calibrateStarted = false;
-        public bool calibrateEnded = false;
+       /* public bool calibrateStarted = false;
+        public bool calibrateEnded = false;*/
 
         #region Instrument logic
         //private bool blow = false;
@@ -263,8 +263,8 @@ namespace Netytar
         public NetychordsSurface NetychordsSurface { get => netychordsSurface; set => netychordsSurface = value; }
 
 
-        private CalibrationSurface calibrationSurface;
-        public CalibrationSurface CalibrationSurface { get => calibrationSurface; set => calibrationSurface = value; }
+        /*private CalibrationSurface calibrationSurface;
+        public CalibrationSurface CalibrationSurface { get => calibrationSurface; set => calibrationSurface = value; }*/
         #endregion
 
         #region HeadSensor
@@ -307,18 +307,18 @@ namespace Netytar
             new TargetDistance(900),
         };*/
 
-        public bool isCalibrated = false;
+        public bool isCentered = false;
         public double minYaw;
         public double maxYaw;
 
         public void CalibrationHeadSensor()
         {
 
-            if (Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded && !isCalibrated)
+            if (/*Rack.NetychordsDMIBox.calibrateStarted && Rack.NetychordsDMIBox.calibrateEnded &&*/ !isCentered)
             {
                 minYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspCalibrationYaw - 8;
                 maxYaw = Rack.NetychordsDMIBox.HeadTrackerData.TranspCalibrationYaw + 8;
-                isCalibrated = true;
+                isCentered = true;
             }
         }
 

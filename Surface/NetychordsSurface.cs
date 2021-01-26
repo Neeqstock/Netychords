@@ -1,4 +1,5 @@
 ﻿using Eyerpheus.Controllers.Graphics;
+using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Music;
 using Netytar.Utils;
 using System;
@@ -28,6 +29,7 @@ namespace Netytar
 
     public class NetychordsSurface
     {
+        private HTFeedbackModule htFeedbackModule;
         private NetychordsButton lastCheckedButton;
         private NetychordsButton checkedButton;
         public Ellipse highlighter = new Ellipse(); //before was private
@@ -103,8 +105,9 @@ namespace Netytar
             canvas.Width = startPositionX * 2 + (horizontalSpacer + 13) * (nCols - 1);
             canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
 
-
             canvas.Children.Add(highlighter);
+
+            htFeedbackModule = new HTFeedbackModule(canvas);
         }
 
         private void LoadSettings(IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings)
@@ -135,8 +138,11 @@ namespace Netytar
             highlighter.Height = dimensions.HighlightRadius;
             highlighter.StrokeThickness = dimensions.HighlightStrokeDim;
             highlighter.Stroke = colorCode.HighlightBrush;
+        }
 
-            
+        public void UpdateHeadTrackerFeedback(HeadTrackerData headTrackerData)
+        {
+            throw new NotImplementedException();
         }
 
         public void DrawButtons()

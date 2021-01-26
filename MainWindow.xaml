@@ -302,7 +302,7 @@
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid Grid.Row="7" Margin="5,1,5,1">
+                <!--<Grid Grid.Row="7" Margin="5,1,5,1">
                     <Border Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
                         <Button x:Name="btnCalibrate" Foreground="White" Content="Calibrate" Click="BtnCalibrate_Click"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
                             <Button.Background>
@@ -310,7 +310,7 @@
                             </Button.Background>
                         </Button>
                     </Border>
-                </Grid>
+                </Grid>-->
                 <Grid Grid.Row="8" Margin="5,5,5,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
