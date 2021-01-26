@@ -140,9 +140,9 @@ namespace Netytar
             highlighter.Stroke = colorCode.HighlightBrush;
         }
 
-        public void UpdateHeadTrackerFeedback(HeadTrackerData headTrackerData)
+        public void UpdateHeadTrackerFeedback(HeadTrackerData headTrackerData, NetychordsButton lastCheckedButton)
         {
-            throw new NotImplementedException();
+            htFeedbackModule.UpdateGraphics(headTrackerData, lastCheckedButton);
         }
 
         public void DrawButtons()
@@ -1528,7 +1528,6 @@ namespace Netytar
         {
             canvas.Children.Remove(((Image)sender));
         }
-
 
         private void NoteToColor(NetychordsButton button)
         {
