@@ -324,7 +324,7 @@ namespace Netytar
 
         public double startStrum;
         public double endStrum;
-        public double inDeadZone;
+        public bool inDeadZone;
         public bool isStartedStrum = false;
         public bool isEndedStrum = false;
         public DateTime startingTime;
@@ -348,9 +348,11 @@ namespace Netytar
                 {
                     startStrum = HeadTrackerData.TranspYaw;
                     isEndedStrum = false;
+                    inDeadZone = true;
                 }
                 else if (!isStartedStrum && !isEndedStrum)
                 {
+                    inDeadZone = false;
                     if (HeadTrackerData.TranspYaw < minYaw)
                     {
                         dirStrum = NetychordsDMIBox.directionStrum.Left;
