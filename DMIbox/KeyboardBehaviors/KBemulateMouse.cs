@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace Netytar
 {
-    class KBemulateMouse : AKeyboardBehavior
+     public class KBemulateMouse : IKeyboardBehavior
     {
         private VKeyCodes keyStartEmulate = VKeyCodes.Control;
         private VKeyCodes keyStopEmulate = VKeyCodes.Shift;
@@ -13,7 +13,7 @@ namespace Netytar
         private bool cursorVisible = true;
         private bool autoScrollerEnabled = false;
 
-        public override int ReceiveEvent(RawInputEventArgs e)
+        public int ReceiveEvent(RawInputEventArgs e)
         {
             if (e.VirtualKey == (ushort)keyStartEmulate)
             {

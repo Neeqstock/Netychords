@@ -4,12 +4,12 @@ using RawInputProcessor;
 
 namespace Netytar.DMIBox.KeyboardBehaviors
 {
-    class KBplayStop : AKeyboardBehavior
+    class KBplayStop : IKeyboardBehavior
     {
         private const VKeyCodes space = VKeyCodes.Space;
         private bool isDown = false;
 
-        public override int ReceiveEvent(RawInputEventArgs e)
+        public int ReceiveEvent(RawInputEventArgs e)
         {
             if (Rack.NetychordsDMIBox.keyboardEmulator)
             {
