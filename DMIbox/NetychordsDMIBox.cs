@@ -324,7 +324,7 @@ namespace Netytar
 
         public double startStrum;
         public double endStrum;
-        public double inDeadZone;
+        public bool inDeadZone;
         public bool isStartedStrum = false;
         public bool isEndedStrum = false;
         public DateTime startingTime;
