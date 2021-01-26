@@ -169,6 +169,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\Eyetracker\BBDoubleCloseStopChords.cs" />
     <Compile Include="Behaviors\HeadSensor\HSreadSerial.cs" />
     <Compile Include="ControlMode.cs" />
     <Compile Include="DMIbox\CalibrateSetup.cs" />
@@ -295,7 +296,6 @@
   <ItemGroup>
     <Folder Include="Controllers\Graphic\WickiEyeden\" />
     <Folder Include="DMIbox\SensorBehaviors\" />
-    <Folder Include="DMIbox\TobiiBehaviors\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NeeqDMIs\NeeqDMIs.csproj">

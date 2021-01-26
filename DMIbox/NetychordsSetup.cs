@@ -11,6 +11,7 @@ using System;
 using System.Windows.Interop;
 using Tobii.Interaction.Framework;
 using NeeqDMIs.Eyetracking.PointFilters;
+using Netytar.Behaviors.Eyetracker;
 
 namespace Netytar.DMIBox
 {
@@ -48,6 +49,8 @@ namespace Netytar.DMIBox
                 Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulator = new MouseEmulator(new PointFilterBypass());
                 Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulatorGazeMode = GazeMode.Raw;
             }
+
+            Rack.NetychordsDMIBox.TobiiModule.BlinkBehaviors.Add(new BBDoubleCloseStopChords());
 
             // MODULES
             //IntPtr windowHandle = new WindowInteropHelper(Rack.NetychordsDMIBox.TestMainWindow).Handle;
