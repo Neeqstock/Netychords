@@ -69,6 +69,7 @@ namespace Netytar
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
                 lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName();
                 lblYaw.Text = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw.ToString();
+                centerValue.Text = Math.Round(centerZone.Value,1).ToString();
             }
 
             /*if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)

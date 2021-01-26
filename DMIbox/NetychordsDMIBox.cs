@@ -316,14 +316,15 @@ namespace Netytar
 
             if (/*calibrateStarted && calibrateEnded &&*/ !isCentered)
             {
-                minYaw = HeadTrackerData.TranspCalibrationYaw - 8;
-                maxYaw = HeadTrackerData.TranspCalibrationYaw + 8;
+                minYaw = HeadTrackerData.TranspCalibrationYaw - MainWindow.centerZone.Value;
+                maxYaw = HeadTrackerData.TranspCalibrationYaw + MainWindow.centerZone.Value;
                 isCentered = true;
             }
         }
 
         public double startStrum;
         public double endStrum;
+        public double inDeadZone;
         public bool isStartedStrum = false;
         public bool isEndedStrum = false;
         public DateTime startingTime;
