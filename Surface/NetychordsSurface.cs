@@ -107,7 +107,7 @@ namespace Netytar
 
             canvas.Children.Add(highlighter);
 
-            htFeedbackModule = new HTFeedbackModule(canvas);
+            htFeedbackModule = new HTFeedbackModule(canvas, HTFeedbackModule.HTFeedbackModes.Bars);
         }
 
         private void LoadSettings(IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings)
