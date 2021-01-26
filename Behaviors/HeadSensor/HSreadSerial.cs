@@ -30,7 +30,7 @@ namespace Netytar.Behaviors.Sensor
                 Rack.NetychordsDMIBox.HeadTrackerData.Pitch = double.Parse(split[1], CultureInfo.InvariantCulture);
                 Rack.NetychordsDMIBox.HeadTrackerData.Roll = double.Parse(split[2], CultureInfo.InvariantCulture);
 
-                if (Rack.NetychordsDMIBox.HeadTrackerData.Pitch != 10101010101)
+                if (Rack.NetychordsDMIBox.HeadTrackerData.Pitch <= Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value && Rack.NetychordsDMIBox.HeadTrackerData.Pitch >= - Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value)
                 {
                   Rack.NetychordsDMIBox.elaborateStrumming();
                 }
