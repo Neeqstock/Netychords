@@ -1,8 +1,8 @@
 ﻿using EyeTribe.ClientSdk.Data;
-using HANDMIs_TestSuite.Utils;
 using NAudio.MediaFoundation;
 using NeeqDMIs;
 using NeeqDMIs.ATmega;
+using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.Music;
 using Netytar.Utils;

@@ -140,11 +140,6 @@ namespace Netytar
             highlighter.Stroke = colorCode.HighlightBrush;
         }
 
-        public void UpdateHeadTrackerFeedback(HeadTrackerData headTrackerData, NetychordsButton lastCheckedButton)
-        {
-            htFeedbackModule.UpdateGraphics(headTrackerData, lastCheckedButton);
-        }
-
         public void DrawButtons()
         {
             if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
@@ -1575,6 +1570,11 @@ namespace Netytar
                     break;
             }
             
+        }
+
+        public void UpdateHeadTrackerFeedback(HeadTrackerData headTrackerData)
+        {
+            htFeedbackModule.UpdateGraphics(headTrackerData, lastCheckedButton);
         }
     }
 }
