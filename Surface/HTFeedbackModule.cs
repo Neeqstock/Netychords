@@ -32,7 +32,7 @@ namespace Eyerpheus.Controllers.Graphics
         public HTFeedbackModule(Canvas canvas, HTFeedbackModes mode)
         {
             Canvas = canvas;
-            
+
             horLine = new Line();
             horLine.StrokeThickness = horLineThickness;
             horLine.Stroke = horLineStroke;
@@ -42,24 +42,30 @@ namespace Eyerpheus.Controllers.Graphics
             verLine.StrokeThickness = verLineThickness;
             verLine.Stroke = verLineStroke;
             canvas.Children.Add(verLine);
+
             halfVLHeight = verLineHeight / 2;
-            
+
             Mode = mode;
         }
 
         public void UpdateGraphics(HeadTrackerData headTrackerData, NetychordsButton lastCheckedButton)
         {
-            horLine.X1 = Canvas.GetLeft(lastCheckedButton) + lastCheckedButton.ActualWidth / 2;
-            horLine.Y1 = Canvas.GetTop(lastCheckedButton) + lastCheckedButton.ActualHeight / 2;
+            if (lastCheckedButton != null)
+            {
+                horLine.X1 = Canvas.GetLeft(lastCheckedButton) + lastCheckedButton.ActualWidth / 2;
+                horLine.Y1 = Canvas.GetTop(lastCheckedButton) + lastCheckedButton.ActualHeight / 2;
 
-            horLine.X2 = horLine.X1 + headTrackerData.TranspYaw;
-            horLine.Y2 = horLine.Y1;
+                horLine.X2 = horLine.X1 + headTrackerData.TranspYaw;
+                horLine.Y2 = horLine.Y1;
 
-            verLine.X1 = horLine.X2;
-            verLine.Y1 = horLine.Y2 - halfVLHeight;
+                verLine.X1 = horLine.X2;
+                verLine.Y1 = horLine.Y2 - halfVLHeight;
 
-            verLine.X2 = horLine.X2;
-            verLine.Y2 = horLine.Y2 + halfVLHeight;
+                verLine.X2 = horLine.X2;
+                verLine.Y2 = horLine.Y2 + halfVLHeight;
+
+                Canvas.UpdateLayout();
+            }
         }
 
         public enum HTFeedbackModes

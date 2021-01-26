@@ -63,13 +63,14 @@ namespace Netytar
         /// </summary>
         private void UpdateWindow(object sender, EventArgs e)
         {
-            
             if (netychordsStarted)
             {
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
                 lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName();
                 lblYaw.Text = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw.ToString();
                 centerValue.Text = Math.Round(centerZone.Value,1).ToString();
+
+                Rack.NetychordsDMIBox.NetychordsSurface.UpdateHeadTrackerFeedback(Rack.NetychordsDMIBox.HeadTrackerData);
             }
 
             /*if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)

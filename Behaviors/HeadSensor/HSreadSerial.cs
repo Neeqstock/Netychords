@@ -35,8 +35,6 @@ namespace Netytar.Behaviors.Sensor
             
             Rack.NetychordsDMIBox.Str_HeadTrackerRaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw + "";// + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.Pitch + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.Roll + "\n";
             Rack.NetychordsDMIBox.Str_HeadTrackerCalib = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw + "";// "\n" + Rack.NetychordsDMIBox.HeadTrackerData.TranspPitch + "\n" + Rack.NetychordsDMIBox.HeadTrackerData.TranspRoll + "\n";
-
-            Rack.NetychordsDMIBox.NetychordsSurface.UpdateHeadTrackerFeedback(Rack.NetychordsDMIBox.HeadTrackerData);
         }
 
     }
