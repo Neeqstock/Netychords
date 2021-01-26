@@ -1576,7 +1576,7 @@ namespace Netytar
         {
             if (headTrackerData != null)
             {
-                htFeedbackModule.UpdateGraphics(headTrackerData, lastCheckedButton);
+                htFeedbackModule.UpdateGraphics(headTrackerData, checkedButton);
             }
 
         }
