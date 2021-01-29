@@ -277,8 +277,9 @@ namespace Netytar
         public bool isCentered = false;
         public double maxYaw;
         public double minYaw;
-        private directionStrum dirStrum;
+        private DirectionStrum dirStrum;
         private DateTime endingTime;
+
         private double endStrum;
         private int headTrackerPortNumber = 0;
         private bool isEndedStrum = false;
@@ -286,6 +287,7 @@ namespace Netytar
         private DateTime startingTime;
         private double startStrum;
         public double CenterZone { get; set; } = 0;
+        public double Distance { get; private set; }
         public HeadTrackerData HeadTrackerData { get; set; } = new HeadTrackerData();
         public SensorModule HeadTrackerModule { get; set; }
 
@@ -322,7 +324,7 @@ namespace Netytar
             }
         }
 
-        public enum directionStrum
+        public enum DirectionStrum
         {
             Right,
             Left
@@ -348,7 +350,7 @@ namespace Netytar
                     InDeadZone = false;
                     if (HeadTrackerData.TranspYaw < minYaw)
                     {
-                        dirStrum = NetychordsDMIBox.directionStrum.Left;
+                        dirStrum = NetychordsDMIBox.DirectionStrum.Left;
                         startingTime = DateTime.Now;
                         isStartedStrum = true;
                         isEndedStrum = false;
@@ -356,7 +358,7 @@ namespace Netytar
                     }
                     else if (HeadTrackerData.TranspYaw > maxYaw)
                     {
-                        dirStrum = NetychordsDMIBox.directionStrum.Right;
+                        dirStrum = NetychordsDMIBox.DirectionStrum.Right;
                         startingTime = DateTime.Now;
                         isStartedStrum = true;
                         isEndedStrum = false;
@@ -367,13 +369,13 @@ namespace Netytar
                 {
                     switch (dirStrum)
                     {
-                        case NetychordsDMIBox.directionStrum.Left:
+                        case NetychordsDMIBox.DirectionStrum.Left:
                             if (HeadTrackerData.TranspYaw > lastYaw)
                             {
                                 endStrum = lastYaw;
                                 endingTime = DateTime.Now;
-                                double distance = Math.Abs(endStrum - minYaw);
-                                int midiVelocity = (int)(40 + 1.4 * distance);
+                                Distance = endStrum - minYaw;
+                                int midiVelocity = (int)(40 + 1.4 * Math.Abs(Distance));
                                 isEndedStrum = true;
                                 isStartedStrum = false;
                                 Velocity = midiVelocity;
@@ -396,13 +398,13 @@ namespace Netytar
                             }
                             break;
 
-                        case NetychordsDMIBox.directionStrum.Right:
+                        case NetychordsDMIBox.DirectionStrum.Right:
                             if (HeadTrackerData.TranspYaw < lastYaw)
                             {
                                 endStrum = lastYaw;
                                 endingTime = DateTime.Now;
-                                double distance = Math.Abs(endStrum - maxYaw);
-                                int midiVelocity = (int)(40 + 1.4 * distance);
+                                Distance = endStrum - maxYaw;
+                                int midiVelocity = (int)(40 + 1.4 * Math.Abs(Distance));
                                 isEndedStrum = true;
                                 isStartedStrum = false;
                                 Velocity = midiVelocity;

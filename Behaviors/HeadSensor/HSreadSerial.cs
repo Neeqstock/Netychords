@@ -1,5 +1,4 @@
 ﻿using NeeqDMIs.ATmega;
-using System;
 using System.Globalization;
 
 namespace Netytar.Behaviors.Sensor
@@ -14,7 +13,6 @@ namespace Netytar.Behaviors.Sensor
             {
                 Rack.NetychordsDMIBox.HeadTrackerModule.Write("A");
             }
-
             else if (val.StartsWith("$")) //Input data is formatted as $yaw!pitch!roll ($0.00!0.00!0.00)
             {
                 val = val.Replace("$", string.Empty);
@@ -26,16 +24,15 @@ namespace Netytar.Behaviors.Sensor
                 Rack.NetychordsDMIBox.HeadTrackerData.Roll = double.Parse(split[2], CultureInfo.InvariantCulture);
 
                 //Strumming is elaborated only while the head position is centered along the pitch axis
-                if (Rack.NetychordsDMIBox.HeadTrackerData.Pitch <= Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value && Rack.NetychordsDMIBox.HeadTrackerData.Pitch >= - Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value)
+                if (Rack.NetychordsDMIBox.HeadTrackerData.Pitch <= Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value && Rack.NetychordsDMIBox.HeadTrackerData.Pitch >= -Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value)
                 {
-                  Rack.NetychordsDMIBox.ElaborateStrumming();
+                    Rack.NetychordsDMIBox.ElaborateStrumming();
                 }
             }
-            
+
             //Debugging variables
             Rack.NetychordsDMIBox.Str_HeadTrackerRaw = Rack.NetychordsDMIBox.HeadTrackerData.Yaw.ToString();
             Rack.NetychordsDMIBox.Str_HeadTrackerCalib = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw.ToString();
         }
-
     }
 }

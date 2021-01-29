@@ -9,22 +9,23 @@ namespace Eyerpheus.Controllers.Graphics
 {
     public class HTFeedbackModule
     {
-        private const int horLineThickness = 4;
-        private const int verLineThickness = 4;
-        private readonly SolidColorBrush deadZoneColor = new SolidColorBrush(Colors.White);
-        private readonly SolidColorBrush horLineStroke = new SolidColorBrush(Colors.White);
-        private readonly SolidColorBrush leftRectColor = new SolidColorBrush(Colors.White);
-        private readonly SolidColorBrush rightRectColor = new SolidColorBrush(Colors.White);
-        private readonly SolidColorBrush verLineStroke = new SolidColorBrush(Colors.White);
+        private const int Bar_horLineThickness = 4;
+        private const int Bar_verLineThickness = 4;
+        private const int Half_midLineThickness = 5;
+        private readonly SolidColorBrush Bar_horLineStroke = new SolidColorBrush(Colors.White);
+        private readonly SolidColorBrush Bar_verLineStroke = new SolidColorBrush(Colors.White);
+        private readonly SolidColorBrush Half_leftRectColor = new SolidColorBrush(Colors.White);
+        private readonly SolidColorBrush Half_midLineColor = new SolidColorBrush(Colors.White);
+        private readonly SolidColorBrush Half_rightRectColor = new SolidColorBrush(Colors.White);
+        private Line Bar_horLine;
+        private Line Bar_verLine;
+        private double Bar_verLineHeight = 50;
         private Canvas Canvas;
-        private Line centerRect;
-        private double halfVLHeight;
-        private Line horLine;
-        private Rectangle leftRect;
-        private ValueMapperDouble rectRangeMapper = new ValueMapperDouble(80, 1);
-        private Rectangle rightRect;
-        private Line verLine;
-        private double verLineHeight = 50;
+        private Rectangle Half_leftRect;
+        private Line Half_midLine;
+        private ValueMapperDouble Half_rectRangeMapper = new ValueMapperDouble(80, 1);
+        private Rectangle Half_rightRect;
+        private double Half_VLHeight;
         public HTFeedbackModes Mode { get; set; }
 
         public HTFeedbackModule(Canvas canvas, HTFeedbackModes mode)
@@ -35,34 +36,41 @@ namespace Eyerpheus.Controllers.Graphics
             switch (mode)
             {
                 case HTFeedbackModes.Bars:
-                    horLine = new Line();
-                    horLine.StrokeThickness = horLineThickness;
-                    horLine.Stroke = horLineStroke;
-                    Panel.SetZIndex(horLine, 2000);
-                    canvas.Children.Add(horLine);
+                    Bar_horLine = new Line();
+                    Bar_horLine.StrokeThickness = Bar_horLineThickness;
+                    Bar_horLine.Stroke = Bar_horLineStroke;
+                    Panel.SetZIndex(Bar_horLine, 2000);
+                    canvas.Children.Add(Bar_horLine);
 
-                    verLine = new Line();
-                    verLine.StrokeThickness = verLineThickness;
-                    verLine.Stroke = verLineStroke;
-                    Panel.SetZIndex(verLine, 2000);
-                    canvas.Children.Add(verLine);
+                    Bar_verLine = new Line();
+                    Bar_verLine.StrokeThickness = Bar_verLineThickness;
+                    Bar_verLine.Stroke = Bar_verLineStroke;
+                    Panel.SetZIndex(Bar_verLine, 2000);
+                    canvas.Children.Add(Bar_verLine);
 
-                    halfVLHeight = verLineHeight / 2;
+                    Half_VLHeight = Bar_verLineHeight / 2;
 
                     break;
 
                 case HTFeedbackModes.HalfButton:
-                    leftRect = new Rectangle();
-                    leftRect.Fill = leftRectColor;
-                    leftRect.Opacity = 0;
-                    Panel.SetZIndex(leftRect, 2000);
-                    canvas.Children.Add(leftRect);
+                    Half_leftRect = new Rectangle();
+                    Half_leftRect.Fill = Half_leftRectColor;
+                    Half_leftRect.Opacity = 0;
+                    Panel.SetZIndex(Half_leftRect, 2000);
+                    canvas.Children.Add(Half_leftRect);
 
-                    rightRect = new Rectangle();
-                    rightRect.Fill = rightRectColor;
-                    rightRect.Opacity = 0;
-                    Panel.SetZIndex(rightRect, 2000);
-                    canvas.Children.Add(rightRect);
+                    Half_rightRect = new Rectangle();
+                    Half_rightRect.Fill = Half_rightRectColor;
+                    Half_rightRect.Opacity = 0;
+                    Panel.SetZIndex(Half_rightRect, 2000);
+                    canvas.Children.Add(Half_rightRect);
+
+                    Half_midLine = new Line();
+                    Half_midLine.Stroke = Half_midLineColor;
+                    Half_midLine.StrokeThickness = Half_midLineThickness;
+                    Half_midLine.Opacity = 0;
+                    Panel.SetZIndex(Half_midLine, 2001);
+                    canvas.Children.Add(Half_midLine);
 
                     break;
 
@@ -95,17 +103,17 @@ namespace Eyerpheus.Controllers.Graphics
         {
             if (checkedButton != null)
             {
-                horLine.X1 = Canvas.GetLeft(checkedButton) + checkedButton.ActualWidth / 2;
-                horLine.Y1 = Canvas.GetTop(checkedButton) + checkedButton.ActualHeight / 2;
+                Bar_horLine.X1 = Canvas.GetLeft(checkedButton) + checkedButton.ActualWidth / 2;
+                Bar_horLine.Y1 = Canvas.GetTop(checkedButton) + checkedButton.ActualHeight / 2;
 
-                horLine.X2 = horLine.X1 + headTrackerData.TranspYaw;
-                horLine.Y2 = horLine.Y1;
+                Bar_horLine.X2 = Bar_horLine.X1 + headTrackerData.TranspYaw;
+                Bar_horLine.Y2 = Bar_horLine.Y1;
 
-                verLine.X1 = horLine.X2;
-                verLine.Y1 = horLine.Y2 - halfVLHeight;
+                Bar_verLine.X1 = Bar_horLine.X2;
+                Bar_verLine.Y1 = Bar_horLine.Y2 - Half_VLHeight;
 
-                verLine.X2 = horLine.X2;
-                verLine.Y2 = horLine.Y2 + halfVLHeight;
+                Bar_verLine.X2 = Bar_horLine.X2;
+                Bar_verLine.Y2 = Bar_horLine.Y2 + Half_VLHeight;
 
                 Canvas.UpdateLayout();
             }
@@ -121,16 +129,21 @@ namespace Eyerpheus.Controllers.Graphics
             {
                 var Occ = checkedButton.Occluder;
 
-                leftRect.Height = Occ.ActualHeight;
-                leftRect.Width = Occ.ActualWidth / 2;
+                Half_leftRect.Height = Occ.ActualHeight;
+                Half_leftRect.Width = Occ.ActualWidth / 2;
 
-                rightRect.Height = Occ.ActualHeight;
-                rightRect.Width = Occ.ActualWidth / 2;
+                Half_rightRect.Height = Occ.ActualHeight;
+                Half_rightRect.Width = Occ.ActualWidth / 2;
 
-                Canvas.SetLeft(leftRect, Canvas.GetLeft(Occ));
-                Canvas.SetLeft(rightRect, Canvas.GetLeft(Occ) + Occ.ActualWidth / 2);
-                Canvas.SetTop(leftRect, Canvas.GetTop(Occ));
-                Canvas.SetTop(rightRect, Canvas.GetTop(Occ));
+                Half_midLine.X1 = Canvas.GetLeft(Occ) + Occ.ActualWidth / 2;
+                Half_midLine.Y1 = Canvas.GetTop(Occ);
+                Half_midLine.X2 = Canvas.GetLeft(Occ) + Occ.ActualWidth / 2;
+                Half_midLine.Y2 = Canvas.GetTop(Occ) + Occ.ActualHeight;
+
+                Canvas.SetLeft(Half_leftRect, Canvas.GetLeft(Occ));
+                Canvas.SetLeft(Half_rightRect, Canvas.GetLeft(Occ) + Occ.ActualWidth / 2);
+                Canvas.SetTop(Half_leftRect, Canvas.GetTop(Occ));
+                Canvas.SetTop(Half_rightRect, Canvas.GetTop(Occ));
 
                 double posPart = 0;
                 double negPart = 0;
@@ -146,8 +159,17 @@ namespace Eyerpheus.Controllers.Graphics
                     posPart = 0;
                 }
 
-                leftRect.Opacity = rectRangeMapper.Map(negPart);
-                rightRect.Opacity = rectRangeMapper.Map(posPart);
+                if (Rack.NetychordsDMIBox.InDeadZone)
+                {
+                    Half_midLine.Opacity = 1;
+                }
+                else
+                {
+                    Half_midLine.Opacity = 0;
+                }
+
+                Half_leftRect.Opacity = Half_rectRangeMapper.Map(negPart);
+                Half_rightRect.Opacity = Half_rectRangeMapper.Map(posPart);
             }
         }
 
