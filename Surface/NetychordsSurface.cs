@@ -1,16 +1,13 @@
 ﻿using Eyerpheus.Controllers.Graphics;
 using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Music;
+using Netychords.Surface;
 using Netytar.Utils;
-using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using WpfAnimatedGif;
 
 namespace Netytar
 {
@@ -29,17 +26,39 @@ namespace Netytar
 
     public class NetychordsSurface
     {
-        private HTFeedbackModule htFeedbackModule;
-        private NetychordsButton lastCheckedButton;
+        public Ellipse highlighter = new Ellipse();
         private NetychordsButton checkedButton;
-        public Ellipse highlighter = new Ellipse(); //before was private
-
         private NetychordsSurfaceDrawModes drawMode;
-        public NetychordsSurfaceDrawModes DrawMode { get => drawMode; set => drawMode = value; }
+        private NetychordsButton lastCheckedButton;
         public NetychordsButton CheckedButton { get => checkedButton; }
+
+        //before was private
+        public NetychordsSurfaceDrawModes DrawMode { get => drawMode; set => drawMode = value; }
+
         public NetychordsSurfaceHighlightModes HighLightMode { get; set; }
+        public HTFeedbackModule HtFeedbackModule { get; set; }
 
         #region Settings
+
+        public MidiChord firstChord;
+
+        public int nCols;
+
+        //before was private
+        private MidiChord actualChord;
+
+        private int buttonHeight;
+
+        private int buttonWidth;
+
+        private int ellipseStrokeDim;
+
+        private int ellipseStrokeSpacer;
+
+        private int generativePitch;
+
+        private int horizontalSpacer;
+
         private List<Color> keysColorCode = new List<Color>()
         {
             Colors.Red,
@@ -51,41 +70,30 @@ namespace Netytar
             Colors.Coral
         };
 
-        private SolidColorBrush notInScaleBrush;
-        private SolidColorBrush minorBrush;
+        private int lineThickness;
         private SolidColorBrush majorBrush;
-        private SolidColorBrush transparentBrush = new SolidColorBrush(Colors.Transparent);
-
-        private int generativePitch;
-        public int nCols;
+        private SolidColorBrush minorBrush;
+        private SolidColorBrush notInScaleBrush;
         private int nRows;
+        private int occluderAlpha;
+        private int occluderOffset;
+        private string starterNote;
+        private string starterOctave;
         private int startPositionX;
         private int startPositionY;
-        private int occluderAlpha;
-
+        private SolidColorBrush transparentBrush = new SolidColorBrush(Colors.Transparent);
         private int verticalSpacer;
-        private int horizontalSpacer;
-        private int buttonHeight;
-        private int buttonWidth;
-        private int occluderOffset;
-        private int ellipseStrokeDim;
-        private int ellipseStrokeSpacer;
-        private int lineThickness;
 
-        private string starterOctave;
-        private string starterNote;
-        public MidiChord firstChord; //before was private
-        private MidiChord actualChord;
-
-        #endregion
+        #endregion Settings
 
         #region Surface components
-        private Canvas canvas;
 
-        private NetychordsButton[,] NetychordsButtons;
-        private List<Line> drawnLines = new List<Line>();
         private List<Ellipse> drawnEllipses = new List<Ellipse>();
-        #endregion
+        private List<Line> drawnLines = new List<Line>();
+        private NetychordsButton[,] NetychordsButtons;
+        public Canvas Canvas { get; set; }
+
+        #endregion Surface components
 
         public NetychordsSurface(Canvas canvas, IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings, NetychordsSurfaceDrawModes drawMode)
         {
@@ -97,7 +105,7 @@ namespace Netytar
 
             NetychordsButtons = new NetychordsButton[nRows, nCols];
 
-            this.canvas = canvas;
+            this.Canvas = canvas;
             /*
             canvas.VerticalAlignment = VerticalAlignment.Stretch;
             canvas.HorizontalAlignment = HorizontalAlignment.Stretch;
@@ -106,38 +114,6 @@ namespace Netytar
             canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
 
             canvas.Children.Add(highlighter);
-
-            htFeedbackModule = new HTFeedbackModule(canvas, HTFeedbackModule.HTFeedbackModes.HalfButton);
-        }
-
-        private void LoadSettings(IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings)
-        {
-            buttonHeight = dimensions.ButtonHeight;
-            buttonWidth = dimensions.ButtonWidth;
-            ellipseStrokeDim = dimensions.EllipseStrokeDim;
-            ellipseStrokeSpacer = dimensions.EllipseStrokeSpacer;
-            horizontalSpacer = dimensions.HorizontalSpacer;
-            lineThickness = dimensions.LineThickness;
-            occluderOffset = dimensions.OccluderOffset;
-            verticalSpacer = dimensions.VerticalSpacer;
-
-            keysColorCode = colorCode.KeysColorCode;
-
-            notInScaleBrush = colorCode.NotInScaleBrush;
-            majorBrush = colorCode.MajorBrush;
-            minorBrush = colorCode.MinorBrush;
-
-            generativePitch = buttonsSettings.GenerativeNote;
-            nCols = buttonsSettings.NCols;
-            nRows = buttonsSettings.NRows;
-            startPositionX = buttonsSettings.StartPositionX;
-            startPositionY = buttonsSettings.StartPositionY;
-            occluderAlpha = buttonsSettings.OccluderAlpha;
-
-            highlighter.Width = dimensions.HighlightRadius;
-            highlighter.Height = dimensions.HighlightRadius;
-            highlighter.StrokeThickness = dimensions.HighlightStrokeDim;
-            highlighter.Stroke = colorCode.HighlightBrush;
         }
 
         public void DrawButtons()
@@ -159,7 +135,6 @@ namespace Netytar
             int firstSpacer = 0;
 
             bool isPairRow;
-
 
             if (Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
             {
@@ -194,11 +169,11 @@ namespace Netytar
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
+
                     if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
                     {
                         if (Rack.NetychordsDMIBox.layout == "Stradella")
                         {
-
                             spacer = 100;
                             firstSpacer = row * spacer / 4;
                         }
@@ -207,7 +182,6 @@ namespace Netytar
                             spacer = horizontalSpacer;
                             firstSpacer = row * spacer / 2;
                         }
-
 
                         if (row % 2 != 0)
                         {
@@ -218,8 +192,7 @@ namespace Netytar
                             isPairRow = true;
                         }
                         verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
-
+                        Canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
@@ -227,14 +200,15 @@ namespace Netytar
                         firstSpacer = 0;
                         isPairRow = true;
                         verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
+                        Canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
-                    #endregion
+                    #endregion Is row pair?
 
                     NetychordsButtons[row, col] = new NetychordsButton(this);
 
                     #region Define chordType of this chord and starter note of the row
+
                     ChordType thisChordType;
                     MidiNotes thisNote;
 
@@ -262,6 +236,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "Sus4":
                                 thisChordType = ChordType.Sus4;
                                 if (col == 0)
@@ -279,6 +254,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "DiminishedSeventh":
                                 thisChordType = ChordType.DiminishedSeventh;
                                 if (col == 0)
@@ -296,6 +272,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "Major":
                                 thisChordType = ChordType.Major;
                                 if (col == 0)
@@ -313,6 +290,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "MajorSixth":
                                 thisChordType = ChordType.MajorSixth;
                                 if (col == 0)
@@ -330,13 +308,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "DominantSeventh":
                                 thisChordType = ChordType.DominantSeventh;
                                 if (firstChord.chordType != ChordType.DominantSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.DominantSeventh);
                                     firstChord.chordType = ChordType.DominantSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -354,6 +332,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "Minor":
                                 thisChordType = ChordType.Minor;
                                 if (firstChord.chordType != ChordType.Minor)
@@ -377,6 +356,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "MinorSixth":
                                 thisChordType = ChordType.MinorSixth;
                                 if (firstChord.chordType != ChordType.MinorSixth)
@@ -400,6 +380,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "DominantNinth":
                                 thisChordType = ChordType.DominantNinth;
                                 if (col == 0)
@@ -417,13 +398,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "MajorSeventh":
                                 thisChordType = ChordType.MajorSeventh;
                                 if (firstChord.chordType != ChordType.MajorSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote, ChordType.MajorSeventh);
                                     firstChord.chordType = ChordType.MajorSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -441,6 +422,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "DominantEleventh":
                                 thisChordType = ChordType.DominantEleventh;
                                 if (col == 0)
@@ -458,13 +440,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "MinorSeventh":
                                 thisChordType = ChordType.MinorSeventh;
                                 if (firstChord.chordType != ChordType.MinorSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote + 2, ChordType.MinorSeventh);
                                     firstChord.chordType = ChordType.MinorSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -505,7 +487,6 @@ namespace Netytar
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote - 1, ChordType.SemiDiminished);
                                     firstChord.chordType = ChordType.SemiDiminished;
-
                                 };
 
                                 if (col == 0)
@@ -523,6 +504,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             default:
                                 thisChordType = ChordType.Major;
                                 if (col == 0)
@@ -541,7 +523,6 @@ namespace Netytar
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
                         }
-
                     }
                     else if (Rack.NetychordsDMIBox.layout == "Pop")
                     {
@@ -565,6 +546,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 1:
                                 thisChordType = ChordType.Sus4;
                                 if (col == 0)
@@ -582,6 +564,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 2:
                                 thisChordType = ChordType.Major;
                                 if (col == 0)
@@ -599,6 +582,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 3:
                                 thisChordType = ChordType.Minor;
                                 if (firstChord.chordType != ChordType.Minor)
@@ -622,6 +606,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             default:
                                 break;
                         }
@@ -648,6 +633,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 1:
                                 thisChordType = ChordType.Sus4;
                                 if (col == 0)
@@ -665,6 +651,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 2:
                                 thisChordType = ChordType.Major;
                                 if (col == 0)
@@ -682,6 +669,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 3:
                                 thisChordType = ChordType.Minor;
                                 if (firstChord.chordType != ChordType.Minor)
@@ -705,13 +693,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 4:
                                 thisChordType = ChordType.DominantSeventh;
                                 if (firstChord.chordType != ChordType.DominantSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.DominantSeventh);
                                     firstChord.chordType = ChordType.DominantSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -729,6 +717,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             default:
                                 break;
                         }
@@ -743,7 +732,6 @@ namespace Netytar
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote - 1, ChordType.SemiDiminished);
                                     firstChord.chordType = ChordType.SemiDiminished;
-
                                 };
 
                                 if (col == 0)
@@ -761,6 +749,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 1:
                                 thisChordType = ChordType.DiminishedSeventh;
                                 if (col == 0)
@@ -778,6 +767,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 2:
                                 thisChordType = ChordType.MajorSixth;
                                 if (col == 0)
@@ -795,13 +785,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 3:
                                 thisChordType = ChordType.DominantSeventh;
                                 if (firstChord.chordType != ChordType.DominantSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.DominantSeventh);
                                     firstChord.chordType = ChordType.DominantSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -819,6 +809,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 4:
                                 thisChordType = ChordType.MinorSixth;
                                 if (firstChord.chordType != ChordType.MinorSixth)
@@ -842,13 +833,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 5:
                                 thisChordType = ChordType.MajorSeventh;
                                 if (firstChord.chordType != ChordType.MajorSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote, ChordType.MajorSeventh);
                                     firstChord.chordType = ChordType.MajorSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -866,13 +857,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 6:
                                 thisChordType = ChordType.MinorSeventh;
                                 if (firstChord.chordType != ChordType.MinorSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote + 2, ChordType.MinorSeventh);
                                     firstChord.chordType = ChordType.MinorSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -890,6 +881,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             default:
                                 break;
                         }
@@ -904,7 +896,6 @@ namespace Netytar
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote - 1, ChordType.SemiDiminished);
                                     firstChord.chordType = ChordType.SemiDiminished;
-
                                 };
 
                                 if (col == 0)
@@ -922,6 +913,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 1:
                                 thisChordType = ChordType.Sus2;
                                 firstSpacer = 0;
@@ -940,6 +932,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 2:
                                 thisChordType = ChordType.Sus4;
                                 if (col == 0)
@@ -957,6 +950,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 3:
                                 thisChordType = ChordType.DiminishedSeventh;
                                 if (col == 0)
@@ -974,6 +968,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 4:
                                 thisChordType = ChordType.Major;
                                 if (col == 0)
@@ -991,13 +986,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 5:
                                 thisChordType = ChordType.DominantSeventh;
                                 if (firstChord.chordType != ChordType.DominantSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.DominantSeventh);
                                     firstChord.chordType = ChordType.DominantSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -1015,6 +1010,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 6:
                                 thisChordType = ChordType.Minor;
                                 if (firstChord.chordType != ChordType.Minor)
@@ -1038,6 +1034,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 7:
                                 thisChordType = ChordType.DominantNinth;
                                 if (col == 0)
@@ -1055,13 +1052,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 8:
                                 thisChordType = ChordType.MajorSeventh;
                                 if (firstChord.chordType != ChordType.MajorSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote, ChordType.MajorSeventh);
                                     firstChord.chordType = ChordType.MajorSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -1079,6 +1076,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 9:
                                 thisChordType = ChordType.DominantEleventh;
                                 if (col == 0)
@@ -1096,13 +1094,13 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 10:
                                 thisChordType = ChordType.MinorSeventh;
                                 if (firstChord.chordType != ChordType.MinorSeventh)
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote + 2, ChordType.MinorSeventh);
                                     firstChord.chordType = ChordType.MinorSeventh;
-
                                 };
 
                                 if (col == 0)
@@ -1153,7 +1151,6 @@ namespace Netytar
                                 {
                                     actualChord = new MidiChord(firstChord.rootNote, ChordType.SemiDiminished);
                                     firstChord.chordType = ChordType.SemiDiminished;
-
                                 };
 
                                 if (col == 0)
@@ -1171,6 +1168,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 1:
                                 thisChordType = ChordType.Sus2;
                                 if (col == 0)
@@ -1188,6 +1186,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 2:
                                 thisChordType = ChordType.Sus4;
                                 if (col == 0)
@@ -1205,6 +1204,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 3:
                                 thisChordType = ChordType.DiminishedSeventh;
                                 if (col == 0)
@@ -1222,6 +1222,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 4:
                                 thisChordType = ChordType.Major;
                                 if (col == 0)
@@ -1239,6 +1240,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 5:
                                 thisChordType = ChordType.DominantSeventh;
                                 if (col == 0)
@@ -1256,6 +1258,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 6:
                                 thisChordType = ChordType.Minor;
                                 if (col == 0)
@@ -1273,6 +1276,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 7:
                                 thisChordType = ChordType.DominantNinth;
                                 if (col == 0)
@@ -1290,6 +1294,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 8:
                                 thisChordType = ChordType.MajorSeventh;
                                 if (col == 0)
@@ -1307,6 +1312,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 9:
                                 thisChordType = ChordType.DominantEleventh;
                                 if (col == 0)
@@ -1324,6 +1330,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 10:
                                 thisChordType = ChordType.MinorSeventh;
                                 if (col == 0)
@@ -1363,9 +1370,10 @@ namespace Netytar
                         }
                     }
 
-                    #endregion
+                    #endregion Define chordType of this chord and starter note of the row
 
                     #region Draw the button on canvas
+
                     if (Rack.NetychordsDMIBox.layout != "Stradella")
                     {
                         if (!isPairRow)
@@ -1387,7 +1395,6 @@ namespace Netytar
                     else
                     {
                         Y = startPositionY - verticalSpacer * row;
-
                     }
                     Canvas.SetLeft(NetychordsButtons[row, col], X);
                     Canvas.SetTop(NetychordsButtons[row, col], Y);
@@ -1407,14 +1414,16 @@ namespace Netytar
                     Panel.SetZIndex(NetychordsButtons[row, col], 30);
                     Panel.SetZIndex(NetychordsButtons[row, col].Occluder, 2);
                     Panel.SetZIndex(highlighter, 30);
-                    canvas.Children.Add(NetychordsButtons[row, col]);
-                    canvas.Children.Add(NetychordsButtons[row, col].Occluder);
+                    Canvas.Children.Add(NetychordsButtons[row, col]);
+                    Canvas.Children.Add(NetychordsButtons[row, col].Occluder);
 
                     NetychordsButtons[row, col].Width = buttonWidth;
                     NetychordsButtons[row, col].Height = buttonHeight;
-                    #endregion
+
+                    #endregion Draw the button on canvas
 
                     /*
+
                     #region Define rootNote of this chord
 
                     int calcShift;
@@ -1426,15 +1435,23 @@ namespace Netytar
                     {
                         calcShift = col * 7;
                     }
-                    
+
                     MidiNotes thisNote = firstChord.rootNote + calcShift;
 
-                    #endregion
-
-
+                    #endregion Define rootNote of this chord
 
                     NetychordsButtons[row, col].Chord = new MidiChord(thisNote, thisChordType);*/
                 }
+            }
+        }
+
+        public void FlashMovementLine()
+        {
+            if (lastCheckedButton != null)
+            {
+                Point point1 = new Point(Canvas.GetLeft(CheckedButton) + 6, Canvas.GetTop(CheckedButton) + 6);
+                Point point2 = new Point(Canvas.GetLeft(lastCheckedButton) + 6, Canvas.GetTop(lastCheckedButton) + 6);
+                IndependentLineFlashTimer timer = new IndependentLineFlashTimer(point1, point2, Canvas, Colors.NavajoWhite);
             }
         }
 
@@ -1457,26 +1474,53 @@ namespace Netytar
             }
         }
 
-        private void MoveHighlighter(NetychordsButton checkedButton)
+        public void UpdateHeadTrackerFeedback(HeadTrackerData headTrackerData)
         {
-            Canvas.SetLeft(highlighter, Canvas.GetLeft(checkedButton) - highlighter.ActualWidth / 2.5);
-            Canvas.SetTop(highlighter, Canvas.GetTop(checkedButton) - highlighter.ActualHeight / 2.5);
-        }
-
-        public void FlashMovementLine()
-        {
-            if (lastCheckedButton != null)
+            if (headTrackerData != null)
             {
-                Point point1 = new Point(Canvas.GetLeft(CheckedButton) + 6, Canvas.GetTop(CheckedButton) + 6);
-                Point point2 = new Point(Canvas.GetLeft(lastCheckedButton) + 6, Canvas.GetTop(lastCheckedButton) + 6);
-                IndependentLineFlashTimer timer = new IndependentLineFlashTimer(point1, point2, canvas, Colors.NavajoWhite);
+                HtFeedbackModule.UpdateGraphics(headTrackerData, checkedButton);
             }
-
         }
 
         private void DisposeImage(object sender, RoutedEventArgs e)
         {
-            canvas.Children.Remove(((Image)sender));
+            Canvas.Children.Remove(((Image)sender));
+        }
+
+        private void LoadSettings(IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings)
+        {
+            buttonHeight = dimensions.ButtonHeight;
+            buttonWidth = dimensions.ButtonWidth;
+            ellipseStrokeDim = dimensions.EllipseStrokeDim;
+            ellipseStrokeSpacer = dimensions.EllipseStrokeSpacer;
+            horizontalSpacer = dimensions.HorizontalSpacer;
+            lineThickness = dimensions.LineThickness;
+            occluderOffset = dimensions.OccluderOffset;
+            verticalSpacer = dimensions.VerticalSpacer;
+
+            keysColorCode = colorCode.KeysColorCode;
+
+            notInScaleBrush = colorCode.NotInScaleBrush;
+            majorBrush = colorCode.MajorBrush;
+            minorBrush = colorCode.MinorBrush;
+
+            generativePitch = buttonsSettings.GenerativeNote;
+            nCols = buttonsSettings.NCols;
+            nRows = buttonsSettings.NRows;
+            startPositionX = buttonsSettings.StartPositionX;
+            startPositionY = buttonsSettings.StartPositionY;
+            occluderAlpha = buttonsSettings.OccluderAlpha;
+
+            highlighter.Width = dimensions.HighlightRadius;
+            highlighter.Height = dimensions.HighlightRadius;
+            highlighter.StrokeThickness = dimensions.HighlightStrokeDim;
+            highlighter.Stroke = colorCode.HighlightBrush;
+        }
+
+        private void MoveHighlighter(NetychordsButton checkedButton)
+        {
+            Canvas.SetLeft(highlighter, Canvas.GetLeft(checkedButton) - highlighter.ActualWidth / 2.5);
+            Canvas.SetTop(highlighter, Canvas.GetTop(checkedButton) - highlighter.ActualHeight / 2.5);
         }
 
         private void NoteToColor(NetychordsButton button)
@@ -1487,53 +1531,55 @@ namespace Netytar
                 case "C":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x00, 0x00));
                     break;
+
                 case "C#":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xa9, 0x8a, 0x4d));
                     break;
+
                 case "D":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xA5, 0x00));
                     break;
+
                 case "D#":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xD7, 0x00));//
                     break;
+
                 case "E":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xFF, 0x00));
                     break;
+
                 case "F":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x90, 0xEE, 0x90));//
                     break;
+
                 case "F#":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0xFF, 0x00));
                     break;
+
                 case "G":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0xFF, 0xFF));
                     break;
+
                 case "G#":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x00, 0xFF));
                     break;
+
                 case "A":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0x00, 0xFF));
                     break;
+
                 case "A#":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xC0, 0xCB));//
                     break;
+
                 case "B":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x6F, 0x00, 0xFF));
                     break;
+
                 default:
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xFF, 0xFF));
                     break;
             }
-
-        }
-
-        public void UpdateHeadTrackerFeedback(HeadTrackerData headTrackerData)
-        {
-            if (headTrackerData != null)
-            {
-                htFeedbackModule.UpdateGraphics(headTrackerData, checkedButton);
-            }
-
         }
     }
 }

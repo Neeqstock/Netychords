@@ -5,79 +5,52 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Eyerpheus.Controllers.Graphics
+namespace Netychords.Surface
 {
     public class HTFeedbackModule
     {
         private const int Bar_horLineThickness = 4;
         private const int Bar_verLineThickness = 4;
-        private const int Half_midLineThickness = 5;
+        private const double Dead_midLineActiveOpacity = 1f;
+        private const int Dead_midLineThickness = 5;
         private const double Half_midLineActiveOpacity = 1f;
+        private const int Half_midLineThickness = 5;
         private readonly SolidColorBrush Bar_horLineStroke = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush Bar_verLineStroke = new SolidColorBrush(Colors.White);
+        private readonly SolidColorBrush Dead_midLineColor = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush Half_leftRectColor = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush Half_midLineColor = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush Half_rightRectColor = new SolidColorBrush(Colors.White);
         private Line Bar_horLine;
         private Line Bar_verLine;
         private double Bar_verLineHeight = 50;
-        private Canvas Canvas;
+        private Line Dead_midLine;
         private Rectangle Half_leftRect;
         private Line Half_midLine;
         private ValueMapperDouble Half_rectRangeMapper = new ValueMapperDouble(80, 1);
         private Rectangle Half_rightRect;
         private double Half_VLHeight;
-        public HTFeedbackModes Mode { get; set; }
+        private HTFeedbackModes mode;
+        public Canvas Canvas { get; set; }
+
+        public HTFeedbackModes Mode
+        {
+            get { return mode; }
+            set
+            {
+                mode = value;
+                DisposeElements();
+                CreateElements();
+            }
+        }
 
         public HTFeedbackModule(Canvas canvas, HTFeedbackModes mode)
         {
             Canvas = canvas;
             Mode = mode;
 
-            switch (mode)
-            {
-                case HTFeedbackModes.Bars:
-                    Bar_horLine = new Line();
-                    Bar_horLine.StrokeThickness = Bar_horLineThickness;
-                    Bar_horLine.Stroke = Bar_horLineStroke;
-                    Panel.SetZIndex(Bar_horLine, 2000);
-                    canvas.Children.Add(Bar_horLine);
-
-                    Bar_verLine = new Line();
-                    Bar_verLine.StrokeThickness = Bar_verLineThickness;
-                    Bar_verLine.Stroke = Bar_verLineStroke;
-                    Panel.SetZIndex(Bar_verLine, 2000);
-                    canvas.Children.Add(Bar_verLine);
-
-                    Half_VLHeight = Bar_verLineHeight / 2;
-
-                    break;
-
-                case HTFeedbackModes.HalfButton:
-                    Half_leftRect = new Rectangle();
-                    Half_leftRect.Fill = Half_leftRectColor;
-                    Half_leftRect.Opacity = 0;
-                    Panel.SetZIndex(Half_leftRect, 2000);
-                    canvas.Children.Add(Half_leftRect);
-
-                    Half_rightRect = new Rectangle();
-                    Half_rightRect.Fill = Half_rightRectColor;
-                    Half_rightRect.Opacity = 0;
-                    Panel.SetZIndex(Half_rightRect, 2000);
-                    canvas.Children.Add(Half_rightRect);
-
-                    Half_midLine = new Line();
-                    Half_midLine.Stroke = Half_midLineColor;
-                    Half_midLine.StrokeThickness = Half_midLineThickness;
-                    Half_midLine.Opacity = 0;
-                    Panel.SetZIndex(Half_midLine, 2001);
-                    canvas.Children.Add(Half_midLine);
-
-                    break;
-
-                case HTFeedbackModes.DeadZone:
-                    break;
-            }
+            DisposeElements();
+            CreateElements();
         }
 
         public void UpdateGraphics(HeadTrackerData headTrackerData, NetychordsButton checkedButton)
@@ -96,6 +69,70 @@ namespace Eyerpheus.Controllers.Graphics
                     Update_DeadZone(headTrackerData, checkedButton);
                     break;
             }
+        }
+
+        private void CreateElements()
+        {
+            switch (Mode)
+            {
+                case HTFeedbackModes.Bars:
+                    Bar_horLine = new Line();
+                    Bar_horLine.StrokeThickness = Bar_horLineThickness;
+                    Bar_horLine.Stroke = Bar_horLineStroke;
+                    Panel.SetZIndex(Bar_horLine, 2000);
+                    Canvas.Children.Add(Bar_horLine);
+
+                    Bar_verLine = new Line();
+                    Bar_verLine.StrokeThickness = Bar_verLineThickness;
+                    Bar_verLine.Stroke = Bar_verLineStroke;
+                    Panel.SetZIndex(Bar_verLine, 2000);
+                    Canvas.Children.Add(Bar_verLine);
+
+                    Half_VLHeight = Bar_verLineHeight / 2;
+
+                    break;
+
+                case HTFeedbackModes.HalfButton:
+                    Half_leftRect = new Rectangle();
+                    Half_leftRect.Fill = Half_leftRectColor;
+                    Half_leftRect.Opacity = 0;
+                    Panel.SetZIndex(Half_leftRect, 2000);
+                    Canvas.Children.Add(Half_leftRect);
+
+                    Half_rightRect = new Rectangle();
+                    Half_rightRect.Fill = Half_rightRectColor;
+                    Half_rightRect.Opacity = 0;
+                    Panel.SetZIndex(Half_rightRect, 2000);
+                    Canvas.Children.Add(Half_rightRect);
+
+                    Half_midLine = new Line();
+                    Half_midLine.Stroke = Half_midLineColor;
+                    Half_midLine.StrokeThickness = Half_midLineThickness;
+                    Half_midLine.Opacity = 0;
+                    Panel.SetZIndex(Half_midLine, 2001);
+                    Canvas.Children.Add(Half_midLine);
+
+                    break;
+
+                case HTFeedbackModes.DeadZone:
+                    Dead_midLine = new Line();
+                    Dead_midLine.Stroke = Dead_midLineColor;
+                    Dead_midLine.StrokeThickness = Dead_midLineThickness;
+                    Dead_midLine.Opacity = 0;
+                    Panel.SetZIndex(Dead_midLine, 2001);
+                    Canvas.Children.Add(Dead_midLine);
+                    break;
+            }
+        }
+
+        private void DisposeElements()
+        {
+            if (Bar_horLine != null) Canvas.Children.Remove(Bar_horLine);
+            if (Bar_verLine != null) Canvas.Children.Remove(Bar_verLine);
+            if (Half_leftRect != null) Canvas.Children.Remove(Half_leftRect);
+            if (Half_rightRect != null) Canvas.Children.Remove(Half_rightRect);
+            if (Half_midLine != null) Canvas.Children.Remove(Half_midLine);
+            if (Dead_midLine != null) Canvas.Children.Remove(Dead_midLine);
         }
 
         #region Update resolvers
@@ -122,6 +159,24 @@ namespace Eyerpheus.Controllers.Graphics
 
         private void Update_DeadZone(HeadTrackerData headTrackerData, NetychordsButton checkedButton)
         {
+            if (checkedButton != null)
+            {
+                var Occ = checkedButton.Occluder;
+
+                Dead_midLine.X1 = Canvas.GetLeft(Occ) + Occ.ActualWidth / 2;
+                Dead_midLine.Y1 = Canvas.GetTop(Occ);
+                Dead_midLine.X2 = Canvas.GetLeft(Occ) + Occ.ActualWidth / 2;
+                Dead_midLine.Y2 = Canvas.GetTop(Occ) + Occ.ActualHeight;
+
+                if (Rack.NetychordsDMIBox.InDeadZone)
+                {
+                    Dead_midLine.Opacity = Dead_midLineActiveOpacity;
+                }
+                else
+                {
+                    Dead_midLine.Opacity = 0;
+                }
+            }
         }
 
         private void Update_HalfButton(HeadTrackerData headTrackerData, NetychordsButton checkedButton)

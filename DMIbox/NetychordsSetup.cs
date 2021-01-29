@@ -12,6 +12,8 @@ using System.Windows.Interop;
 using Tobii.Interaction.Framework;
 using NeeqDMIs.Eyetracking.PointFilters;
 using Netytar.Behaviors.Eyetracker;
+using Eyerpheus.Controllers.Graphics;
+using Netychords.Surface;
 
 namespace Netytar.DMIBox
 {
@@ -71,6 +73,8 @@ namespace Netytar.DMIBox
 
             Rack.NetychordsDMIBox.NetychordsSurface = new NetychordsSurface(Rack.NetychordsDMIBox.MainWindow.canvasNetychords, dimension, colorCode, buttonsSettings, drawMode);
             Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+
+            Rack.NetychordsDMIBox.NetychordsSurface.HtFeedbackModule = new HTFeedbackModule(Rack.NetychordsDMIBox.NetychordsSurface.Canvas, HTFeedbackModule.HTFeedbackModes.DeadZone);
         }
     }
 }
