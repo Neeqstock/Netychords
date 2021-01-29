@@ -12,6 +12,7 @@ namespace Eyerpheus.Controllers.Graphics
         private const int Bar_horLineThickness = 4;
         private const int Bar_verLineThickness = 4;
         private const int Half_midLineThickness = 5;
+        private const double Half_midLineActiveOpacity = 1f;
         private readonly SolidColorBrush Bar_horLineStroke = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush Bar_verLineStroke = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush Half_leftRectColor = new SolidColorBrush(Colors.White);
@@ -161,7 +162,7 @@ namespace Eyerpheus.Controllers.Graphics
 
                 if (Rack.NetychordsDMIBox.InDeadZone)
                 {
-                    Half_midLine.Opacity = 1;
+                    Half_midLine.Opacity = Half_midLineActiveOpacity;
                 }
                 else
                 {

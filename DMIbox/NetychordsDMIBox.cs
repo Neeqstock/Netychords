@@ -367,6 +367,7 @@ namespace Netytar
                 }
                 else if (!isEndedStrum)
                 {
+                    InDeadZone = false;
                     switch (dirStrum)
                     {
                         case NetychordsDMIBox.DirectionStrum.Left:
