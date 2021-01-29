@@ -321,7 +321,7 @@
                         <!--<Border.Background>
                             <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
                         </Border.Background>-->
-                        <Slider Name="centerZone" Maximum="10" Minimum="0" TickPlacement="None" TickFrequency="1" Value="0"/>
+                        <Slider Name="sldCenterZone" Maximum="10" Minimum="0" TickPlacement="None" TickFrequency="1" Value="0" ValueChanged="centerZone_ValueChanged"  />
                     </Border>
                     <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="0,0,0,0">
                         <TextBlock Name="centerValue" Margin="0,5,0,0" Background="Black" Foreground="LightGreen" FontFamily="Digital-7 Italic" FontSize="12" TextAlignment="Center" Text="">

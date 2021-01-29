@@ -1,7 +1,4 @@
-﻿using EyeTribe.ClientSdk.Data;
-using NAudio.MediaFoundation;
-using NeeqDMIs;
-using NeeqDMIs.ATmega;
+﻿using NeeqDMIs.ATmega;
 using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.Music;
@@ -9,8 +6,6 @@ using Netytar.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Windows.Controls;
 
 namespace Netytar
 {
@@ -19,33 +14,44 @@ namespace Netytar
     /// </summary>
     public class NetychordsDMIBox : NeeqDMIs.DMIBox
     {
-        public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public KeyboardModule KeyboardModule;
+        public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public MainWindow MainWindow { get; set; }
         /*public DateTime startcalibration = new DateTime(2020, 01, 01, 00, 00, 00);*/
 
-
-       /* public bool calibrateStarted = false;
-        public bool calibrateEnded = false;*/
+        /* public bool calibrateStarted = false;
+         public bool calibrateEnded = false;*/
 
         #region Instrument logic
-        //private bool blow = false;
-        private int velocity = 127;
-        private int pressure = 127;
-        private int modulation = 0;
-        public List<int> reeds = new List<int>();
 
-        private MidiChord chord = new MidiChord(MidiNotes.C4, ChordType.Major);
-        public MidiChord lastChord;
-        private bool keyDown = false;
-        public string octaveNumber = "4";
-        public string firstNote = "C";
-        public string isPlaying = "";
-        public string layout = "Fifth circle";
         public List<string> arbitraryLines = new List<string>();
-        public bool strummed = false;
+
+        public string firstNote = "C";
+
+        public string isPlaying = "";
+
         public bool keyboardEmulator = true;
 
+        public MidiChord lastChord;
+
+        public string layout = "Fifth circle";
+
+        public string octaveNumber = "4";
+
+        public List<int> reeds = new List<int>();
+
+        public bool strummed = false;
+
+        private MidiChord chord = new MidiChord(MidiNotes.C4, ChordType.Major);
+
+        private bool keyDown = false;
+
+        private int modulation = 0;
+
+        private int pressure = 127;
+
+        //private bool blow = false;
+        private int velocity = 127;
 
         public MidiChord Chord
         {
@@ -62,7 +68,6 @@ namespace Netytar
                             PlayChord(value);
                             isPlaying = "Playing";
                             isEndedStrum = false;
-
                         }
                         else
                         {
@@ -82,7 +87,6 @@ namespace Netytar
                             PlayChord(value);
                             isPlaying = "Playing";
                             isEndedStrum = false;
-
                         }
                         else
                         {
@@ -116,24 +120,6 @@ namespace Netytar
             }
         }
 
-        public void ResetModulationAndPressure()
-        {
-            Modulation = 0;
-            Pressure = 127;
-            Velocity = 127;
-        }
-
-        
-        public int Pressure
-        {
-            get { return pressure; }
-            set
-            {
-                pressure = 127;
-                SetPressure();
-                
-            }
-        }
         public int Modulation
         {
             get { return modulation; }
@@ -141,6 +127,16 @@ namespace Netytar
             {
                 modulation = 0;
                 SetModulation();
+            }
+        }
+
+        public int Pressure
+        {
+            get { return pressure; }
+            set
+            {
+                pressure = 127;
+                SetPressure();
             }
         }
 
@@ -164,18 +160,6 @@ namespace Netytar
             }
         }
 
-        public void StopChord(MidiChord chord)
-        {
-            /*for (int i = 0; i < chord.interval.Count; i++)
-            {
-                MidiModule.StopNote((int)chord.rootNote + chord.interval[i]);
-            }*/
-
-            for (int i = 12; i < 128; i++)
-            {
-                MidiModule.StopNote(i);
-            }
-        }
         public void PlayChord(MidiChord chord)
         {
             List<int> notes = new List<int>();
@@ -188,6 +172,7 @@ namespace Netytar
                     minInterval = 36;
                     maxInterval = 47;
                     break;
+
                 case "C#":
                     minInterval = 37;
                     maxInterval = 48;
@@ -198,32 +183,32 @@ namespace Netytar
             {
                 int thisNote = (int)chord.rootNote + chord.interval[i];
 
-                for (int j=0; j<5; j++)
+                for (int j = 0; j < 5; j++)
                 {
                     minInterval = 36 + j * 12;
                     maxInterval = 47 + j * 12;
 
                     if (reeds.Contains(j))
                     {
-                        if ((thisNote + (j+1)*12 <= maxInterval && thisNote + (j+1)*12 >= minInterval))
+                        if ((thisNote + (j + 1) * 12 <= maxInterval && thisNote + (j + 1) * 12 >= minInterval))
                         {
-                            if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j+1)*12)))
+                            if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j + 1) * 12)))
                             {
-                                notes.Add((int)chord.rootNote + chord.interval[i] + (j+1)*12);
+                                notes.Add((int)chord.rootNote + chord.interval[i] + (j + 1) * 12);
                             }
                         }
-                        if (thisNote + j*12 <= maxInterval && thisNote + j*12 >= minInterval)
+                        if (thisNote + j * 12 <= maxInterval && thisNote + j * 12 >= minInterval)
                         {
                             if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j) * 12)))
                             {
-                                notes.Add((int)chord.rootNote + chord.interval[i] + j*12);
+                                notes.Add((int)chord.rootNote + chord.interval[i] + j * 12);
                             }
                         }
-                        if (thisNote + (j-1)*12 <= maxInterval && thisNote + (j-1)*12 >= minInterval)
+                        if (thisNote + (j - 1) * 12 <= maxInterval && thisNote + (j - 1) * 12 >= minInterval)
                         {
                             if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j - 1) * 12)))
                             {
-                                notes.Add((int)chord.rootNote + chord.interval[i] + (j-1)*12);
+                                notes.Add((int)chord.rootNote + chord.interval[i] + (j - 1) * 12);
                             }
                         }
                     }
@@ -231,51 +216,79 @@ namespace Netytar
                 //MidiModule.PlayNote((int)chord.rootNote + chord.interval[i], velocity);
             }
 
-            if(!(reeds.Count == 0))
+            if (!(reeds.Count == 0))
             {
-
                 int min = reeds.Min();
                 notes.Add((int)chord.rootNote + (min - 1) * 12);
             }
-
 
             for (int i = 0; i < notes.Count; i++)
             {
                 MidiModule.PlayNote(notes[i], velocity);
             }
-            
         }
-        private void SetPressure()
+
+        public void ResetModulationAndPressure()
         {
-            MidiModule.SetPressure(pressure);
+            Modulation = 0;
+            Pressure = 127;
+            Velocity = 127;
         }
+
+        public void StopChord(MidiChord chord)
+        {
+            /*for (int i = 0; i < chord.interval.Count; i++)
+            {
+                MidiModule.StopNote((int)chord.rootNote + chord.interval[i]);
+            }*/
+
+            for (int i = 12; i < 128; i++)
+            {
+                MidiModule.StopNote(i);
+            }
+        }
+
         private void SetModulation()
         {
             MidiModule.SetModulation(Modulation);
         }
-        #endregion
+
+        private void SetPressure()
+        {
+            MidiModule.SetPressure(pressure);
+        }
+
+        #endregion Instrument logic
 
         #region Graphic components
+
         private AutoScroller autoScroller;
-        public AutoScroller AutoScroller { get => autoScroller; set => autoScroller = value; }
-
         private NetychordsSurface netychordsSurface;
+        public AutoScroller AutoScroller { get => autoScroller; set => autoScroller = value; }
         public NetychordsSurface NetychordsSurface { get => netychordsSurface; set => netychordsSurface = value; }
-
 
         /*private CalibrationSurface calibrationSurface;
         public CalibrationSurface CalibrationSurface { get => calibrationSurface; set => calibrationSurface = value; }*/
-        #endregion
+
+        #endregion Graphic components
 
         #region HeadSensor
 
+        public bool isCentered = false;
+        public double maxYaw;
+        public double minYaw;
+        private directionStrum dirStrum;
+        private DateTime endingTime;
+        private double endStrum;
+        private int headTrackerPortNumber = 0;
+        private bool isEndedStrum = false;
+        private bool isStartedStrum = false;
+        private DateTime startingTime;
+        private double startStrum;
+        public double CenterZone { get; set; } = 0;
+        public HeadTrackerData HeadTrackerData { get; set; } = new HeadTrackerData();
         public SensorModule HeadTrackerModule { get; set; }
 
-        public string Str_HeadTrackerRaw { get; set; } = "Test";
-        public string Str_HeadTrackerCalib { get; set; } = "Test";
-        public HeadTrackerData HeadTrackerData { get; set; } = new HeadTrackerData();
-
-        private int headTrackerPortNumber = 0;
         public int HeadTrackerPortNumber
         {
             get
@@ -295,36 +308,27 @@ namespace Netytar
             }
         }
 
-
-        public bool isCentered = false;
-        public double minYaw;
-        public double maxYaw;
+        public bool InDeadZone { get; set; }
+        public string Str_HeadTrackerCalib { get; set; } = "Test";
+        public string Str_HeadTrackerRaw { get; set; } = "Test";
 
         public void CalibrationHeadSensor()
         {
-
             if (!isCentered)
             {
-                minYaw = HeadTrackerData.TranspCalibrationYaw - MainWindow.centerZone.Value;
-                maxYaw = HeadTrackerData.TranspCalibrationYaw + MainWindow.centerZone.Value;
+                minYaw = HeadTrackerData.TranspCalibrationYaw - CenterZone;
+                maxYaw = HeadTrackerData.TranspCalibrationYaw + CenterZone;
                 isCentered = true;
             }
         }
 
-        public double startStrum;
-        public double endStrum;
-        public bool inDeadZone;
-        public bool isStartedStrum = false;
-        public bool isEndedStrum = false;
-        public DateTime startingTime;
-        public DateTime endingTime;
-        public directionStrum dirStrum;
         public enum directionStrum
         {
             Right,
             Left
         }
-        #endregion
+
+        #endregion HeadSensor
 
         #region Strumming
 
@@ -337,11 +341,11 @@ namespace Netytar
                 {
                     startStrum = HeadTrackerData.TranspYaw;
                     isEndedStrum = false;
-                    inDeadZone = true;
+                    InDeadZone = true;
                 }
                 else if (!isStartedStrum && !isEndedStrum)
                 {
-                    inDeadZone = false;
+                    InDeadZone = false;
                     if (HeadTrackerData.TranspYaw < minYaw)
                     {
                         dirStrum = NetychordsDMIBox.directionStrum.Left;
@@ -389,7 +393,6 @@ namespace Netytar
                             else
                             {
                                 lastYaw = HeadTrackerData.TranspYaw;
-
                             }
                             break;
 
@@ -415,13 +418,10 @@ namespace Netytar
                                 {
                                     StopChord(lastChord);
                                 }*/
-
                             }
-
                             else
                             {
                                 lastYaw = HeadTrackerData.TranspYaw;
-
                             }
                             break;
                     }
@@ -429,7 +429,6 @@ namespace Netytar
             }
         }
 
-        #endregion
+        #endregion Strumming
     }
 }
-    

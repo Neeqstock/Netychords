@@ -66,7 +66,7 @@ namespace Netytar
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
                 lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName();
                 lblYaw.Text = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw.ToString();
-                centerValue.Text = Math.Round(centerZone.Value,0).ToString();
+                centerValue.Text = Math.Round(Rack.NetychordsDMIBox.CenterZone,0).ToString();
                 centerPitchValue.Text = Math.Round(centerPitchZone.Value,0).ToString();
 
 
@@ -493,6 +493,11 @@ namespace Netytar
             Rack.NetychordsDMIBox.HeadTrackerData.SetDeltaForAll();
             Rack.NetychordsDMIBox.CalibrationHeadSensor();
 
+        }
+
+        private void centerZone_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Rack.NetychordsDMIBox.CenterZone = sldCenterZone.Value;
         }
     }
 }
