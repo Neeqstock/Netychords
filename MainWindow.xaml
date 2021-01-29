@@ -122,7 +122,6 @@
                 <Grid Grid.Row="3" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
-                        <!--<ColumnDefinition Width = "1*"/>-->
                         <ColumnDefinition Width = "1*"/>
 
                     </Grid.ColumnDefinitions>
@@ -164,29 +163,6 @@
                             B
                         </ComboBoxItem>
                     </ComboBox>
-                    <!--<ComboBox x:Name="lstOctaveChanger" Grid.Column="1" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="Black">
-                        <ComboBoxItem>
-                            1
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            2
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            3
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            4
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            5
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            6
-                        </ComboBoxItem>
-                        <ComboBoxItem>
-                            7
-                        </ComboBoxItem>
-                    </ComboBox>-->
                     <ComboBox x:Name="lstReeds" Grid.Column="2" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="LstOctaveChanger_SelectionChanged" Background="Black" Foreground="Black">
                         <CheckBox x:Name="one" Checked="one_Checked" Unchecked="one_Unchecked">
                             1
@@ -230,9 +206,6 @@
                         </TextBlock>
                     </Border>
                     <Border HorizontalAlignment="Stretch" Margin="0,0,4,0" Width="Auto" Height="20" BorderThickness="0" BorderBrush="White" Grid.Column="1" Grid.RowSpan="2">
-                        <!--<Border.Background>
-                            <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
-                        </Border.Background>-->
                         <Slider Name="Margins" Maximum="1" Minimum="0" TickFrequency="1" TickPlacement="None" ValueChanged="Margins_ValueChanged" Value="1"/>
                     </Border>
                     <Border Background="Black" Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="0,0,0,0">
@@ -265,9 +238,6 @@
                             <ListBoxItem>
                                 Jazz
                             </ListBoxItem>
-                            <!--<ListBoxItem>
-                                Classical
-                            </ListBoxItem>-->
                         </ListBox>
                     </Grid>
                     <Grid Grid.Column="1">
@@ -303,24 +273,12 @@
                         </Button>
                     </Grid>
                 </Grid>
-                <!--<Grid Grid.Row="7" Margin="5,1,5,1">
-                    <Border Grid.Column="2" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" Margin="5,5,5,5">
-                        <Button x:Name="btnCalibrate" Foreground="White" Content="Calibrate" Click="BtnCalibrate_Click"  Width="Auto" Height="Auto" FontFamily="Magneto" FontSize="20" IsCancel="True" >
-                            <Button.Background>
-                                <ImageBrush ImageSource="Images/Backgrounds/MidWood.png" TileMode="Tile" Stretch="None"></ImageBrush>
-                            </Button.Background>
-                        </Button>
-                    </Border>
-                </Grid>-->
                 <Grid Grid.Row="7" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "2.5*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
                     <Border HorizontalAlignment="Stretch" Margin="0,0,4,0" Width="Auto" Height="20" BorderThickness="0" BorderBrush="White" Grid.Column="0" Grid.RowSpan="2">
-                        <!--<Border.Background>
-                            <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
-                        </Border.Background>-->
                         <Slider Name="sldCenterZone" Maximum="10" Minimum="0" TickPlacement="None" TickFrequency="1" Value="0" ValueChanged="centerZone_ValueChanged"  />
                     </Border>
                     <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="0,0,0,0">
@@ -334,9 +292,6 @@
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
                     <Border HorizontalAlignment="Stretch" Margin="0,0,4,0" Width="Auto" Height="20" BorderThickness="0" BorderBrush="White" Grid.Column="0" Grid.RowSpan="2">
-                        <!--<Border.Background>
-                            <ImageBrush ImageSource="/Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
-                        </Border.Background>-->
                         <Slider Name="centerPitchZone" Maximum="40" Minimum="10" TickPlacement="None" TickFrequency="1" Value="0"/>
                     </Border>
                     <Border Background="Black" Grid.Column="1" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="30" Margin="0,0,0,0">
@@ -372,12 +327,11 @@
                 <ImageBrush ImageSource="Images/Backgrounds/LightWood.jpg" TileMode="Tile"/>
             </Border.Background>
 
-            <TabControl x:Name="tabSolo" Margin="-6,-6,6,6" SelectionChanged="TabSolo_SelectionChanged">
+            <TabControl x:Name="tabSolo" Margin="0,0,0,0" SelectionChanged="TabSolo_SelectionChanged">
                 <TabItem x:Name="tabNetychords"  Header="Netychords" Visibility="Collapsed">
                     <Grid>
                         <Grid.Background>
                             <SolidColorBrush Color="Black"></SolidColorBrush>
-                            <!--ImageBrush ImageSource="Images/Backgrounds/PanWood.png" TileMode="Tile"></-->
                         </Grid.Background>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="12*"/>
@@ -387,67 +341,10 @@
                                 <Canvas.Background>
                                     <SolidColorBrush Color="Black" Opacity="0"/>
                                 </Canvas.Background>
-                                <!--
-                                <Button Content="C" Height="35" Width="35" Canvas.Left="2520" Canvas.Top="2260" MouseEnter="Button_MouseEnter"/>
-    
-                                <Button Content="C" Height="35" Width="35" Canvas.Left="520" Canvas.Top="60" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="F" Height="35" Width="35" Canvas.Left="360" Canvas.Top="100" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="G" Height="35" Width="35" Canvas.Left="680" Canvas.Top="100" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="D" Height="35" Width="35" Canvas.Left="790" Canvas.Top="190" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="A#" Height="35" Width="35" Canvas.Left="250" Canvas.Top="190" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="D#" Height="35" Width="35" Canvas.Left="200" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="A" Height="35" Width="35" Canvas.Left="840" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="G#" Height="35" Width="35" Canvas.Left="250" Canvas.Top="470" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="E" Height="35" Width="35" Canvas.Left="790" Canvas.Top="470" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="C#" Height="35" Width="35" Canvas.Left="360" Canvas.Top="560" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="B" Height="35" Width="35" Canvas.Left="680" Canvas.Top="560" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="F#" Height="35" Width="35" Canvas.Left="520" Canvas.Top="600" MouseEnter="Button_MouseEnter"/>
-                                
-                                <Button Content="Am" Height="35" Width="35" Canvas.Left="520" Canvas.Top="140" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Dm" Height="35" Width="35" Canvas.Left="400" Canvas.Top="180" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Em" Height="35" Width="35" Canvas.Left="640" Canvas.Top="180" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Bm" Height="35" Width="35" Canvas.Left="710" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Gm" Height="35" Width="35" Canvas.Left="330" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Cm" Height="35" Width="35" Canvas.Left="280" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="F#m" Height="35" Width="35" Canvas.Left="760" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Fm" Height="35" Width="35" Canvas.Left="330" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="C#m" Height="35" Width="35" Canvas.Left="710" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="A#m" Height="35" Width="35" Canvas.Left="400" Canvas.Top="480" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="G#m" Height="35" Width="35" Canvas.Left="640" Canvas.Top="480" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="D#m" Height="35" Width="35" Canvas.Left="520" Canvas.Top="520" MouseEnter="Button_MouseEnter"/>
-                                
-                                <Button Content="B7" Height="35" Width="35" Canvas.Left="520" Canvas.Top="220" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="E7" Height="35" Width="35" Canvas.Left="450" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="F#7" Height="35" Width="35" Canvas.Left="590" Canvas.Top="240" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Db7" Height="35" Width="35" Canvas.Left="640" Canvas.Top="280" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="A7" Height="35" Width="35" Canvas.Left="400" Canvas.Top="280" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="D7" Height="35" Width="35" Canvas.Left="360" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Ab7" Height="35" Width="35" Canvas.Left="680" Canvas.Top="330" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="G7" Height="35" Width="35" Canvas.Left="400" Canvas.Top="380" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Eb7" Height="35" Width="35" Canvas.Left="640" Canvas.Top="380" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="C7" Height="35" Width="35" Canvas.Left="450" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="Bb7" Height="35" Width="35" Canvas.Left="590" Canvas.Top="420" MouseEnter="Button_MouseEnter"/>
-                                <Button Content="F7" Height="35" Width="35" Canvas.Left="520" Canvas.Top="440" MouseEnter="Button_MouseEnter"/>
-                                -->
                             </Canvas>
                         </ScrollViewer>
                     </Grid>
                 </TabItem>
-                <Button Content="Button" Height="36" Width="38"/>
-
-                <!--<TabItem x:Name="tabNetytar"  Header="Netytar" Visibility="Collapsed">
-                    <Grid>
-                        <Grid.Background>
-                            <SolidColorBrush Color="Black"></SolidColorBrush>
-                        </Grid.Background>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="12*"/>
-                        </Grid.RowDefinitions>
-                        <ScrollViewer x:Name="scrlNetytar" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="0">
-                            <Canvas x:Name="canvasNetytar" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0"></Canvas>
-                        </ScrollViewer>
-                    </Grid>
-                </TabItem>-->
             </TabControl>
         </Border>
 

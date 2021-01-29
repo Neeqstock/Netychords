@@ -38,7 +38,6 @@ namespace HANDMIs_TestSuite.Utils
             yawTransf.Delta = Yaw;
             calibrationYawTransf.Delta = CalibrationYaw;
             rollTransf.Delta = Roll;
-            //MessageBox.Show(yawTransf.Delta.ToString(CultureInfo.InvariantCulture) + "\n" + yawTransf.getDeltaBar());
         }
 
         public void SetPitchDelta()

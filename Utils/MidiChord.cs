@@ -24,32 +24,6 @@ namespace Netytar.Utils
         {
             List<int> temp = new List<int>();
 
-            if (Rack.NetychordsDMIBox != null)
-            {
-                /*for (int i = 0; i < Rack.NetychordsDMIBox.reeds.Count; i++)
-                {
-                    temp.Add(Rack.NetychordsDMIBox.reeds[i]*12);
-
-                    if (type == ChordType.Major) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 4); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); };
-                    if (type == ChordType.Minor) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 3); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); };
-                    if (type == ChordType.MajorSeventh) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 4); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 11); };
-                    if (type == ChordType.MinorSeventh) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 3); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 10); };
-                    if (type == ChordType.DominantSeventh) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 4); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 10); };
-                    if (type == ChordType.DiminishedSeventh) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 3); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 6); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 9); };
-                    if (type == ChordType.Sus2) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 2); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); };
-                    if (type == ChordType.Sus4) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 5); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); };
-                    if (type == ChordType.Augmented) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 4); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 8); };
-                    if (type == ChordType.DominantNinth) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 4); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 14); };
-                    if (type == ChordType.DominantEleventh) { temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 4); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 7); temp.Add(i + 14); temp.Add(Rack.NetychordsDMIBox.reeds[i] * 12 + 17); };
-                }*/
-
-                //if (Rack.NetychordsDMIBox.reeds.Count == 0)
-                //{
-                //}
-            }
-
-
-
             temp.Add(0);
 
             if (type == ChordType.Major) { temp.Add(4); temp.Add(7); };
@@ -63,12 +37,8 @@ namespace Netytar.Utils
             if (type == ChordType.DiminishedSeventh) { temp.Add(3); temp.Add(6); temp.Add(9); };
             if (type == ChordType.Sus2) { temp.Add(2); temp.Add(7); };
             if (type == ChordType.Sus4) { temp.Add(5); temp.Add(7); };
-            /*if (type == ChordType.Augmented) { temp.Add(4); temp.Add(8); };*/
             if (type == ChordType.DominantNinth) { temp.Add(4); temp.Add(7); temp.Add(14); };
             if (type == ChordType.DominantEleventh) { temp.Add(4); temp.Add(7); temp.Add(14); temp.Add(17); };
-
-
-
 
             return temp;
         }
@@ -91,9 +61,6 @@ namespace Netytar.Utils
                 case ChordType.Minor:
                     name = "m";
                     break;
-                /*case ChordType.Augmented:
-                    name = "aug";
-                    break;*/
                 case ChordType.DiminishedSeventh:
                     name = "dim7";
                     break;

@@ -151,19 +151,7 @@ namespace Netytar
                 starterNote = "C";
             }
 
-            if (true)//Rack.NetychordsDMIBox.MainWindow.lstOctaveChanger.SelectedItem != null)
-            {
-                //starterOctave = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstOctaveChanger.SelectedItem).Content.ToString();
-                // nCols = 96 - 12 * Int32.Parse(starterOctave);
-                nCols = 12;
-
-            }
-            else
-            {
-                //nCols = 96 - 12 * 4;
-                nCols = 12;
-                //starterOctave = Rack.NetychordsDMIBox.octaveNumber;
-            }
+            nCols = 12;
 
             firstChord = MidiChord.ChordFactory(starterNote, "2", ChordType.Major);
             int halfSpacer = horizontalSpacer / 2;
