@@ -295,17 +295,6 @@ namespace Netytar
             }
         }
 
-        /*public List<TargetDistance> TargetDistances = new List<TargetDistance>()
-        {
-            new TargetDistance(300),
-            new TargetDistance(300),
-            new TargetDistance(500),
-            new TargetDistance(500),
-            new TargetDistance(700),
-            new TargetDistance(700),
-            new TargetDistance(900),
-            new TargetDistance(900),
-        };*/
 
         public bool isCentered = false;
         public double minYaw;
@@ -314,7 +303,7 @@ namespace Netytar
         public void CalibrationHeadSensor()
         {
 
-            if (/*calibrateStarted && calibrateEnded &&*/ !isCentered)
+            if (!isCentered)
             {
                 minYaw = HeadTrackerData.TranspCalibrationYaw - MainWindow.centerZone.Value;
                 maxYaw = HeadTrackerData.TranspCalibrationYaw + MainWindow.centerZone.Value;
@@ -339,7 +328,7 @@ namespace Netytar
 
         #region Strumming
 
-        public void elaborateStrumming()
+        public void ElaborateStrumming()
         {
             double lastYaw = 0;
             if (isCentered && MainWindow.NetychordsStarted)
