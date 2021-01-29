@@ -24,10 +24,10 @@ namespace Netytar.Behaviors.Sensor
                 Rack.NetychordsDMIBox.HeadTrackerData.Roll = double.Parse(split[2], CultureInfo.InvariantCulture);
 
                 //Strumming is elaborated only while the head position is centered along the pitch axis
-                if (Rack.NetychordsDMIBox.HeadTrackerData.Pitch <= Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value && Rack.NetychordsDMIBox.HeadTrackerData.Pitch >= -Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value)
-                {
+                //if (Rack.NetychordsDMIBox.HeadTrackerData.Pitch <= Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value && Rack.NetychordsDMIBox.HeadTrackerData.Pitch >= -Rack.NetychordsDMIBox.MainWindow.centerPitchZone.Value)
+                //{
                     Rack.NetychordsDMIBox.ElaborateStrumming();
-                }
+                //}
             }
 
             //Debugging variables
