@@ -1,0 +1,4 @@
+#Git ignored folder
+obj/
+bin/
+.vs/
