@@ -33,6 +33,7 @@
                     <RowDefinition Height="60*"/>
                     <RowDefinition Height="45*"/>
                     <RowDefinition Height="209*"/>
+                    <RowDefinition Height="30*"/>
                     <RowDefinition Height="58*"/>
                     <RowDefinition Height="58*"/>
                     <RowDefinition Height="69*"/>
@@ -275,6 +276,22 @@
                 </Grid>
                 <Grid Grid.Row="7" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width = "1*"/>
+                    </Grid.ColumnDefinitions>
+                    <ComboBox x:Name="lstFeedbackModeChanger" Grid.Column="0" Margin="5,5,5,5" BorderThickness="2" BorderBrush="WhiteSmoke" Width="Auto" Height="Auto" SelectionChanged="lstFeedbackModeChanger_SelectionChanged" Background="Black" Foreground="Black">
+                        <ComboBoxItem>
+                            Bars
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            HalfButton
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            DeadZone
+                        </ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="8" Margin="5,1,5,1">
+                    <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "2.5*"/>
                         <ColumnDefinition Width = "1*"/>
                     </Grid.ColumnDefinitions>
@@ -286,7 +303,7 @@
                         </TextBlock>
                     </Border>
                 </Grid>
-                <Grid Grid.Row="8" Margin="5,1,5,1">
+                <Grid Grid.Row="9" Margin="5,1,5,1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "2.5*"/>
                         <ColumnDefinition Width = "1*"/>
@@ -299,7 +316,7 @@
                         </TextBlock>
                     </Border>
                 </Grid>
-                <Grid Grid.Row="9" Margin="5,5,5,5">
+                <Grid Grid.Row="10" Margin="5,5,5,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width = "1*"/>
                         <ColumnDefinition Width = "1*"/>

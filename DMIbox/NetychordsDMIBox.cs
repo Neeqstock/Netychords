@@ -17,10 +17,6 @@ namespace Netytar
         public KeyboardModule KeyboardModule;
         public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
         public MainWindow MainWindow { get; set; }
-        /*public DateTime startcalibration = new DateTime(2020, 01, 01, 00, 00, 00);*/
-
-        /* public bool calibrateStarted = false;
-         public bool calibrateEnded = false;*/
 
         #region Instrument logic
 
@@ -50,7 +46,6 @@ namespace Netytar
 
         private int pressure = 127;
 
-        //private bool blow = false;
         private int velocity = 127;
 
         public MidiChord Chord
@@ -80,19 +75,7 @@ namespace Netytar
                 else
                 {
                     if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
-                    {/*
-                        if (keyDown)
-                        {
-                            StopChord(chord);
-                            PlayChord(value);
-                            isPlaying = "Playing";
-                            isEndedStrum = false;
-                        }
-                        else
-                        {
-                            StopChord(chord);
-                            isPlaying = "";
-                        }*/
+                    {
                         chord = value;
                     }
                 }
@@ -166,19 +149,6 @@ namespace Netytar
             int minInterval;
             int maxInterval;
 
-            /*switch (chord.rootNote.ToStandardString().Remove(chord.rootNote.ToStandardString().Length - 1))
-            {
-                case "C":
-                    minInterval = 36;
-                    maxInterval = 47;
-                    break;
-
-                case "C#":
-                    minInterval = 37;
-                    maxInterval = 48;
-                    break;
-            }*/
-
             for (int i = 0; i < chord.interval.Count; i++)
             {
                 int thisNote = (int)chord.rootNote + chord.interval[i];
@@ -213,7 +183,6 @@ namespace Netytar
                         }
                     }
                 }
-                //MidiModule.PlayNote((int)chord.rootNote + chord.interval[i], velocity);
             }
 
             if (!(reeds.Count == 0))
@@ -237,10 +206,6 @@ namespace Netytar
 
         public void StopChord(MidiChord chord)
         {
-            /*for (int i = 0; i < chord.interval.Count; i++)
-            {
-                MidiModule.StopNote((int)chord.rootNote + chord.interval[i]);
-            }*/
 
             for (int i = 12; i < 128; i++)
             {
@@ -266,9 +231,6 @@ namespace Netytar
         private NetychordsSurface netychordsSurface;
         public AutoScroller AutoScroller { get => autoScroller; set => autoScroller = value; }
         public NetychordsSurface NetychordsSurface { get => netychordsSurface; set => netychordsSurface = value; }
-
-        /*private CalibrationSurface calibrationSurface;
-        public CalibrationSurface CalibrationSurface { get => calibrationSurface; set => calibrationSurface = value; }*/
 
         #endregion Graphic components
 
@@ -380,11 +342,6 @@ namespace Netytar
                                 isEndedStrum = true;
                                 isStartedStrum = false;
                                 Velocity = midiVelocity;
-                                /*if (lastChord != null && lastChord != Chord)
-                                {
-                                    StopChord(lastChord);
-                                }*/
-                                //StopChord(NetychordsSurface.LastCheckedButton.Chord);
 
                                 if (lastChord != null)
                                 {
@@ -409,18 +366,12 @@ namespace Netytar
                                 isEndedStrum = true;
                                 isStartedStrum = false;
                                 Velocity = midiVelocity;
-                                //StopChord(NetychordsSurface.LastCheckedButton.Chord);
                                 if (lastChord != null)
                                 {
                                     StopChord(lastChord);
                                 }
                                 PlayChord(Chord);
                                 lastChord = Chord;
-                                /*
-                                if (lastChord != null && lastChord != Chord)
-                                {
-                                    StopChord(lastChord);
-                                }*/
                             }
                             else
                             {

@@ -138,10 +138,7 @@ namespace Netytar.Utils
             {
                 midiNote = "" + note[0];
             };
-            /*if (chordType == ChordType.DominantSeventh)
-            {
-                octaveNumber = (int.Parse(octaveNumber) - 1).ToString();
-            }*/
+
             midiNote += octaveNumber;
 
             MidiNotes rootNote = (MidiNotes)System.Enum.Parse(typeof(MidiNotes), midiNote);
@@ -152,15 +149,14 @@ namespace Netytar.Utils
 
     public enum ChordType
     {
-        Major,//
-        Minor,//
-        MajorSeventh,//
-        MinorSeventh,//
-        DominantSeventh,//
+        Major,
+        Minor,
+        MajorSeventh,
+        MinorSeventh,
+        DominantSeventh,
         DiminishedSeventh,
-        Sus2,//
-        Sus4,//
-        //Augmented,
+        Sus2,
+        Sus4,
         DominantNinth,
         DominantEleventh,
         SemiDiminished,

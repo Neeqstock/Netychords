@@ -184,13 +184,7 @@ namespace Netytar
 
         private void CanvasNetytchords_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            /*if (true == false)
-            {
-                if (System.Windows.Input.Keyboard.IsKeyUp(System.Windows.Input.Key.Space) && Rack.DMIBox.playing == true)
-                {
-                    Rack.DMIBox.StopChord(Rack.DMIBox.lastChord);
-                }
-            }*/
+
         }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
@@ -214,6 +208,7 @@ namespace Netytar
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
         }
+
 
         private void Margins_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -498,6 +493,22 @@ namespace Netytar
         private void centerZone_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Rack.NetychordsDMIBox.CenterZone = sldCenterZone.Value;
+        }
+
+        private void lstFeedbackModeChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (((ListBoxItem)lstFeedbackModeChanger.SelectedItem).Content.ToString()){
+                case "Bars":
+                    Rack.NetychordsDMIBox.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)0;
+                    break;
+                case "HalfButton":
+                    Rack.NetychordsDMIBox.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)1;
+                    break;
+                case "DeadZone":
+                    Rack.NetychordsDMIBox.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)2;
+                    break;
+            }
+
         }
     }
 }

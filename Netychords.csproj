@@ -202,7 +202,6 @@
     <Compile Include="Surface\RhythmFlasher.cs" />
     <Compile Include="Utils\HeadTrackerData.cs" />
     <Compile Include="Utils\MidiChord.cs" />
-    <Compile Include="Utils\TargetDistance.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
