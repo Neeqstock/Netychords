@@ -22,8 +22,6 @@ namespace Netytar
         //private readonly SolidColorBrush BlankBrush = new SolidColorBrush(Colors.Black);
 
         private bool netychordsStarted = false;
-        /*private bool calibrateStarted = false;
-        private bool calibrateEnded = false;*/
         private bool clickedButton = false;
         DateTime clicked;
         DateTime centering = new DateTime(2020,01,01,0,0,0);
@@ -75,19 +73,6 @@ namespace Netytar
                 Rack.NetychordsDMIBox.NetychordsSurface.UpdateHeadTrackerFeedback(Rack.NetychordsDMIBox.HeadTrackerData);
             }
 
-            /*if (Rack.NetychordsDMIBox.calibrateStarted && !Rack.NetychordsDMIBox.calibrateEnded)
-            {
-                TimeSpan calibrationLimit = new TimeSpan(0,0,45);
-                TimeSpan calibration = DateTime.Now.Subtract(Rack.NetychordsDMIBox.startcalibration);
-                if (calibration >= calibrationLimit)
-                {
-                    //Rack.NetychordsDMIBox.CalibrationSurface.DrawButtons();
-                    btnCalibrate.Foreground = new SolidColorBrush(Colors.Green);
-                    btnCalibrate.Content = "Sensor ready!";
-
-                }
-            }*/
-
             if (clickedButton)
             {
                 TimeSpan limit = new TimeSpan(0, 0, 0, 0, 30);
@@ -108,10 +93,6 @@ namespace Netytar
         /// </summary>
         private void StartNetytar(object sender, RoutedEventArgs e)
         {
-            /*if (Rack.NetychordsDMIBox.calibrateStarted)
-            {
-                canvasNetychords.Children.Clear();
-            }*/
             if (!netychordsStarted)
             {
                 // Launches the Setup class
@@ -121,7 +102,6 @@ namespace Netytar
                 // Changes the aspect of the Start button
                 btnStart.IsEnabled = false;
                 btnStart.Foreground = new SolidColorBrush(Colors.Black);
-                /*Rack.NetychordsDMIBox.startcalibration = DateTime.Now;*/
                 // Checks the selected MIDI port is available
                 CheckMidiPort();
                 InitializeSensorPortText();
@@ -193,25 +173,6 @@ namespace Netytar
             }
         }
 
-        private void Button_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            if (netychordsStarted)
-            {
-                //DMIBox.SelectedChord = Contenuto del bottone;
-
-                System.Windows.Controls.Button button = (System.Windows.Controls.Button)sender;
-                string noteName = (string)button.Content;
-                //int octaveNumber = 4;
-                //Rack.DMIBox.Chord = MidiChord.StringToNote(noteName, Rack.DMIBox.octaveNumber);
-                //DMIBox.ChordType chordtype = DMIBox.ChordType.Major;
-                /*if (Rack.DMIBox.playing == true)
-                {
-                    Rack.DMIBox.StopChord(Rack.DMIBox.lastChord);
-                };*/
-
-                
-            }
-        }
 
         // [Corrente]
 
@@ -239,15 +200,7 @@ namespace Netytar
 
         private void LstOctaveChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*Rack.NetychordsDMIBox.octaveNumber = ((ListBoxItem)lstOctaveChanger.SelectedItem).Content.ToString();
-            if (netychordsStarted)
-            {
-                canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
-            }*/
+
         }
 
         private void LstNoteChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -363,66 +316,7 @@ namespace Netytar
             }
         }
 
-        /*private void BtnCalibrate_Click(object sender, RoutedEventArgs e)
-        {
-            if (netychordsStarted)
-            {
-                canvasNetychords.Children.Clear();
-            }
-            // Launches the Setup class
-            
-            bool finded = false;
-
-            CalibrateSetup calibrateSetup = new CalibrateSetup(this);
-            calibrateSetup.Setup();
-
-
-            for (int i = 1; i<15; i++)
-            {
-                if (!Rack.NetychordsDMIBox.HeadTrackerModule.Connect(Rack.NetychordsDMIBox.MainWindow.SensorPort))
-                {
-                    sensorPort++;
-                }
-                else
-                {
-                    finded = true;
-                    UpdateSensorConnection();
-                    break;
-                }
-            }
-
-            if (finded)
-            {
-
-                btnCalibrate.Foreground = new SolidColorBrush(Colors.Green);
-                btnCalibrate.Content = "Please wait";
-                //Rack.NetychordsDMIBox.CalibrationSurface.DrawButtons();
-
-                InitializeSensorPortText();
-
-
-                // Changes the aspect of the Start button
-                btnCalibrate.IsEnabled = false;
-                btnCalibrate.Foreground = new SolidColorBrush(Colors.Black);
-                btnStart.IsEnabled = true;
-                btnStart.Foreground = new SolidColorBrush(Colors.White);
-
-                Rack.NetychordsDMIBox.calibrateStarted = true;
-                Rack.NetychordsDMIBox.startcalibration = DateTime.Now;
-                Rack.NetychordsDMIBox.keyboardEmulator = false;
-            }
-            else
-            {
-                btnCalibrate.IsEnabled = false;
-                btnCalibrate.Foreground = new SolidColorBrush(Colors.Red);
-                btnStart.IsEnabled = true;
-                btnStart.Foreground = new SolidColorBrush(Colors.White);
-                btnCalibrate.Content = "Not found";
-                sensorPort = 1;
-            }
-
-        }*/
-
+        
         private void BtnSensorPortMinus_Click(object sender, RoutedEventArgs e)
         {
             if (netychordsStarted)
@@ -475,7 +369,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -489,7 +382,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -502,7 +394,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -516,7 +407,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -530,7 +420,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -545,7 +434,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -558,7 +446,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -571,7 +458,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -584,7 +470,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -597,7 +482,6 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                //Rack.NetychordsDMIBox.NetychordsSurface.nCols = 96 - 12 * Int32.Parse(Rack.NetychordsDMIBox.octaveNumber);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -606,10 +490,8 @@ namespace Netytar
 
         private void BtnCenter_Click(object sender, RoutedEventArgs e)
         {
-            /*Rack.NetychordsDMIBox.calibrateEnded = true;*/
             Rack.NetychordsDMIBox.HeadTrackerData.SetDeltaForAll();
             Rack.NetychordsDMIBox.CalibrationHeadSensor();
-            /*btnCalibrate.Content = "Calibrated";*/
 
         }
     }
