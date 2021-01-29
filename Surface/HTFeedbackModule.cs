@@ -1,7 +1,6 @@
 ﻿using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Utils;
 using Netytar;
-using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -10,26 +9,22 @@ namespace Eyerpheus.Controllers.Graphics
 {
     public class HTFeedbackModule
     {
-        private Canvas Canvas;
-        private Line horLine;
-        private Line verLine;
-
-
         private const int horLineThickness = 4;
         private const int verLineThickness = 4;
+        private readonly SolidColorBrush deadZoneColor = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush horLineStroke = new SolidColorBrush(Colors.White);
-        private readonly SolidColorBrush verLineStroke = new SolidColorBrush(Colors.White);
-        private double verLineHeight = 50;
-        private double halfVLHeight;
-
-        private Rectangle leftRect;
-        private Rectangle rightRect;
         private readonly SolidColorBrush leftRectColor = new SolidColorBrush(Colors.White);
         private readonly SolidColorBrush rightRectColor = new SolidColorBrush(Colors.White);
-        private readonly SolidColorBrush deadZoneColor = new SolidColorBrush(Colors.White);
-        private ValueMapperDouble rectRangeMapper = new ValueMapperDouble(80, 1);
+        private readonly SolidColorBrush verLineStroke = new SolidColorBrush(Colors.White);
+        private Canvas Canvas;
         private Line centerRect;
-
+        private double halfVLHeight;
+        private Line horLine;
+        private Rectangle leftRect;
+        private ValueMapperDouble rectRangeMapper = new ValueMapperDouble(80, 1);
+        private Rectangle rightRect;
+        private Line verLine;
+        private double verLineHeight = 50;
         public HTFeedbackModes Mode { get; set; }
 
         public HTFeedbackModule(Canvas canvas, HTFeedbackModes mode)
@@ -55,11 +50,11 @@ namespace Eyerpheus.Controllers.Graphics
                     halfVLHeight = verLineHeight / 2;
 
                     break;
-                
+
                 case HTFeedbackModes.HalfButton:
                     leftRect = new Rectangle();
                     leftRect.Fill = leftRectColor;
-                    leftRect.Opacity = 0; 
+                    leftRect.Opacity = 0;
                     Panel.SetZIndex(leftRect, 2000);
                     canvas.Children.Add(leftRect);
 
@@ -69,13 +64,11 @@ namespace Eyerpheus.Controllers.Graphics
                     Panel.SetZIndex(rightRect, 2000);
                     canvas.Children.Add(rightRect);
 
-
-
                     break;
+
                 case HTFeedbackModes.DeadZone:
                     break;
             }
-
         }
 
         public void UpdateGraphics(HeadTrackerData headTrackerData, NetychordsButton checkedButton)
@@ -85,18 +78,41 @@ namespace Eyerpheus.Controllers.Graphics
                 case HTFeedbackModes.Bars:
                     Update_Bars(headTrackerData, checkedButton);
                     break;
+
                 case HTFeedbackModes.HalfButton:
                     Update_HalfButton(headTrackerData, checkedButton);
                     break;
+
                 case HTFeedbackModes.DeadZone:
                     Update_DeadZone(headTrackerData, checkedButton);
                     break;
             }
         }
 
+        #region Update resolvers
+
+        private void Update_Bars(HeadTrackerData headTrackerData, NetychordsButton checkedButton)
+        {
+            if (checkedButton != null)
+            {
+                horLine.X1 = Canvas.GetLeft(checkedButton) + checkedButton.ActualWidth / 2;
+                horLine.Y1 = Canvas.GetTop(checkedButton) + checkedButton.ActualHeight / 2;
+
+                horLine.X2 = horLine.X1 + headTrackerData.TranspYaw;
+                horLine.Y2 = horLine.Y1;
+
+                verLine.X1 = horLine.X2;
+                verLine.Y1 = horLine.Y2 - halfVLHeight;
+
+                verLine.X2 = horLine.X2;
+                verLine.Y2 = horLine.Y2 + halfVLHeight;
+
+                Canvas.UpdateLayout();
+            }
+        }
+
         private void Update_DeadZone(HeadTrackerData headTrackerData, NetychordsButton checkedButton)
         {
-            
         }
 
         private void Update_HalfButton(HeadTrackerData headTrackerData, NetychordsButton checkedButton)
@@ -135,25 +151,7 @@ namespace Eyerpheus.Controllers.Graphics
             }
         }
 
-        private void Update_Bars(HeadTrackerData headTrackerData, NetychordsButton checkedButton)
-        {
-            if (checkedButton != null)
-            {
-                horLine.X1 = Canvas.GetLeft(checkedButton) + checkedButton.ActualWidth / 2;
-                horLine.Y1 = Canvas.GetTop(checkedButton) + checkedButton.ActualHeight / 2;
-
-                horLine.X2 = horLine.X1 + headTrackerData.TranspYaw;
-                horLine.Y2 = horLine.Y1;
-
-                verLine.X1 = horLine.X2;
-                verLine.Y1 = horLine.Y2 - halfVLHeight;
-
-                verLine.X2 = horLine.X2;
-                verLine.Y2 = horLine.Y2 + halfVLHeight;
-
-                Canvas.UpdateLayout();
-            }
-        }
+        #endregion Update resolvers
 
         public enum HTFeedbackModes
         {
