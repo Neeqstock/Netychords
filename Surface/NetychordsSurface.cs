@@ -107,7 +107,7 @@ namespace Netytar
 
             canvas.Children.Add(highlighter);
 
-            htFeedbackModule = new HTFeedbackModule(canvas, HTFeedbackModule.HTFeedbackModes.Bars);
+            htFeedbackModule = new HTFeedbackModule(canvas, HTFeedbackModule.HTFeedbackModes.HalfButton);
         }
 
         private void LoadSettings(IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings)
@@ -164,39 +164,6 @@ namespace Netytar
                 nCols = 12;
                 //starterOctave = Rack.NetychordsDMIBox.octaveNumber;
             }
-
-            /*if ((bool)Rack.NetychordsDMIBox.MainWindow.one.IsChecked)
-            {
-                starterOctave = "1";
-            }
-            else if ((bool)Rack.NetychordsDMIBox.MainWindow.two.IsChecked)
-            {
-                starterOctave = "2";
-            }
-            else if ((bool)Rack.NetychordsDMIBox.MainWindow.three.IsChecked)
-            {
-                starterOctave = "3";
-            }
-            else if ((bool)Rack.NetychordsDMIBox.MainWindow.four.IsChecked)
-            {
-                starterOctave = "4";
-            }
-            else if ((bool)Rack.NetychordsDMIBox.MainWindow.five.IsChecked)
-            {
-                starterOctave = "5";
-            }
-            else if ((bool)Rack.NetychordsDMIBox.MainWindow.six.IsChecked)
-            {
-                starterOctave = "6";
-            }
-            else if ((bool)Rack.NetychordsDMIBox.MainWindow.seven.IsChecked)
-            {
-                starterOctave = "7";
-            }
-            else
-            {
-                starterOctave = "4";
-            }*/
 
             firstChord = MidiChord.ChordFactory(starterNote, "2", ChordType.Major);
             int halfSpacer = horizontalSpacer / 2;
