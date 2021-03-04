@@ -65,12 +65,12 @@ namespace Netytar
             {
                 lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
                 lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName();
-                lblYaw.Text = Rack.NetychordsDMIBox.HeadTrackerData.TranspYaw.ToString();
+                lblYaw.Text = Rack.NetychordsDMIBox.HTData.TranspYaw.ToString();
                 centerValue.Text = Math.Round(Rack.NetychordsDMIBox.CenterZone,0).ToString();
                 centerPitchValue.Text = Math.Round(centerPitchZone.Value,0).ToString();
 
 
-                Rack.NetychordsDMIBox.NetychordsSurface.UpdateHeadTrackerFeedback(Rack.NetychordsDMIBox.HeadTrackerData);
+                Rack.NetychordsDMIBox.NetychordsSurface.UpdateHeadTrackerFeedback(Rack.NetychordsDMIBox.HTData);
             }
 
             if (clickedButton)
@@ -485,7 +485,7 @@ namespace Netytar
 
         private void BtnCenter_Click(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.HeadTrackerData.SetDeltaForAll();
+            Rack.NetychordsDMIBox.HTData.CalibrateCenter();
             Rack.NetychordsDMIBox.CalibrationHeadSensor();
 
         }

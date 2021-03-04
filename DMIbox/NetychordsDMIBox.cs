@@ -206,7 +206,6 @@ namespace Netytar
 
         public void StopChord(MidiChord chord)
         {
-
             for (int i = 12; i < 128; i++)
             {
                 MidiModule.StopNote(i);
@@ -237,20 +236,25 @@ namespace Netytar
         #region HeadSensor
 
         public bool isCentered = false;
-        public double maxYaw;
-        public double minYaw;
         private DirectionStrum dirStrum;
-        private DateTime endingTime;
 
+        //private DateTime endingTime;
         private double endStrum;
+
         private int headTrackerPortNumber = 0;
         private bool isEndedStrum = false;
         private bool isStartedStrum = false;
-        private DateTime startingTime;
-        private double startStrum;
-        public double CenterZone { get; set; } = 0;
+        private double lastYaw = 0;
+        //private DateTime startingTime;
+
+        //private double startStrum;
+        public double CenterZone
+        {
+            get { return deadzoneTop; }
+            set { deadzoneTop = value; deadzoneBottom = -value; }
+        }
+
         public double Distance { get; private set; }
-        public HeadTrackerData HeadTrackerData { get; set; } = new HeadTrackerData();
         public SensorModule HeadTrackerModule { get; set; }
 
         public int HeadTrackerPortNumber
@@ -272,17 +276,98 @@ namespace Netytar
             }
         }
 
-        public bool InDeadZone { get; set; }
+        public HeadTrackerData HTData { get; set; } = new HeadTrackerData();
+        public bool InDeadZone { get; private set; } = false;
         public string Str_HeadTrackerCalib { get; set; } = "Test";
         public string Str_HeadTrackerRaw { get; set; } = "Test";
+        private double deadzoneBottom { get; set; } = 1f;
+        private double deadzoneTop { get; set; } = 1f;
 
         public void CalibrationHeadSensor()
         {
-            if (!isCentered)
+            HTData.CalibrateCenter();
+            isCentered = true;
+        }
+
+        public void ElaborateStrumming()
+        {
+            if (isCentered && MainWindow.NetychordsStarted)
             {
-                minYaw = HeadTrackerData.TranspCalibrationYaw - CenterZone;
-                maxYaw = HeadTrackerData.TranspCalibrationYaw + CenterZone;
-                isCentered = true;
+                if (HTData.TranspYaw <= deadzoneTop && HTData.TranspYaw >= deadzoneBottom)
+                {
+                    //startStrum = HeadTrackerData.TranspYaw;
+                    isEndedStrum = false;
+                    InDeadZone = true;
+                }
+                else if (!isStartedStrum && !isEndedStrum)
+                {
+                    InDeadZone = false;
+                    if (HTData.TranspYaw < deadzoneBottom)
+                    {
+                        dirStrum = NetychordsDMIBox.DirectionStrum.Left;
+                        isStartedStrum = true;
+                        isEndedStrum = false;
+                        lastYaw = HTData.TranspYaw;
+                    }
+                    if (HTData.TranspYaw > deadzoneTop)
+                    {
+                        dirStrum = NetychordsDMIBox.DirectionStrum.Right;
+                        isStartedStrum = true;
+                        isEndedStrum = false;
+                        lastYaw = HTData.TranspYaw;
+                    }
+                }
+                else if (!isEndedStrum)
+                {
+                    InDeadZone = false;
+                    switch (dirStrum)
+                    {
+                        case NetychordsDMIBox.DirectionStrum.Left:
+                            if (HTData.TranspYaw > lastYaw)
+                            {
+                                endStrum = lastYaw;
+                                Distance = endStrum - deadzoneBottom;
+                                int midiVelocity = (int)(40 + 1.4 * Math.Abs(Distance));
+                                isEndedStrum = true;
+                                isStartedStrum = false;
+                                Velocity = midiVelocity;
+
+                                if (lastChord != null)
+                                {
+                                    StopChord(lastChord);
+                                }
+                                PlayChord(Chord);
+                                lastChord = Chord;
+                            }
+                            else
+                            {
+                                lastYaw = HTData.TranspYaw;
+                            }
+                            break;
+
+                        case NetychordsDMIBox.DirectionStrum.Right:
+                            if (HTData.TranspYaw < lastYaw)
+                            {
+                                endStrum = lastYaw;
+                                Distance = endStrum - deadzoneTop;
+                                int midiVelocity = (int)(40 + 1.4 * Math.Abs(Distance));
+                                isEndedStrum = true;
+                                isStartedStrum = false;
+                                Velocity = midiVelocity;
+                                if (lastChord != null)
+                                {
+                                    StopChord(lastChord);
+                                }
+                                PlayChord(Chord);
+                                lastChord = Chord;
+                            }
+                            else
+                            {
+                                lastYaw = HTData.TranspYaw;
+                            }
+                            break;
+                    }
+                }
             }
         }
 
@@ -293,96 +378,5 @@ namespace Netytar
         }
 
         #endregion HeadSensor
-
-        #region Strumming
-
-        public void ElaborateStrumming()
-        {
-            double lastYaw = 0;
-            if (isCentered && MainWindow.NetychordsStarted)
-            {
-                if (HeadTrackerData.TranspYaw <= maxYaw && HeadTrackerData.TranspYaw >= minYaw)
-                {
-                    startStrum = HeadTrackerData.TranspYaw;
-                    isEndedStrum = false;
-                    InDeadZone = true;
-                }
-                else if (!isStartedStrum && !isEndedStrum)
-                {
-                    InDeadZone = false;
-                    if (HeadTrackerData.TranspYaw < minYaw)
-                    {
-                        dirStrum = NetychordsDMIBox.DirectionStrum.Left;
-                        startingTime = DateTime.Now;
-                        isStartedStrum = true;
-                        isEndedStrum = false;
-                        lastYaw = HeadTrackerData.TranspYaw;
-                    }
-                    else if (HeadTrackerData.TranspYaw > maxYaw)
-                    {
-                        dirStrum = NetychordsDMIBox.DirectionStrum.Right;
-                        startingTime = DateTime.Now;
-                        isStartedStrum = true;
-                        isEndedStrum = false;
-                        lastYaw = HeadTrackerData.TranspYaw;
-                    }
-                }
-                else if (!isEndedStrum)
-                {
-                    InDeadZone = false;
-                    switch (dirStrum)
-                    {
-                        case NetychordsDMIBox.DirectionStrum.Left:
-                            if (HeadTrackerData.TranspYaw > lastYaw)
-                            {
-                                endStrum = lastYaw;
-                                endingTime = DateTime.Now;
-                                Distance = endStrum - minYaw;
-                                int midiVelocity = (int)(40 + 1.4 * Math.Abs(Distance));
-                                isEndedStrum = true;
-                                isStartedStrum = false;
-                                Velocity = midiVelocity;
-
-                                if (lastChord != null)
-                                {
-                                    StopChord(lastChord);
-                                }
-                                PlayChord(Chord);
-                                lastChord = Chord;
-                            }
-                            else
-                            {
-                                lastYaw = HeadTrackerData.TranspYaw;
-                            }
-                            break;
-
-                        case NetychordsDMIBox.DirectionStrum.Right:
-                            if (HeadTrackerData.TranspYaw < lastYaw)
-                            {
-                                endStrum = lastYaw;
-                                endingTime = DateTime.Now;
-                                Distance = endStrum - maxYaw;
-                                int midiVelocity = (int)(40 + 1.4 * Math.Abs(Distance));
-                                isEndedStrum = true;
-                                isStartedStrum = false;
-                                Velocity = midiVelocity;
-                                if (lastChord != null)
-                                {
-                                    StopChord(lastChord);
-                                }
-                                PlayChord(Chord);
-                                lastChord = Chord;
-                            }
-                            else
-                            {
-                                lastYaw = HeadTrackerData.TranspYaw;
-                            }
-                            break;
-                    }
-                }
-            }
-        }
-
-        #endregion Strumming
     }
 }
