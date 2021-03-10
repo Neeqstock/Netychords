@@ -1,6 +1,4 @@
-﻿using NeeqDMIs.Music;
-using Netytar.Utils;
-using System.Runtime.CompilerServices;
+﻿using Netytar.Utils;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -12,10 +10,12 @@ namespace Netytar
     public class NetychordsButton : RadioButton
     {
         #region Internal params
+
         private MidiChord chord;
+        private NetychordsSurface NetychordsDrawer;
+        private Rectangle occluder;
         public MidiChord Chord { get { return chord; } set { chord = value; } }
 
-        private Rectangle occluder;
         public Rectangle Occluder
         {
             get
@@ -29,8 +29,7 @@ namespace Netytar
             }
         }
 
-        private NetychordsSurface NetychordsDrawer;
-        #endregion
+        #endregion Internal params
 
         public NetychordsButton(NetychordsSurface NetychordsDrawer) : base()
         {

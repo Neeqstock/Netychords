@@ -30,7 +30,9 @@ namespace Netytar
 
         public MidiChord lastChord;
 
-        public string layout = "Fifth circle";
+        public Layouts Layout = Layouts.FifthCircle;
+
+        
 
         public string octaveNumber = "4";
 
@@ -238,7 +240,6 @@ namespace Netytar
         public bool isCentered = false;
         private DirectionStrum dirStrum;
 
-        //private DateTime endingTime;
         private double endStrum;
 
         private int headTrackerPortNumber = 0;
@@ -378,5 +379,15 @@ namespace Netytar
         }
 
         #endregion HeadSensor
+    }
+
+    public enum Layouts
+    {
+        FifthCircle,
+        Arbitrary,
+        Stradella,
+        Jazz,
+        Pop,
+        Rock
     }
 }

@@ -115,7 +115,7 @@ namespace Netytar
 
             canvas.Children.Add(highlighter);
         }
-
+        
         public void DrawButtons()
         {
             if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
@@ -142,19 +142,19 @@ namespace Netytar
             }
             else
             {
-                if (Rack.NetychordsDMIBox.layout == "Stradella" || Rack.NetychordsDMIBox.layout == "Fifth circle")
+                if (Rack.NetychordsDMIBox.Layout == Layouts.Stradella || Rack.NetychordsDMIBox.Layout == Layouts.FifthCircle)
                 {
                     nRows = 11;
                 }
-                else if (Rack.NetychordsDMIBox.layout == "Jazz")
+                else if (Rack.NetychordsDMIBox.Layout == Layouts.Jazz)
                 {
                     nRows = 7;
                 }
-                else if (Rack.NetychordsDMIBox.layout == "Pop")
+                else if (Rack.NetychordsDMIBox.Layout == Layouts.Pop)
                 {
                     nRows = 4;
                 }
-                else if (Rack.NetychordsDMIBox.layout == "Rock")
+                else if (Rack.NetychordsDMIBox.Layout == Layouts.Rock)
                 {
                     nRows = 5;
                 }
@@ -172,7 +172,7 @@ namespace Netytar
 
                     if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
                     {
-                        if (Rack.NetychordsDMIBox.layout == "Stradella")
+                        if (Rack.NetychordsDMIBox.Layout == Layouts.Stradella)
                         {
                             spacer = 100;
                             firstSpacer = row * spacer / 4;
@@ -212,7 +212,7 @@ namespace Netytar
                     ChordType thisChordType;
                     MidiNotes thisNote;
 
-                    if (Rack.NetychordsDMIBox.layout == "Arbitrary" && Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
+                    if (Rack.NetychordsDMIBox.Layout == Layouts.Arbitrary && Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
                     {
                         string type = Rack.NetychordsDMIBox.arbitraryLines[Rack.NetychordsDMIBox.arbitraryLines.Count - row - 1];
 
@@ -464,23 +464,6 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
-                            /*case "Augmented":
-                                thisChordType = ChordType.Augmented;
-                                if (col == 0)
-                                {
-                                    thisNote = firstChord.rootNote;
-                                }
-                                else if (col % 2 != 0)
-                                {
-                                    thisNote = actualChord.rootNote - 5;
-                                }
-                                else
-                                {
-                                    thisNote = actualChord.rootNote + 7;
-                                };
-                                actualChord = new MidiChord(thisNote, thisChordType);
-                                NetychordsButtons[row, col].Chord = actualChord;
-                                break;*/
                             case "SemiDiminished":
                                 thisChordType = ChordType.SemiDiminished;
                                 if (firstChord.chordType != ChordType.SemiDiminished)
@@ -524,7 +507,7 @@ namespace Netytar
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.layout == "Pop")
+                    else if (Rack.NetychordsDMIBox.Layout == Layouts.Pop)
                     {
                         switch (row)
                         {
@@ -611,7 +594,7 @@ namespace Netytar
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.layout == "Rock")
+                    else if (Rack.NetychordsDMIBox.Layout == Layouts.Rock)
                     {
                         switch (row)
                         {
@@ -722,7 +705,7 @@ namespace Netytar
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.layout == "Jazz")
+                    else if (Rack.NetychordsDMIBox.Layout == Layouts.Jazz)
                     {
                         switch (row)
                         {
@@ -886,7 +869,7 @@ namespace Netytar
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.layout != "Stradella")
+                    else if (Rack.NetychordsDMIBox.Layout != Layouts.Stradella)
                     {
                         switch (row)
                         {
@@ -1374,7 +1357,7 @@ namespace Netytar
 
                     #region Draw the button on canvas
 
-                    if (Rack.NetychordsDMIBox.layout != "Stradella")
+                    if (Rack.NetychordsDMIBox.Layout != Layouts.Stradella)
                     {
                         if (!isPairRow)
                         {
