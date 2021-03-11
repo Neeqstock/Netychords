@@ -1,7 +1,7 @@
 ﻿using NeeqDMIs.ATmega;
 using System.Globalization;
 
-namespace Netytar.Behaviors.Sensor
+namespace Netychords.Behaviors.Sensor
 {
     public class HSreadSerial : ISensorReaderBehavior
     {

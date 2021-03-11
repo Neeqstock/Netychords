@@ -1,6 +1,6 @@
 ﻿using NeeqDMIs.Eyetracking.PointFilters;
-using Netytar.DMIBox;
-using Netytar.Utils;
+using Netychords.DMIBox;
+using Netychords.Utils;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace Netytar
+namespace Netychords
 {
     /// <summary>
     /// Logica di interazione per MainWindow.xaml
@@ -71,7 +71,7 @@ namespace Netytar
             }
             if (netychordsStarted)
             {
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
@@ -171,7 +171,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -183,7 +183,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -195,7 +195,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -207,7 +207,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -284,7 +284,7 @@ namespace Netytar
 
                 arbitraryStart.IsEnabled = false;
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -296,7 +296,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -311,7 +311,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -323,7 +323,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -336,7 +336,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -395,7 +395,7 @@ namespace Netytar
             {
                 canvasNetychords.Children.Clear();
                 Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new PointFilterMAExpDecaying(0.1f));
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
                 IDimension dimension = new DimensionInvert();
                 IColorCode colorCode = new ColorCodeStandard();
                 IButtonsSettings buttonsSettings = new ButtonsSettingsChords();
@@ -419,7 +419,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -431,7 +431,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -443,7 +443,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }
@@ -455,7 +455,7 @@ namespace Netytar
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.ChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
+                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
                 Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
                 canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
             }

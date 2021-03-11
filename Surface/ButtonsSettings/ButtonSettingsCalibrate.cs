@@ -1,6 +1,6 @@
-﻿using Netytar.Utils;
+﻿using Netychords.Utils;
 
-namespace Netytar
+namespace Netychords
 {
     class ButtonsSettingsCalibrate : IButtonsSettings
     {

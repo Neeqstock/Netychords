@@ -1,6 +1,6 @@
 ﻿using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Utils;
-using Netytar;
+using Netychords;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;

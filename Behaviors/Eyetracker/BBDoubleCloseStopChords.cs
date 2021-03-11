@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netytar.Behaviors.Eyetracker
+namespace Netychords.Behaviors.Eyetracker
 {
     class BBDoubleCloseStopChords : ATobiiBlinkBehavior
     {

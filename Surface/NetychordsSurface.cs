@@ -2,14 +2,14 @@
 using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Music;
 using Netychords.Surface;
-using Netytar.Utils;
+using Netychords.Utils;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace Netytar
+namespace Netychords
 {
     public enum NetychordsSurfaceDrawModes
     {
@@ -115,9 +115,10 @@ namespace Netytar
 
             canvas.Children.Add(highlighter);
         }
-        
+
         public void DrawButtons()
         {
+            // STARTER NOTE =====================
             if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
             {
                 starterNote = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem).Content.ToString();
@@ -127,15 +128,17 @@ namespace Netytar
                 starterNote = "C";
             }
 
+            // INIZIALIZZAZIONE VARIABILI PER L'ITERAZIONE =====================
             nCols = 12;
 
-            firstChord = MidiChord.ChordFactory(starterNote, "2", ChordType.Major);
+            firstChord = MidiChord.StringToChordFactory(starterNote, "2", ChordType.Major);
             int halfSpacer = horizontalSpacer / 2;
             int spacer = horizontalSpacer;
             int firstSpacer = 0;
 
             bool isPairRow;
 
+            // INIZIALIZZAZIONE NUMERO RIGHE =====================
             if (Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
             {
                 nRows = Rack.NetychordsDMIBox.arbitraryLines.Count;
@@ -163,6 +166,8 @@ namespace Netytar
                     nRows = 11;
                 }
             }
+
+            // CICLO PRINCIPALE =====================
 
             for (int row = 0; row < nRows; row++)
             {
@@ -464,6 +469,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case "SemiDiminished":
                                 thisChordType = ChordType.SemiDiminished;
                                 if (firstChord.chordType != ChordType.SemiDiminished)
@@ -1101,23 +1107,7 @@ namespace Netytar
                                 actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
-                            /*case 10:
-                                thisChordType = ChordType.Augmented;
-                                if (col == 0)
-                                {
-                                    thisNote = firstChord.rootNote;
-                                }
-                                else if (col % 2 != 0)
-                                {
-                                    thisNote = actualChord.rootNote - 5;
-                                }
-                                else
-                                {
-                                    thisNote = actualChord.rootNote + 7;
-                                };
-                                actualChord = new MidiChord(thisNote, thisChordType);
-                                NetychordsButtons[row, col].Chord = actualChord;
-                                break;*/
+
                             default:
                                 break;
                         }
@@ -1404,28 +1394,27 @@ namespace Netytar
                     NetychordsButtons[row, col].Height = buttonHeight;
 
                     #endregion Draw the button on canvas
-
-                    /*
-
-                    #region Define rootNote of this chord
-
-                    int calcShift;
-                    if (col % 2 != 0)
-                    {
-                        calcShift = col * 7;
-                    }
-                    else
-                    {
-                        calcShift = col * 7;
-                    }
-
-                    MidiNotes thisNote = firstChord.rootNote + calcShift;
-
-                    #endregion Define rootNote of this chord
-
-                    NetychordsButtons[row, col].Chord = new MidiChord(thisNote, thisChordType);*/
                 }
             }
+        }
+
+        public void DrawButtons_New()
+        {
+            // STARTER NOTE ========================
+            if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
+            {
+                starterNote = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem).Content.ToString();
+            }
+            else
+            {
+                starterNote = "C";
+            }
+
+            Panel.SetZIndex(highlighter, 30);
+            
+            // CHIAMATA AL LAYOUTDRAWER
+            firstChord = MidiChord.StringToChordFactory(starterNote, "2", ChordType.Major);
+            Rack.NetychordsDMIBox.Layout.Draw(firstChord, Canvas, NetychordsButtons);
         }
 
         public void FlashMovementLine()
@@ -1470,8 +1459,15 @@ namespace Netytar
             Canvas.Children.Remove(((Image)sender));
         }
 
+        public IDimension Dimension { get; private set; }
+        public IColorCode ColorCode { get; private set; }
+        public IButtonsSettings ButtonSettings { get; private set; }
         private void LoadSettings(IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings)
         {
+            this.Dimension = dimensions;
+            this.ColorCode = colorCode;
+            this.ButtonSettings = buttonsSettings;
+
             buttonHeight = dimensions.ButtonHeight;
             buttonWidth = dimensions.ButtonWidth;
             ellipseStrokeDim = dimensions.EllipseStrokeDim;

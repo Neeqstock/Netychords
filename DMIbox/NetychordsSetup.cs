@@ -5,17 +5,17 @@ using NeeqDMIs.Eyetracking.Tobii;
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.MIDI;
-using Netytar.Behaviors.Sensor;
-using Netytar.DMIBox.KeyboardBehaviors;
+using Netychords.Behaviors.Sensor;
+using Netychords.DMIBox.KeyboardBehaviors;
 using System;
 using System.Windows.Interop;
 using Tobii.Interaction.Framework;
 using NeeqDMIs.Eyetracking.PointFilters;
-using Netytar.Behaviors.Eyetracker;
+using Netychords.Behaviors.Eyetracker;
 using Eyerpheus.Controllers.Graphics;
 using Netychords.Surface;
 
-namespace Netytar.DMIBox
+namespace Netychords.DMIBox
 {
     public class NetychordsSetup
     {
@@ -36,7 +36,7 @@ namespace Netytar.DMIBox
             midiDeviceFinder.SetToLastDevice();
 
             // EYETRACKER
-            if(Rack.NetychordsDMIBox.Eyetracker == Eyetracker.Tobii)
+            if(Rack.NetychordsDMIBox.Eyetracker == EyetrackerModels.Tobii)
             {
                 Rack.NetychordsDMIBox.TobiiModule = new TobiiModule(GazePointDataMode.Unfiltered);
                 Rack.NetychordsDMIBox.TobiiModule.Start();
@@ -44,7 +44,7 @@ namespace Netytar.DMIBox
                 //Rack.NetychordsDMIBox.TobiiModule.HeadPoseBehaviors.Add(new HPBvelocityPlay(8, 12, 2f, 120f, 0.2f));
             }
 
-            if(Rack.NetychordsDMIBox.Eyetracker == Eyetracker.Eyetribe)
+            if(Rack.NetychordsDMIBox.Eyetracker == EyetrackerModels.EyeTribe)
             {
                 Rack.NetychordsDMIBox.EyeTribeModule = new EyeTribeModule();
                 Rack.NetychordsDMIBox.EyeTribeModule.Start();

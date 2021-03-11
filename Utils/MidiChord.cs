@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Netytar.Utils
+namespace Netychords.Utils
 {
     public class MidiChord
     {
@@ -45,11 +45,11 @@ namespace Netytar.Utils
 
         public string ChordName()
         {
-            string name = rootNote.ToStandardString().Remove(rootNote.ToStandardString().Length - 1) + ChordTypeAbbreviation();
+            string name = rootNote.ToStandardString().Remove(rootNote.ToStandardString().Length - 1) + GetChordTypeAbbreviation();
             return name;
         }
 
-        public string ChordTypeAbbreviation()
+        public string GetChordTypeAbbreviation()
         {
             ChordType type = chordType;
             string name;
@@ -102,7 +102,7 @@ namespace Netytar.Utils
             return name;
         }
 
-        public static MidiChord ChordFactory(string note, string octaveNumber, ChordType chordType)
+        public static MidiChord StringToChordFactory(string note, string octaveNumber, ChordType chordType)
         {
             string midiNote;
 

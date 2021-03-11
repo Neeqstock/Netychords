@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Windows.Media;
 using Eyerpheus.Controllers.Music;
 
-namespace Netytar
+namespace Netychords
 {
     class RhythmFlasher
     {

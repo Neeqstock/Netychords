@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace Netytar
+namespace Netychords
 {
     /// <summary>
     /// Automatically scrolls a ScrollViewer following the mouse.

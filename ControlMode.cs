@@ -1,4 +1,4 @@
-﻿namespace Netytar
+﻿namespace Netychords
 {
     public enum ControlModes
     {

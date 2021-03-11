@@ -1,8 +1,9 @@
-﻿using NeeqDMIs.Keyboard;
+﻿using NeeqDMIs.Eyetracking.Utils;
+using NeeqDMIs.Keyboard;
 using RawInputProcessor;
 using System.Windows;
 
-namespace Netytar
+namespace Netychords
 {
      public class KBemulateMouse : IKeyboardBehavior
     {
@@ -43,12 +44,12 @@ namespace Netytar
             switch (Rack.NetychordsDMIBox.Eyetracker)
             {
 
-                case Eyetracker.Tobii:
+                case EyetrackerModels.Tobii:
                     Rack.NetychordsDMIBox.TobiiModule.MouseEmulator.EyetrackerToMouse = eyeTrackerToMouse;
                     Rack.NetychordsDMIBox.TobiiModule.MouseEmulator.CursorVisible = cursorVisible;
                     Rack.NetychordsDMIBox.AutoScroller.Enabled = autoScrollerEnabled;
                     break;
-                case Eyetracker.Eyetribe:
+                case EyetrackerModels.EyeTribe:
                     Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulator.EyetrackerToMouse = eyeTrackerToMouse;
                     Rack.NetychordsDMIBox.EyeTribeModule.MouseEmulator.CursorVisible = cursorVisible;
                     Rack.NetychordsDMIBox.AutoScroller.Enabled = autoScrollerEnabled;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Media;
 
-namespace Netytar
+namespace Netychords
 {
     public interface IColorCode
     {

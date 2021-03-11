@@ -2,7 +2,7 @@
 using NeeqDMIs.Music;
 using RawInputProcessor;
 
-namespace Netytar.DMIBox.KeyboardBehaviors
+namespace Netychords.DMIBox.KeyboardBehaviors
 {
     class KBplayStop : IKeyboardBehavior
     {

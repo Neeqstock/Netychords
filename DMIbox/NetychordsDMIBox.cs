@@ -1,13 +1,14 @@
 ﻿using NeeqDMIs.ATmega;
+using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Keyboard;
 using NeeqDMIs.Music;
-using Netytar.Utils;
+using Netychords.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Netytar
+namespace Netychords
 {
     /// <summary>
     /// DMIBox for Netytar, implementing the internal logic of the instrument.
@@ -15,7 +16,7 @@ namespace Netytar
     public class NetychordsDMIBox : NeeqDMIs.DMIBox
     {
         public KeyboardModule KeyboardModule;
-        public Eyetracker Eyetracker { get; set; } = Eyetracker.Tobii;
+        public EyetrackerModels Eyetracker { get; set; } = EyetrackerModels.Tobii;
         public MainWindow MainWindow { get; set; }
 
         #region Instrument logic
@@ -379,15 +380,5 @@ namespace Netytar
         }
 
         #endregion HeadSensor
-    }
-
-    public enum Layouts
-    {
-        FifthCircle,
-        Arbitrary,
-        Stradella,
-        Jazz,
-        Pop,
-        Rock
     }
 }
