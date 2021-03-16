@@ -11,9 +11,34 @@ namespace Netychords.Surface.FlowerLayout
 
     public static class FlowerFamiliesMethods
     {
-        public static SolidColorBrush GetColor(this FlowerFamilies family)
+        public static Color GetColor(this FlowerFamilies family, FlowerButtonPositions position)
         {
-
+            switch (family)
+            {
+                case FlowerFamilies.Major:
+                    switch (position)
+                    {
+                        case FlowerButtonPositions.C:
+                            return Colors.DarkRed;
+                            break;
+                        default:
+                            return Colors.Red;
+                            break;
+                    }
+                    break;
+                case FlowerFamilies.Minor:
+                    switch (position)
+                    {
+                        case FlowerButtonPositions.C:
+                            return Colors.DarkBlue;
+                            break;
+                        default:
+                            return Colors.Azure;
+                            break;
+                    }
+                    break;
+            }
+            return Colors.White;
         }
     }
 }
