@@ -189,6 +189,9 @@
     <Compile Include="Surface\Dimensions\DimensionInvert.cs" />
     <Compile Include="Surface\Dimensions\DimensionLaptop.cs" />
     <Compile Include="Surface\Dimensions\IDimension.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerButton.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerButtonPositions.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerFamilies.cs" />
     <Compile Include="Surface\HTFeedbackModule.cs" />
     <Compile Include="Surface\IndependentLineFlashTimer.cs">
       <SubType>Component</SubType>

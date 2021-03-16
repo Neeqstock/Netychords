@@ -356,6 +356,7 @@
                         <ScrollViewer x:Name="scrlNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" Grid.Row="0">
                             <Canvas x:Name="canvasNetychords" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0" Width="2000" Height="2000" MouseMove="CanvasNetytchords_MouseMove">
                                 <Canvas.Background>
+
                                     <SolidColorBrush Color="Black" Opacity="0"/>
                                 </Canvas.Background>
                             </Canvas>
