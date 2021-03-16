@@ -35,7 +35,7 @@ namespace Netychords
 
         
 
-        public string octaveNumber = "4";
+        public string octaveNumber = "2";
 
         public List<int> reeds = new List<int>();
 
@@ -172,7 +172,7 @@ namespace Netychords
                         }
                         if (thisNote + j * 12 <= maxInterval && thisNote + j * 12 >= minInterval)
                         {
-                            if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + (j) * 12)))
+                            if (!(notes.Contains((int)chord.rootNote + chord.interval[i] + j * 12)))
                             {
                                 notes.Add((int)chord.rootNote + chord.interval[i] + j * 12);
                             }

@@ -12,12 +12,14 @@ namespace Netychords.Utils
         public MidiNotes rootNote;
         public ChordType chordType;
         public List<int> interval;
+        public MidiChord nextFifth;
 
         public MidiChord(MidiNotes root, ChordType type)
         {
             rootNote = root;
             chordType = type;
             interval = GenerateInterval(type);
+        //    nextFifth = generateNextFifth(this);
         }
 
         public List<int> GenerateInterval(ChordType type)
@@ -144,6 +146,14 @@ namespace Netychords.Utils
             MidiNotes rootNote = (MidiNotes)System.Enum.Parse(typeof(MidiNotes), midiNote);
 
             return new MidiChord(rootNote, chordType);
+        }
+
+        public MidiChord generateNextFifth()
+        {
+            MidiNotes nextNote = (rootNote + 7);
+            string tmp = nextNote.ToStandardString().Remove(nextNote.ToStandardString().Length - 1);
+            MidiChord nextFifth = StringToChordFactory(tmp, "2", chordType);
+            return nextFifth;
         }
     };
 
