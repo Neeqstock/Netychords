@@ -15,15 +15,23 @@ namespace Netychords.Surface.FlowerLayout
 
         public MidiNotes RootNote { get; private set; }
 
-        public FlowerButton(MidiNotes rootNote, FlowerConfig config, int Xcenter, int Ycenter, NetychordsSurface surface)
+        public FlowerButton(MidiNotes rootNote, FlowerConfig config, int Xcenter, int Ycenter, NetychordsSurface surface, FlowerGridDimensions gridDim)
         {
             this.RootNote = rootNote;
             LoadFlowerConfig(config);
-            SetPositions(Xcenter, Ycenter);
             CreateButtons(surface);
             SetButtonsDimensions(buttonDim, occluderDim);
+            SetPositions(Xcenter, Ycenter, gridDim);
+            DrawButtons(surface);
         }
 
+        private void DrawButtons(NetychordsSurface surface)
+        {
+            foreach (NetychordsButton button in Buttons)
+            {
+                surface.Canvas.Children.Add(button);
+            }
+        }
         private void SetButtonsDimensions(int buttonDim, int occluderDim)
         {
             foreach(NetychordsButton button in Buttons)
@@ -87,7 +95,7 @@ namespace Netychords.Surface.FlowerLayout
             Chord_D = new MidiChord(RootNote, config.ChordType_D);
         }
 
-        private void SetPositions(int xcenter, int ycenter)
+        private void SetPositions(int xcenter, int ycenter, FlowerGridDimensions gridDim)
         {
             X_C = xcenter;
             X_L = xcenter - 1;
@@ -100,6 +108,18 @@ namespace Netychords.Surface.FlowerLayout
             Y_R = ycenter;
             Y_U = ycenter + 1;
             Y_D = ycenter - 1;
+
+            Canvas.SetLeft(Button_C, X_C * gridDim.X);
+            Canvas.SetLeft(Button_L, X_L * gridDim.X);
+            Canvas.SetLeft(Button_R, X_R * gridDim.X);
+            Canvas.SetLeft(Button_D, X_D * gridDim.X);
+            Canvas.SetLeft(Button_U, X_U * gridDim.X);
+
+            Canvas.SetTop(Button_C, Y_C * gridDim.Y);
+            Canvas.SetTop(Button_L, Y_L * gridDim.Y);
+            Canvas.SetTop(Button_R, Y_R * gridDim.Y);
+            Canvas.SetTop(Button_D, Y_D * gridDim.Y);
+            Canvas.SetTop(Button_U, Y_U * gridDim.Y);
         }
 
         #region Buttons

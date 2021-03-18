@@ -239,6 +239,9 @@
                             <ListBoxItem>
                                 Jazz
                             </ListBoxItem>
+                            <ListBoxItem>
+                                Flower
+                            </ListBoxItem>
                         </ListBox>
                     </Grid>
                     <Grid Grid.Column="1">

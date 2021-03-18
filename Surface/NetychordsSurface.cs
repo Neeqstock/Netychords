@@ -30,7 +30,12 @@ namespace Netychords
         private NetychordsButton checkedButton;
         private NetychordsSurfaceDrawModes drawMode;
         private NetychordsButton lastCheckedButton;
+        public IButtonsSettings ButtonSettings { get; private set; }
         public NetychordsButton CheckedButton { get => checkedButton; }
+
+        public IColorCode ColorCode { get; private set; }
+
+        public IDimension Dimension { get; private set; }
 
         //before was private
         public NetychordsSurfaceDrawModes DrawMode { get => drawMode; set => drawMode = value; }
@@ -88,9 +93,9 @@ namespace Netychords
 
         #region Surface components
 
+        public NetychordsButton[,] NetychordsButtons;
         private List<Ellipse> drawnEllipses = new List<Ellipse>();
         private List<Line> drawnLines = new List<Line>();
-        private NetychordsButton[,] NetychordsButtons;
         public Canvas Canvas { get; set; }
 
         #endregion Surface components
@@ -117,6 +122,25 @@ namespace Netychords
         }
 
         public void DrawButtons()
+        {
+            // STARTER NOTE ========================
+            if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
+            {
+                starterNote = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem).Content.ToString();
+            }
+            else
+            {
+                starterNote = "C";
+            }
+
+            Panel.SetZIndex(highlighter, 30);
+
+            // CHIAMATA AL LAYOUTDRAWER
+            firstChord = MidiChord.StringToChordFactory(starterNote, "2", ChordType.Major);
+            Rack.NetychordsDMIBox.Layout.Draw(firstChord, Canvas, NetychordsButtons);
+        }
+
+        public void DrawButtons_Old()
         {
             // STARTER NOTE =====================
             if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
@@ -918,6 +942,7 @@ namespace Netychords
                                 //actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
+
                             case 2:
                                 thisChordType = ChordType.DominantNinth;
                                 if (col == 0)
@@ -938,9 +963,6 @@ namespace Netychords
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
 
-
-
-                            
                             case 3:
                                 thisChordType = ChordType.Sus2;
                                 firstSpacer = 0;
@@ -1008,7 +1030,6 @@ namespace Netychords
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
 
-
                             case 6:
                                 thisChordType = ChordType.Major;
                                 if (col == 0)
@@ -1028,8 +1049,6 @@ namespace Netychords
                                 //actualChord = new MidiChord(thisNote, thisChordType);
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
-
-                            
 
                             case 7:
                                 thisChordType = ChordType.Minor;
@@ -1083,8 +1102,6 @@ namespace Netychords
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
 
-
-
                             case 9:
                                 thisChordType = ChordType.MajorSeventh;
                                 if (firstChord.chordType != ChordType.MajorSeventh)
@@ -1111,12 +1128,11 @@ namespace Netychords
                                 NetychordsButtons[row, col].Chord = actualChord;
                                 break;
 
-                            
                             case 10:
                                 thisChordType = ChordType.MinorSeventh;
                                 if (firstChord.chordType != ChordType.MinorSeventh)
                                 {
-                                    actualChord = new MidiChord(firstChord.rootNote -3, ChordType.MinorSeventh);
+                                    actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.MinorSeventh);
                                     firstChord.chordType = ChordType.MinorSeventh;
                                 };
 
@@ -1428,25 +1444,6 @@ namespace Netychords
             }
         }
 
-        public void DrawButtons_New()
-        {
-            // STARTER NOTE ========================
-            if (Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem != null)
-            {
-                starterNote = ((ListBoxItem)Rack.NetychordsDMIBox.MainWindow.lstNoteChanger.SelectedItem).Content.ToString();
-            }
-            else
-            {
-                starterNote = "C";
-            }
-
-            Panel.SetZIndex(highlighter, 30);
-            
-            // CHIAMATA AL LAYOUTDRAWER
-            firstChord = MidiChord.StringToChordFactory(starterNote, "2", ChordType.Major);
-            Rack.NetychordsDMIBox.Layout.Draw(firstChord, Canvas, NetychordsButtons);
-        }
-
         public void FlashMovementLine()
         {
             if (lastCheckedButton != null)
@@ -1489,9 +1486,6 @@ namespace Netychords
             Canvas.Children.Remove(((Image)sender));
         }
 
-        public IDimension Dimension { get; private set; }
-        public IColorCode ColorCode { get; private set; }
-        public IButtonsSettings ButtonSettings { get; private set; }
         private void LoadSettings(IDimension dimensions, IColorCode colorCode, IButtonsSettings buttonsSettings)
         {
             this.Dimension = dimensions;

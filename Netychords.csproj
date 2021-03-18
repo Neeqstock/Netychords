@@ -172,7 +172,9 @@
     <Compile Include="Behaviors\Eyetracker\BBDoubleCloseStopChords.cs" />
     <Compile Include="Behaviors\HeadSensor\HSreadSerial.cs" />
     <Compile Include="ControlMode.cs" />
-    <Compile Include="DMIbox\Layouts.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerBed.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerGridDimensions.cs" />
+    <Compile Include="Surface\Layouts.cs" />
     <Compile Include="GlobalValues.cs" />
     <Compile Include="DMIbox\KeyboardBehaviors\KBplayStop.cs" />
     <Compile Include="DMIbox\NetychordsDMIBox.cs" />
@@ -191,6 +193,8 @@
     <Compile Include="Surface\Dimensions\IDimension.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerButton.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerButtonPositions.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerConfig.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerConfigFactory.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerFamilies.cs" />
     <Compile Include="Surface\HTFeedbackModule.cs" />
     <Compile Include="Surface\IndependentLineFlashTimer.cs">

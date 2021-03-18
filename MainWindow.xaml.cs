@@ -1,5 +1,6 @@
 ﻿using NeeqDMIs.Eyetracking.PointFilters;
 using Netychords.DMIBox;
+using Netychords.Surface;
 using Netychords.Utils;
 using System;
 using System.Collections.Generic;
@@ -243,25 +244,33 @@ namespace Netychords
             switch (((ListBoxItem)lstLayout.SelectedItem).Content.ToString())
             {
                 case "Fifth Circle":
-                     Rack.NetychordsDMIBox.Layout = Layouts.FifthCircle;
+                    Rack.NetychordsDMIBox.Layout = Layouts.FifthCircle;
                     break;
+
                 case "Arbitrary":
                     Rack.NetychordsDMIBox.Layout = Layouts.Arbitrary;
                     break;
+
                 case "Jazz":
                     Rack.NetychordsDMIBox.Layout = Layouts.Jazz;
                     break;
+
                 case "Pop":
                     Rack.NetychordsDMIBox.Layout = Layouts.Pop;
                     break;
+
                 case "Rock":
                     Rack.NetychordsDMIBox.Layout = Layouts.Rock;
                     break;
+
                 case "Stradella":
                     Rack.NetychordsDMIBox.Layout = Layouts.Stradella;
                     break;
+
+                case "Flower":
+                    Rack.NetychordsDMIBox.Layout = Layouts.Flower;
+                    break;
             }
-           
 
             if (Rack.NetychordsDMIBox.Layout == Layouts.Arbitrary)
             {
