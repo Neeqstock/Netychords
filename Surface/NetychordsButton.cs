@@ -31,9 +31,9 @@ namespace Netychords
 
         #endregion Internal params
 
-        public NetychordsButton(NetychordsSurface NetychordsDrawer) : base()
+        public NetychordsButton(NetychordsSurface netychordsSurface) : base()
         {
-            this.NetychordsDrawer = NetychordsDrawer;
+            this.NetychordsDrawer = netychordsSurface;
 
             occluder = new Rectangle();
             occluder.Stroke = Brushes.Transparent;

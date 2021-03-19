@@ -37,7 +37,6 @@ namespace Netychords
 
         public IDimension Dimension { get; private set; }
 
-        //before was private
         public NetychordsSurfaceDrawModes DrawMode { get => drawMode; set => drawMode = value; }
 
         public NetychordsSurfaceHighlightModes HighLightMode { get; set; }
@@ -49,7 +48,6 @@ namespace Netychords
 
         public int nCols;
 
-        //before was private
         private MidiChord actualChord;
 
         private int buttonHeight;
@@ -111,10 +109,7 @@ namespace Netychords
             NetychordsButtons = new NetychordsButton[nRows, nCols];
 
             this.Canvas = canvas;
-            /*
-            canvas.VerticalAlignment = VerticalAlignment.Stretch;
-            canvas.HorizontalAlignment = HorizontalAlignment.Stretch;
-            canvas.Margin = new Thickness(0, 0, 0, 0);*/
+
             canvas.Width = startPositionX * 2 + (horizontalSpacer + 13) * (nCols - 1);
             canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
 
@@ -140,6 +135,9 @@ namespace Netychords
             Rack.NetychordsDMIBox.Layout.Draw(firstChord, Canvas, NetychordsButtons);
         }
 
+        /// <summary>
+        /// Deprecated?
+        /// </summary>
         public void DrawButtons_Old()
         {
             // STARTER NOTE =====================

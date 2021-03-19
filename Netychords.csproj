@@ -172,7 +172,9 @@
     <Compile Include="Behaviors\Eyetracker\BBDoubleCloseStopChords.cs" />
     <Compile Include="Behaviors\HeadSensor\HSreadSerial.cs" />
     <Compile Include="ControlMode.cs" />
-    <Compile Include="Surface\FlowerLayout\FlowerBed.cs" />
+    <Compile Include="Surface\FlowerLayout\PlantFamilies.cs" />
+    <Compile Include="Surface\FlowerLayout\Plant.cs" />
+    <Compile Include="Surface\FlowerLayout\FlowerButton.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerGridDimensions.cs" />
     <Compile Include="Surface\Layouts.cs" />
     <Compile Include="GlobalValues.cs" />
@@ -191,7 +193,7 @@
     <Compile Include="Surface\Dimensions\DimensionInvert.cs" />
     <Compile Include="Surface\Dimensions\DimensionLaptop.cs" />
     <Compile Include="Surface\Dimensions\IDimension.cs" />
-    <Compile Include="Surface\FlowerLayout\FlowerButton.cs" />
+    <Compile Include="Surface\FlowerLayout\Flower.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerButtonPositions.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerConfig.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerConfigFactory.cs" />
