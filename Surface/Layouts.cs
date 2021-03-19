@@ -1792,233 +1792,261 @@ namespace Netychords.Surface
                     MidiNotes thisNote;
 
                     switch (row)
-                    {
-                        case 0:
-                            thisChordType = ChordType.SemiDiminished;
+                        {
+                            case 0:
+                                thisChordType = ChordType.DiminishedSeventh;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote - 5;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                            firstSpacer = 0;
-                            if (firstChord.chordType != ChordType.SemiDiminished)
-                            {
-                                actualChord = new MidiChord(firstChord.rootNote, ChordType.SemiDiminished);
-                                firstChord.chordType = ChordType.SemiDiminished;
-                            };
+                            case 1:
+                                thisChordType = ChordType.DominantEleventh;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote + 7;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                            if (col == 0)
-                            {
-                                thisNote = actualChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 2:
+                                thisChordType = ChordType.DominantNinth;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote + 7;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 1:
-                            thisChordType = ChordType.Sus2;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 3:
+                                thisChordType = ChordType.Sus2;
+                                firstSpacer = 0;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote + 7;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 2:
-                            thisChordType = ChordType.Sus4;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 4:
+                                thisChordType = ChordType.Sus4;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote + 7;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 3:
-                            thisChordType = ChordType.DiminishedSeventh;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 5:
+                                thisChordType = ChordType.DominantSeventh;
+                                if (firstChord.chordType != ChordType.DominantSeventh)
+                                {
+                                    actualChord = new MidiChord(firstChord.rootNote - 5, ChordType.DominantSeventh);
+                                    firstChord.chordType = ChordType.DominantSeventh;
+                                };
 
-                        case 4:
-                            thisChordType = ChordType.Major;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                                if (col == 0)
+                                {
+                                    thisNote = actualChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote - 5;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 5:
-                            thisChordType = ChordType.DominantSeventh;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 6:
+                                thisChordType = ChordType.Major;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote + 7;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 6:
-                            thisChordType = ChordType.Minor;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 7:
+                                thisChordType = ChordType.Minor;
+                                if (firstChord.chordType != ChordType.Minor)
+                                {
+                                    actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.Minor);
+                                    firstChord.chordType = ChordType.Minor;
+                                };
 
-                        case 7:
-                            thisChordType = ChordType.DominantNinth;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                                if (col == 0)
+                                {
+                                    thisNote = actualChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote - 5;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 8:
-                            thisChordType = ChordType.MajorSeventh;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 8:
+                                thisChordType = ChordType.SemiDiminished;
+                                if (firstChord.chordType != ChordType.SemiDiminished)
+                                {
+                                    actualChord = new MidiChord(firstChord.rootNote - 1, ChordType.SemiDiminished);
+                                    firstChord.chordType = ChordType.SemiDiminished;
+                                };
 
-                        case 9:
-                            thisChordType = ChordType.DominantEleventh;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                                if (col == 0)
+                                {
+                                    thisNote = actualChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote - 5;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 10:
-                            thisChordType = ChordType.MinorSeventh;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
-                        /*case 10:
-                            thisChordType = ChordType.Augmented;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            NetychordsButtons[row, col].Chord = actualChord;
-                            break;*/
-                        default:
-                            break;
-                    }
+                            case 9:
+                                thisChordType = ChordType.MajorSeventh;
+                                if (firstChord.chordType != ChordType.MajorSeventh)
+                                {
+                                    actualChord = new MidiChord(firstChord.rootNote, ChordType.MajorSeventh);
+                                    firstChord.chordType = ChordType.MajorSeventh;
+                                };
 
+                                if (col == 0)
+                                {
+                                    thisNote = actualChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote + 7;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
+
+                            case 10:
+                                thisChordType = ChordType.MinorSeventh;
+                                if (firstChord.chordType != ChordType.MinorSeventh)
+                                {
+                                    actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.MinorSeventh);
+                                    firstChord.chordType = ChordType.MinorSeventh;
+                                };
+
+                                if (col == 0)
+                                {
+                                    thisNote = actualChord.rootNote;
+                                    actualChord = new MidiChord(thisNote, thisChordType);
+                                }
+                                /*else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }*/
+                                else
+                                {
+                                    //thisNote = actualChord.rootNote + 7;
+                                    actualChord = actualChord.generateNextFifth();
+                                };
+                                //actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
+
+                            default:
+                                break;
+                        }
                     #endregion Define chordType of this chord and starter note of the row
 
                     #region Draw the button on canvas
@@ -2790,240 +2818,232 @@ namespace Netychords.Surface
                     MidiNotes thisNote;
 
                     switch (row)
-                    {
-                        case 0:
-                            thisChordType = ChordType.SemiDiminished;
-                            if (firstChord.chordType != ChordType.SemiDiminished)
-                            {
-                                actualChord = new MidiChord(firstChord.rootNote - 1, ChordType.SemiDiminished);
-                                firstChord.chordType = ChordType.SemiDiminished;
-                            };
+                        {
+                            case 0:
+                                thisChordType = ChordType.SemiDiminished;
 
-                            if (col == 0)
-                            {
-                                thisNote = actualChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                                firstSpacer = 0;
+                                if (firstChord.chordType != ChordType.SemiDiminished)
+                                {
+                                    actualChord = new MidiChord(firstChord.rootNote, ChordType.SemiDiminished);
+                                    firstChord.chordType = ChordType.SemiDiminished;
+                                };
 
-                        case 1:
-                            thisChordType = ChordType.Sus2;
-                            firstSpacer = 0;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                                if (col == 0)
+                                {
+                                    thisNote = actualChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 2:
-                            thisChordType = ChordType.Sus4;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 1:
+                                thisChordType = ChordType.Sus2;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 3:
-                            thisChordType = ChordType.DiminishedSeventh;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 2:
+                                thisChordType = ChordType.Sus4;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 4:
-                            thisChordType = ChordType.Major;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 3:
+                                thisChordType = ChordType.DiminishedSeventh;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 5:
-                            thisChordType = ChordType.DominantSeventh;
-                            if (firstChord.chordType != ChordType.DominantSeventh)
-                            {
-                                actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.DominantSeventh);
-                                firstChord.chordType = ChordType.DominantSeventh;
-                            };
+                            case 4:
+                                thisChordType = ChordType.Major;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                            if (col == 0)
-                            {
-                                thisNote = actualChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 5:
+                                thisChordType = ChordType.DominantSeventh;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 6:
-                            thisChordType = ChordType.Minor;
-                            if (firstChord.chordType != ChordType.Minor)
-                            {
-                                actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.Minor);
-                                firstChord.chordType = ChordType.Minor;
-                            };
+                            case 6:
+                                thisChordType = ChordType.Minor;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                            if (col == 0)
-                            {
-                                thisNote = actualChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 7:
+                                thisChordType = ChordType.DominantNinth;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 7:
-                            thisChordType = ChordType.DominantNinth;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
+                            case 8:
+                                thisChordType = ChordType.MajorSeventh;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                        case 8:
-                            thisChordType = ChordType.MajorSeventh;
-                            if (firstChord.chordType != ChordType.MajorSeventh)
-                            {
-                                actualChord = new MidiChord(firstChord.rootNote, ChordType.MajorSeventh);
-                                firstChord.chordType = ChordType.MajorSeventh;
-                            };
+                            case 9:
+                                thisChordType = ChordType.DominantEleventh;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
 
-                            if (col == 0)
-                            {
-                                thisNote = actualChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
-
-                        case 9:
-                            thisChordType = ChordType.DominantEleventh;
-                            if (col == 0)
-                            {
-                                thisNote = firstChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
-
-                        case 10:
-                            thisChordType = ChordType.MinorSeventh;
-                            if (firstChord.chordType != ChordType.MinorSeventh)
-                            {
-                                actualChord = new MidiChord(firstChord.rootNote + 2, ChordType.MinorSeventh);
-                                firstChord.chordType = ChordType.MinorSeventh;
-                            };
-
-                            if (col == 0)
-                            {
-                                thisNote = actualChord.rootNote;
-                            }
-                            else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }
-                            else
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            };
-                            actualChord = new MidiChord(thisNote, thisChordType);
-                            netychordsButtons[row, col].Chord = actualChord;
-                            break;
-
-                        default:
-                            break;
-                    }
-
+                            case 10:
+                                thisChordType = ChordType.MinorSeventh;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;
+                            /*case 10:
+                                thisChordType = ChordType.Augmented;
+                                if (col == 0)
+                                {
+                                    thisNote = firstChord.rootNote;
+                                }
+                                else if (col % 2 != 0)
+                                {
+                                    thisNote = actualChord.rootNote - 5;
+                                }
+                                else
+                                {
+                                    thisNote = actualChord.rootNote + 7;
+                                };
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                                netychordsButtons[row, col].Chord = actualChord;
+                                break;*/
+                            default:
+                                break;
+                        }
                     #endregion Define chordType of this chord and starter note of the row
 
                     #region Draw the button on canvas
