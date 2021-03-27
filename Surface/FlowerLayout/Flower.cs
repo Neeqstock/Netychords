@@ -2,7 +2,9 @@
 using Netychords.Utils;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Netychords.Surface.FlowerLayout
 {
@@ -17,7 +19,36 @@ namespace Netychords.Surface.FlowerLayout
         public FlowerButton ButtonU { get; set; }
         public List<FlowerButton> FlowerButtons { get; private set; }
 
+        private const int LineStrokeThickness = 10;
+
         #endregion Buttons
+
+        private Line horLine;
+        private Line verLine;
+        public void DrawLines(Canvas canvas)
+        {
+            horLine = new Line();
+            verLine = new Line();
+
+            horLine.X1 = Canvas.GetLeft(ButtonL) + ButtonL.Occluder.ActualWidth / 2 + LineStrokeThickness / 2;
+            horLine.Y1 = Canvas.GetTop(ButtonL) + ButtonL.Occluder.ActualHeight / 2 + LineStrokeThickness / 2;
+            horLine.X2 = Canvas.GetLeft(ButtonR) + ButtonL.Occluder.ActualWidth / 2 + LineStrokeThickness / 2;
+            horLine.Y2 = Canvas.GetTop(ButtonR) + ButtonL.Occluder.ActualHeight / 2 + LineStrokeThickness / 2;
+
+            verLine.X1 = Canvas.GetLeft(ButtonU) + ButtonU.Occluder.ActualWidth / 2 + LineStrokeThickness / 2;
+            verLine.Y1 = Canvas.GetTop(ButtonU) + ButtonU.Occluder.ActualHeight / 2 + LineStrokeThickness / 2;
+            verLine.X2 = Canvas.GetLeft(ButtonD) + ButtonD.Occluder.ActualWidth / 2 + LineStrokeThickness / 2;
+            verLine.Y2 = Canvas.GetTop(ButtonD) + ButtonD.Occluder.ActualHeight / 2 + LineStrokeThickness / 2;
+
+            horLine.Stroke = new SolidColorBrush(FlowerFamily.GetColor(FlowerButtonPositions.C));
+            verLine.Stroke = new SolidColorBrush(FlowerFamily.GetColor(FlowerButtonPositions.C));
+
+            horLine.StrokeThickness = LineStrokeThickness;
+            verLine.StrokeThickness = LineStrokeThickness;
+
+            canvas.Children.Add(verLine);
+            canvas.Children.Add(horLine);
+        }
 
         public FlowerFamilies FlowerFamily { get; private set; }
 

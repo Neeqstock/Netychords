@@ -1,6 +1,7 @@
 ﻿using NeeqDMIs.Music;
 using Netychords.Surface.FlowerLayout;
 using Netychords.Utils;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -2109,8 +2110,13 @@ namespace Netychords.Surface
 
         private static void DrawFlower(MidiChord firstChord, Canvas canvas, NetychordsButton[,] netychordsButtons)
         {
-            System.Drawing.Point center = new System.Drawing.Point(10, 10);
-            FlowerGridDimensions gridDim = new FlowerGridDimensions(40, 40);
+            LoadSettings();
+
+            FlowerButton.DimButton = buttonWidth;
+            FlowerButton.DimOccluder = buttonWidth + occluderOffset * 2;
+
+            System.Drawing.Point center = new System.Drawing.Point(6, 4);
+            FlowerGridDimensions gridDim = new FlowerGridDimensions(100, 100);
 
             Plant plant = new Plant(firstChord.rootNote, PlantFamilies.Major, center);
 
@@ -2127,6 +2133,7 @@ namespace Netychords.Surface
                     canvas.Children.Add(flowerButton);
                     canvas.Children.Add(flowerButton.Occluder);
                 }
+                flower.DrawLines(canvas);
             }
         }
 

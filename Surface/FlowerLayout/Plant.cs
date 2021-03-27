@@ -6,8 +6,8 @@ namespace Netychords.Surface.FlowerLayout
 {
     public class Plant
     {
-        public readonly List<int> MajorRule = new List<int> { 1, 3, 5, 6, 8, 10, 12 };
-        public readonly List<int> MinorRule = new List<int> { 1, 3, 4, 6, 8, 9, 11 };
+        public readonly List<int> MajorRule = new List<int> { 0, 2, 4, 5, 7, 9, 11 };
+        public readonly List<int> MinorRule = new List<int> { 0, 2, 3, 5, 7, 8, 10 };
 
         #region Flowers
         public Flower Flower1 { get; set; }

@@ -33,7 +33,7 @@ namespace Netychords.Surface.FlowerLayout
                             return Colors.DarkBlue;
                             break;
                         default:
-                            return Colors.Azure;
+                            return Colors.Blue;
                             break;
                     }
                     break;
