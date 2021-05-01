@@ -3187,7 +3187,7 @@ namespace Netychords.Surface
                 backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
                 backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
                 ChordTypeToColor(backgroundLine, actualChord);
-                backgroundLine.Opacity = 0.85;
+                backgroundLine.Opacity = 0.65;
                 backgroundLine.StrokeThickness = 50;
                 canvas.Children.Add(backgroundLine);
             }
@@ -3272,47 +3272,47 @@ namespace Netychords.Surface
             switch (n)
             {
                 case ChordType.Major:
-                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    background.Stroke = new SolidColorBrush(Colors.Red);
                     break;
 
                 case ChordType.MajorSeventh:
-                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    background.Stroke = new SolidColorBrush(Colors.Red);
                     break;
 
                 case ChordType.MajorSixth:
-                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    background.Stroke = new SolidColorBrush(Colors.Red);
                     break;
 
                 case ChordType.Sus2:
-                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    background.Stroke = new SolidColorBrush(Colors.Red);
                     break;
 
                 case ChordType.Sus4:
-                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    background.Stroke = new SolidColorBrush(Colors.Red);
                     break;
 
                 case ChordType.DominantNinth:
-                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    background.Stroke = new SolidColorBrush(Colors.Red);
                     break;
 
                 case ChordType.DominantEleventh:
-                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    background.Stroke = new SolidColorBrush(Colors.Red);
                     break;
 
                 case ChordType.Minor:
-                    background.Stroke = new SolidColorBrush(Colors.DarkBlue);
+                    background.Stroke = new SolidColorBrush(Colors.Blue);
                     break;
 
                 case ChordType.MinorSeventh:
-                    background.Stroke = new SolidColorBrush(Colors.DarkBlue);
+                    background.Stroke = new SolidColorBrush(Colors.Blue);
                     break;
 
                 case ChordType.DominantSeventh:
-                    background.Stroke = new SolidColorBrush(Colors.DarkGreen);
+                    background.Stroke = new SolidColorBrush(Colors.Green);
                     break;
 
                 default:
-                    background.Stroke = new SolidColorBrush(Colors.Gray);
+                    background.Stroke = new SolidColorBrush(Colors.LightGray);
                     break;
             }
         }
