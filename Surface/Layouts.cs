@@ -4,6 +4,7 @@ using Netychords.Utils;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Netychords.Surface
 {
@@ -1366,6 +1367,7 @@ namespace Netychords.Surface
 
             for (int row = 0; row < nRows; row++)
             {
+                Line backgroundLine = new Line();
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
@@ -1740,6 +1742,15 @@ namespace Netychords.Surface
 
                     #endregion Draw the button on canvas
                 }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
+                ChordTypeToColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = 0.6;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
             }
         }
 
@@ -1762,6 +1773,7 @@ namespace Netychords.Surface
 
             for (int row = 0; row < nRows; row++)
             {
+                Line backgroundLine = new Line();
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
@@ -2105,6 +2117,15 @@ namespace Netychords.Surface
 
                     #endregion Draw the button on canvas
                 }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
+                ChordTypeToColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = 0.6;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
             }
         }
 
@@ -2157,6 +2178,7 @@ namespace Netychords.Surface
 
             for (int row = 0; row < nRows; row++)
             {
+                Line backgroundLine = new Line();
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
@@ -2405,6 +2427,15 @@ namespace Netychords.Surface
 
                     #endregion Draw the button on canvas
                 }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
+                ChordTypeToColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = 0.6;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
             }
         }
 
@@ -2427,6 +2458,10 @@ namespace Netychords.Surface
 
             for (int row = 0; row < nRows; row++)
             {
+                //System.Windows.Shapes.Rectangle background = new System.Windows.Shapes.Rectangle();
+                Line backgroundLine = new Line();
+                //Color backgroundColor = new Color();
+
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
@@ -2598,6 +2633,23 @@ namespace Netychords.Surface
 
                     #endregion Draw the button on canvas
                 }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0])+7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11])+7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0])+7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11])+7;
+                ChordTypeToColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = 0.6;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
+
+                /*background.Width = startPositionX + firstSpacer + 11 * spacer;
+                background.Height = buttonHeight + occluderOffset * 2;
+                background.Fill = new SolidColorBrush(Colors.GreenYellow);
+                Panel.SetZIndex(background, 1);
+                Canvas.SetLeft(background, startPositionX + firstSpacer * spacer);
+                canvas.Children.Add(background);
+                Canvas.SetTop(background, startPositionY + verticalSpacer/2 * row);*/
             }
         }
 
@@ -2621,6 +2673,7 @@ namespace Netychords.Surface
 
             for (int row = 0; row < nRows; row++)
             {
+                Line backgroundLine = new Line();
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
@@ -2792,6 +2845,15 @@ namespace Netychords.Surface
 
                     #endregion Draw the button on canvas
                 }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
+                ChordTypeToColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = 0.6;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
             }
         }
 
@@ -2813,6 +2875,7 @@ namespace Netychords.Surface
             // CICLO PRINCIPALE =====================
             for (int row = 0; row < nRows; row++)
             {
+                Line backgroundLine = new Line();
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
@@ -3118,6 +3181,15 @@ namespace Netychords.Surface
 
                     #endregion Draw the button on canvas
                 }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
+                ChordTypeToColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = 0.85;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
             }
         }
 
@@ -3190,6 +3262,57 @@ namespace Netychords.Surface
 
                 default:
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xFF, 0xFF));
+                    break;
+            }
+        }
+
+        private static void ChordTypeToColor(Line background, MidiChord actualChord)
+        {
+            ChordType n = actualChord.chordType;
+            switch (n)
+            {
+                case ChordType.Major:
+                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    break;
+
+                case ChordType.MajorSeventh:
+                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    break;
+
+                case ChordType.MajorSixth:
+                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    break;
+
+                case ChordType.Sus2:
+                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    break;
+
+                case ChordType.Sus4:
+                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    break;
+
+                case ChordType.DominantNinth:
+                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    break;
+
+                case ChordType.DominantEleventh:
+                    background.Stroke = new SolidColorBrush(Colors.DarkRed);
+                    break;
+
+                case ChordType.Minor:
+                    background.Stroke = new SolidColorBrush(Colors.DarkBlue);
+                    break;
+
+                case ChordType.MinorSeventh:
+                    background.Stroke = new SolidColorBrush(Colors.DarkBlue);
+                    break;
+
+                case ChordType.DominantSeventh:
+                    background.Stroke = new SolidColorBrush(Colors.DarkGreen);
+                    break;
+
+                default:
+                    background.Stroke = new SolidColorBrush(Colors.Gray);
                     break;
             }
         }
