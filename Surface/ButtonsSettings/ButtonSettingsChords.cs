@@ -4,7 +4,7 @@ namespace Netychords
 {
     class ButtonsSettingsChords : IButtonsSettings
     {
-        private const int nCols = 88;
+        private const int nCols = 12;
         private int nRows = System.Enum.GetNames(typeof(ChordType)).Length;
         private const int spacing = 100;
         private const int generativeNote = 40;
