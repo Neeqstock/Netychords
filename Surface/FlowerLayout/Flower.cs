@@ -19,7 +19,7 @@ namespace Netychords.Surface.FlowerLayout
         public FlowerButton ButtonU { get; set; }
         public List<FlowerButton> FlowerButtons { get; private set; }
 
-        private const int LineStrokeThickness = 10;
+        private const int LineStrokeThickness = 20;
 
         #endregion Buttons
 

@@ -217,7 +217,7 @@ namespace Netychords
         private void InitializeSensorPortText()
         {
             txtSensorPort.Foreground = WarningBrush;
-            txtSensorPort.Text = Rack.NetychordsDMIBox.HeadTrackerModule.PortPrefix + SensorPort;
+            txtSensorPort.Text = "COM" + SensorPort;
             UpdateSensorConnection();
         }
 
@@ -471,9 +471,9 @@ namespace Netychords
         }
 
         // [Corrente]
-        private void UpdateSensorConnection()
+        private void UpdateSensorConnection() 
         {
-            txtSensorPort.Text = Rack.NetychordsDMIBox.HeadTrackerModule.PortPrefix + SensorPort.ToString();
+            txtSensorPort.Text = "COM" + SensorPort.ToString();
 
             if (Rack.NetychordsDMIBox.HeadTrackerModule.Connect(SensorPort))
             {

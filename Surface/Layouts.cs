@@ -2137,7 +2137,7 @@ namespace Netychords.Surface
             FlowerButton.DimOccluder = buttonWidth + occluderOffset * 2;
 
             System.Drawing.Point center = new System.Drawing.Point(6, 4);
-            FlowerGridDimensions gridDim = new FlowerGridDimensions(100, 100);
+            FlowerGridDimensions gridDim = new FlowerGridDimensions(82, 82);
 
             Plant plant = new Plant(firstChord.rootNote, PlantFamilies.Major, center);
 

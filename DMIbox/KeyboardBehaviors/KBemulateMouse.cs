@@ -1,4 +1,5 @@
-﻿using NeeqDMIs.Eyetracking.Utils;
+﻿using NeeqDMIs.Eyetracking.PointFilters;
+using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Keyboard;
 using RawInputProcessor;
 using System.Windows;
@@ -45,6 +46,7 @@ namespace Netychords
             {
 
                 case EyetrackerModels.Tobii:
+                    Rack.NetychordsDMIBox.TobiiModule.MouseEmulator = new MouseEmulator(new PointFilterBypass());
                     Rack.NetychordsDMIBox.TobiiModule.MouseEmulator.EyetrackerToMouse = eyeTrackerToMouse;
                     Rack.NetychordsDMIBox.TobiiModule.MouseEmulator.CursorVisible = cursorVisible;
                     Rack.NetychordsDMIBox.AutoScroller.Enabled = autoScrollerEnabled;

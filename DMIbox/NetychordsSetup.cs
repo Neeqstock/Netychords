@@ -39,7 +39,6 @@ namespace Netychords.DMIBox
             if(Rack.NetychordsDMIBox.Eyetracker == EyetrackerModels.Tobii)
             {
                 Rack.NetychordsDMIBox.TobiiModule = new TobiiModule(GazePointDataMode.Unfiltered);
-                Rack.NetychordsDMIBox.TobiiModule.Start();
                 //Rack.NetychordsDMIBox.TobiiModule.HeadPoseBehaviors.Add(new HPBpitchPlay(10, 15, 1.5f, 30f));
                 //Rack.NetychordsDMIBox.TobiiModule.HeadPoseBehaviors.Add(new HPBvelocityPlay(8, 12, 2f, 120f, 0.2f));
             }
@@ -56,7 +55,7 @@ namespace Netychords.DMIBox
 
             // MODULES
             //IntPtr windowHandle = new WindowInteropHelper(Rack.NetychordsDMIBox.TestMainWindow).Handle;
-            Rack.NetychordsDMIBox.HeadTrackerModule = new SensorModule("COM", 115200);
+            Rack.NetychordsDMIBox.HeadTrackerModule = new SensorModule(115200);
 
             // BEHAVIORS
             Rack.NetychordsDMIBox.KeyboardModule.KeyboardBehaviors.Add(new KBplayStop());
