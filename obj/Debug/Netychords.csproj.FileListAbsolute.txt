@@ -279,7 +279,6 @@ C:\Users\Matteo\Documents\GitHub\Netychords\obj\Debug\App.g.cs
 C:\Users\Matteo\Documents\GitHub\Netychords\obj\Debug\Netychords.csproj.GenerateResource.cache
 C:\Users\Matteo\Documents\GitHub\Netychords\obj\Debug\Netychords.csproj.CoreCompileInputs.cache
 C:\Users\Matteo\Documents\GitHub\Netychords\obj\Debug\Netychords.csproj.CopyComplete
-C:\Users\neequ\OneDrive\Documenti\GitHub\Netychords\obj\Debug\Netychords.csprojAssemblyReference.cache
 C:\Users\neequ\OneDrive\Documenti\GitHub\Netychords\obj\Debug\MainWindow.baml
 C:\Users\neequ\OneDrive\Documenti\GitHub\Netychords\obj\Debug\MainWindow.g.cs
 C:\Users\neequ\OneDrive\Documenti\GitHub\Netychords\obj\Debug\App.g.cs
@@ -330,5 +329,4 @@ C:\Users\Matteo\Documents\GitHub\Netychords\bin\Debug\Netychords.exe
 C:\Users\Matteo\Documents\GitHub\Netychords\bin\Debug\Netychords.pdb
 C:\Users\Matteo\Documents\GitHub\Netychords\obj\Debug\Netychords.exe
 C:\Users\Matteo\Documents\GitHub\Netychords\obj\Debug\Netychords.pdb
-C:\Users\neequ\OneDrive\Documenti\GitHub\Netychords\bin\Debug\NAudio.Midi.dll
-C:\Users\neequ\OneDrive\Documenti\GitHub\Netychords\bin\Debug\NAudio.Core.dll
+C:\Users\neequ\OneDrive\Documenti\GitHub\Netychords\obj\Debug\Netychords.csproj.AssemblyReference.cache
