@@ -11,17 +11,17 @@ namespace Netychords.DMIBox.KeyboardBehaviors
 
         public int ReceiveEvent(RawInputEventArgs e)
         {
-            if (Rack.NetychordsDMIBox.keyboardEmulator)
+            if (R.NDB.keyboardEmulator)
             {
                 if (e.VirtualKey == (ushort)space && e.KeyPressState == KeyPressState.Down && !isDown)
                 {
-                    Rack.NetychordsDMIBox.KeyDown = true;
+                    R.NDB.KeyDown = true;
                     isDown = true;
                     return 0;
                 }
                 if (e.VirtualKey == (ushort)space && e.KeyPressState == KeyPressState.Up)
                 {
-                    Rack.NetychordsDMIBox.KeyDown = false;
+                    R.NDB.KeyDown = false;
                     isDown = false;
                     return 0;
                 };

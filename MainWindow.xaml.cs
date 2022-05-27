@@ -1,4 +1,5 @@
 ﻿using NeeqDMIs.Eyetracking.PointFilters;
+using NeeqDMIs.Music;
 using Netychords.DMIBox;
 using Netychords.Surface;
 using Netychords.Utils;
@@ -27,6 +28,19 @@ namespace Netychords
         private int sensorPort = 1;
         private DispatcherTimer updater;
 
+        public MainWindow()
+        {
+            InitializeComponent();
+            DataContext = this;
+
+            // Initializing dispatcher timer, i.e. the timer that updates every graphical value in
+            // the interface.
+            updater = new DispatcherTimer();
+            updater.Interval = new TimeSpan(6000);
+            updater.Tick += UpdateWindow;
+            updater.Start();
+        }
+
         public bool NetychordsStarted { get => netychordsStarted; set => netychordsStarted = value; }
 
         public int SensorPort
@@ -41,29 +55,16 @@ namespace Netychords
             }
         }
 
-        public MainWindow()
-        {
-            InitializeComponent();
-            DataContext = this;
-
-            // Initializing dispatcher timer, i.e. the timer that updates every graphical value in
-            // the interface.
-            updater = new DispatcherTimer();
-            updater.Interval = new TimeSpan(1000);
-            updater.Tick += UpdateWindow;
-            updater.Start();
-        }
-
         private void ArbitraryStart_Click(object sender, RoutedEventArgs e)
         {
             List<ComboBox> boxes = new List<ComboBox> { FirstRow, SecondRow, ThirdRow, FourthRow, FifthRow, SixthRow, SeventhRow, EighthRow, NinthRow, TenthRow, EleventhRow };
-            Rack.NetychordsDMIBox.arbitraryLines.Clear();
+            R.NDB.arbitraryLines.Clear();
 
             for (int i = 0; i < 11; i++)
             {
                 if (boxes[i].SelectedItem != null)
                 {
-                    Rack.NetychordsDMIBox.arbitraryLines.Add(boxes[i].SelectedItem.ToString());
+                    R.NDB.arbitraryLines.Add(boxes[i].SelectedItem.ToString());
                 }
                 else
                 {
@@ -72,18 +73,18 @@ namespace Netychords
             }
             if (netychordsStarted)
             {
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, R.NDB.octaveNumber, ChordType.Major);
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.DrawButtons();
+
                 arbitraryStart.IsEnabled = false;
             }
         }
 
         private void BtnCenter_Click(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.HTData.CalibrateCenter();
-            Rack.NetychordsDMIBox.CalibrationHeadSensor();
+            R.NDB.HTData.CalibrateCenter();
+            R.NDB.CalibrationHeadSensor();
         }
 
         private void BtnExit_Click(object sender, RoutedEventArgs e)
@@ -95,8 +96,8 @@ namespace Netychords
         {
             if (netychordsStarted)
             {
-                Rack.NetychordsDMIBox.MidiModule.OutDevice--;
-                lblMIDIch.Text = "MP" + Rack.NetychordsDMIBox.MidiModule.OutDevice.ToString();
+                R.NDB.MidiModule.OutDevice--;
+                lblMIDIch.Text = "MP" + R.NDB.MidiModule.OutDevice.ToString();
                 clicked = DateTime.Now;
                 clickedButton = true;
                 btnMIDIchMinus.IsEnabled = false;
@@ -108,8 +109,8 @@ namespace Netychords
         {
             if (netychordsStarted)
             {
-                Rack.NetychordsDMIBox.MidiModule.OutDevice++;
-                lblMIDIch.Text = "MP" + Rack.NetychordsDMIBox.MidiModule.OutDevice.ToString();
+                R.NDB.MidiModule.OutDevice++;
+                lblMIDIch.Text = "MP" + R.NDB.MidiModule.OutDevice.ToString();
                 clicked = DateTime.Now;
                 clickedButton = true;
                 btnMIDIchPlus.IsEnabled = false;
@@ -148,7 +149,7 @@ namespace Netychords
 
         private void centerZone_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Rack.NetychordsDMIBox.CenterZone = sldCenterZone.Value;
+            R.NDB.CenterZone = sldCenterZone.Value;
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace Netychords
         /// </summary>
         private void CheckMidiPort()
         {
-            if (Rack.NetychordsDMIBox.MidiModule.IsMidiOk())
+            if (R.NDB.MidiModule.IsMidiOk())
             {
                 lblMIDIch.Foreground = ActiveBrush;
             }
@@ -168,49 +169,45 @@ namespace Netychords
 
         private void five_Checked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Add(4);
+            R.NDB.reeds.Add(4);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void five_Unchecked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Remove(4);
+            R.NDB.reeds.Remove(4);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void four_Checked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Add(3);
+            R.NDB.reeds.Add(3);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void four_Unchecked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Remove(3);
+            R.NDB.reeds.Remove(3);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
@@ -226,15 +223,15 @@ namespace Netychords
             switch (((ListBoxItem)lstFeedbackModeChanger.SelectedItem).Content.ToString())
             {
                 case "Bars":
-                    Rack.NetychordsDMIBox.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)0;
+                    R.NDB.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)0;
                     break;
 
                 case "HalfButton":
-                    Rack.NetychordsDMIBox.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)1;
+                    R.NDB.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)1;
                     break;
 
                 case "DeadZone":
-                    Rack.NetychordsDMIBox.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)2;
+                    R.NDB.NetychordsSurface.HtFeedbackModule.Mode = (Netychords.Surface.HTFeedbackModule.HTFeedbackModes)2;
                     break;
             }
         }
@@ -244,35 +241,47 @@ namespace Netychords
             switch (((ListBoxItem)lstLayout.SelectedItem).Content.ToString())
             {
                 case "Fifth Circle":
-                    Rack.NetychordsDMIBox.Layout = Layouts.FifthCircle;
+                    R.UserSettings.Layout = Layouts.FifthCircle;
                     break;
 
                 case "Arbitrary":
-                    Rack.NetychordsDMIBox.Layout = Layouts.Arbitrary;
+                    R.UserSettings.Layout = Layouts.Arbitrary;
                     break;
 
                 case "Jazz":
-                    Rack.NetychordsDMIBox.Layout = Layouts.Jazz;
+                    R.UserSettings.Layout = Layouts.Jazz;
                     break;
 
                 case "Pop":
-                    Rack.NetychordsDMIBox.Layout = Layouts.Pop;
+                    R.UserSettings.Layout = Layouts.Pop;
                     break;
 
                 case "Rock":
-                    Rack.NetychordsDMIBox.Layout = Layouts.Rock;
+                    R.UserSettings.Layout = Layouts.Rock;
                     break;
 
                 case "Stradella":
-                    Rack.NetychordsDMIBox.Layout = Layouts.Stradella;
+                    R.UserSettings.Layout = Layouts.Stradella;
                     break;
 
                 case "Flower":
-                    Rack.NetychordsDMIBox.Layout = Layouts.Flower;
+                    R.UserSettings.Layout = Layouts.Flower;
+                    break;
+
+                case "Only Major":
+                    R.UserSettings.Layout = Layouts.OnlyMajor;
+                    break;
+
+                case "Diatonic_3":
+                    R.UserSettings.Layout = Layouts.Diatonic_3;
+                    break;
+
+                case "Diatonic_4":
+                    R.UserSettings.Layout = Layouts.Diatonic_4;
                     break;
             }
 
-            if (Rack.NetychordsDMIBox.Layout == Layouts.Arbitrary)
+            if (R.UserSettings.Layout == Layouts.Arbitrary)
             {
                 SetupComboBox();
                 FirstRow.IsEnabled = true;
@@ -287,27 +296,31 @@ namespace Netychords
                 }
             }
 
-            if (netychordsStarted && Rack.NetychordsDMIBox.Layout != Layouts.Arbitrary)
+            if (netychordsStarted && R.UserSettings.Layout != Layouts.Arbitrary)
             {
-                Rack.NetychordsDMIBox.arbitraryLines = new List<string>();
+                R.NDB.arbitraryLines = new List<string>();
 
                 arbitraryStart.IsEnabled = false;
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, R.NDB.octaveNumber, ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void LstNoteChanger_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Rack.NetychordsDMIBox.firstNote = ((ListBoxItem)lstNoteChanger.SelectedItem).Content.ToString();
+            var b = ((ListBoxItem)lstNoteChanger.SelectedItem).Content.ToString();
+
+            // ROITO ORRIBILE DA SISTEMARE, MA FUNZIONA
+            MidiNotes temp = MidiNotesUtils.StandardStringToAbsNote(b).ToMidiNote(5);
+            temp = (MidiNotes)(temp - 7);
+            R.UserSettings.FirstNote = temp.ToAbsNote().ToStandardString();
+
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, R.NDB.octaveNumber, ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
@@ -319,35 +332,26 @@ namespace Netychords
         {
             if (netychordsStarted)
             {
-                canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void one_Checked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Add(0);
+            R.NDB.reeds.Add(0);
             if (netychordsStarted)
             {
-                canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
-            lblYaw.Text = Rack.NetychordsDMIBox.reeds[0].ToString();
+            lblYaw.Text = R.NDB.reeds[0].ToString();
         }
 
         private void one_Unchecked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Remove(0);
+            R.NDB.reeds.Remove(0);
             if (netychordsStarted)
             {
-                canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
@@ -396,27 +400,44 @@ namespace Netychords
                 // Checks the selected MIDI port is available
                 CheckMidiPort();
                 InitializeSensorPortText();
+                sldDistance.Value = R.UserSettings.HorizontalSpacer;
+                sldDistanceValue.Text = R.UserSettings.HorizontalSpacer.ToString();
+                lstNoteChanger.SelectedIndex = 0;
+                two.IsChecked = true;
+                three.IsChecked = true;
 
                 // LEAVE AT THE END! This keeps track of the started state
                 netychordsStarted = true;
+
+                //LoadSettingsToIndicators();
             }
             else
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.AutoScroller = new AutoScroller(Rack.NetychordsDMIBox.MainWindow.scrlNetychords, 0, 100, new PointFilterMAExpDecaying(0.1f));
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, Rack.NetychordsDMIBox.octaveNumber, ChordType.Major);
-                IDimension dimension = new DimensionInvert();
-                IColorCode colorCode = new ColorCodeStandard();
-                IButtonsSettings buttonsSettings = new ButtonsSettingsChords();
+                //R.NDB.AutoScroller = new AutoScroller(R.NDB.MainWindow.scrlNetychords, 0, 100, new PointFilterMAExpDecaying(0.1f));
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, R.NDB.octaveNumber, ChordType.Major);
 
-                NetychordsSurfaceDrawModes drawMode = NetychordsSurfaceDrawModes.NoLines;
-                Rack.NetychordsDMIBox.NetychordsSurface = new NetychordsSurface(Rack.NetychordsDMIBox.MainWindow.canvasNetychords, dimension, colorCode, buttonsSettings, drawMode);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
+                R.NDB.NetychordsSurface = new NetychordsSurface(R.NDB.MainWindow.canvasNetychords);
+
+                R.NDB.NetychordsSurface.DrawButtons();
                 //canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
                 btnStart.IsEnabled = false;
                 btnStart.Foreground = new SolidColorBrush(Colors.Black);
             }
         }
+
+        //private void LoadSettingsToIndicators()
+        //{
+        //    string strTC = R.UserSettings.TonalCenter.ToStandardString();
+        //    var items = lstTonalCenter.Items;
+        //    for (int i = 0; i< items.Count; i++)
+        //    {
+        //        if(items[i].ToString() == strTC)
+        //        {
+        //            lstTonalCenter.SelectedIndex = i;
+        //        }
+        //    }
+        //}
 
         private void TabSolo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -424,58 +445,54 @@ namespace Netychords
 
         private void three_Checked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Add(2);
+            R.NDB.reeds.Add(2);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void three_Unchecked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Remove(2);
+            R.NDB.reeds.Remove(2);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void two_Checked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Add(1);
+            R.NDB.reeds.Add(1);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         private void two_Unchecked(object sender, RoutedEventArgs e)
         {
-            Rack.NetychordsDMIBox.reeds.Remove(1);
+            R.NDB.reeds.Remove(1);
             if (netychordsStarted)
             {
                 canvasNetychords.Children.Clear();
-                Rack.NetychordsDMIBox.NetychordsSurface.firstChord = MidiChord.StringToChordFactory(Rack.NetychordsDMIBox.firstNote, "2", ChordType.Major);
-                Rack.NetychordsDMIBox.NetychordsSurface.DrawButtons();
-                canvasNetychords.Children.Add(Rack.NetychordsDMIBox.NetychordsSurface.highlighter);
+                R.NDB.NetychordsSurface.firstChord = MidiChord.StandardAbsStringToChordFactory(R.UserSettings.FirstNote, "2", ChordType.Major);
+                R.NDB.NetychordsSurface.DrawButtons();
             }
         }
 
         // [Corrente]
-        private void UpdateSensorConnection() 
+        private void UpdateSensorConnection()
         {
             txtSensorPort.Text = "COM" + SensorPort.ToString();
 
-            if (Rack.NetychordsDMIBox.HeadTrackerModule.Connect(SensorPort))
+            if (R.NDB.HeadTrackerModule.Connect(SensorPort))
             {
                 txtSensorPort.Foreground = ActiveBrush;
             }
@@ -493,13 +510,59 @@ namespace Netychords
         {
             if (netychordsStarted)
             {
-                lblIsPlaying.Text = Rack.NetychordsDMIBox.isPlaying;
-                lblPlayedNote.Text = Rack.NetychordsDMIBox.Chord.ChordName();
-                lblYaw.Text = Rack.NetychordsDMIBox.HTData.TranspYaw.ToString();
-                centerValue.Text = Math.Round(Rack.NetychordsDMIBox.CenterZone, 0).ToString();
+                lblIsPlaying.Text = R.NDB.isPlaying;
+                lblPlayedNote.Text = R.NDB.Chord.ChordName();
+                lblYaw.Text = R.NDB.HTData.TranspYaw.ToString();
+                centerValue.Text = Math.Round(R.NDB.CenterZone, 0).ToString();
                 centerPitchValue.Text = Math.Round(centerPitchZone.Value, 0).ToString();
 
-                Rack.NetychordsDMIBox.NetychordsSurface.UpdateHeadTrackerFeedback(Rack.NetychordsDMIBox.HTData);
+                switch (R.UserSettings.OnlyDiatonic)
+                {
+                    case true:
+                        indOnlyDiatonic.Background = ActiveBrush;
+                        break;
+
+                    case false:
+                        indOnlyDiatonic.Background = WarningBrush;
+                        break;
+                }
+
+                switch (R.UserSettings.BlinkPlay)
+                {
+                    case true:
+                        indBlinkPlay.Background = ActiveBrush;
+                        break;
+
+                    case false:
+                        indBlinkPlay.Background = WarningBrush;
+                        break;
+                }
+
+                switch (R.UserSettings.KeyboardSustain)
+                {
+                    case true:
+                        indSustain.Background = ActiveBrush;
+                        break;
+
+                    case false:
+                        indSustain.Background = WarningBrush;
+                        break;
+                }
+
+                switch (R.UserSettings.AutoStrum)
+                {
+                    case true:
+                        indAutoStrum.Background = ActiveBrush;
+                        break;
+
+                    case false:
+                        indAutoStrum.Background = WarningBrush;
+                        break;
+                }
+
+                indAutoStrumValue.Text = R.UserSettings.AutoStrumBPM.ToString();
+
+                R.NDB.NetychordsSurface.UpdateHeadTrackerFeedback(R.NDB.HTData);
             }
 
             if (clickedButton)
@@ -515,6 +578,69 @@ namespace Netychords
                     clickedButton = false;
                 }
             }
+        }
+
+        private void sldDistance_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            if (netychordsStarted)
+            {
+                R.UserSettings.HorizontalSpacer = (int)sldDistance.Value;
+                R.UserSettings.VerticalSpacer = (int)(sldDistance.Value / 2);
+                sldDistanceValue.Text = ((int)(sldDistance.Value)).ToString();
+                R.NDB.NetychordsSurface.DrawButtons();
+            }
+        }
+
+        private void lstTonalCenter_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string temp = ((ListBoxItem)lstNoteChanger.SelectedItem).Content.ToString();
+            R.UserSettings.TonalCenter = MidiNotesUtils.StandardStringToAbsNote(temp);
+        }
+
+        private void btnOnlyDiatonic_Click(object sender, RoutedEventArgs e)
+        {
+            R.UserSettings.OnlyDiatonic = !R.UserSettings.OnlyDiatonic;
+            switch (R.UserSettings.OnlyDiatonic)
+            {
+                case true:
+                    R.UserSettings.NCols = 3;
+                    break;
+
+                case false:
+                    R.UserSettings.NCols = 12;
+                    break;
+            }
+            R.NDB.NetychordsSurface.DrawButtons();
+        }
+
+        private void btnBlinkPlay_Click(object sender, RoutedEventArgs e)
+        {
+            R.UserSettings.BlinkPlay = !R.UserSettings.BlinkPlay;
+        }
+
+        private void btnSustain_Click(object sender, RoutedEventArgs e)
+        {
+            R.UserSettings.KeyboardSustain = !R.UserSettings.KeyboardSustain;
+        }
+
+        private void btnAutoStrum_Click(object sender, RoutedEventArgs e)
+        {
+            R.UserSettings.AutoStrum = !R.UserSettings.AutoStrum;
+            switch (R.UserSettings.AutoStrum)
+            {
+                case true:
+                    R.NDB.StartAutostrum(R.UserSettings.AutoStrumBPM);
+                    break;
+                case false:
+                    R.NDB.StopAutostrum();
+                    break;
+            }
+        }
+
+
+        private void sldAutoStrum_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            R.UserSettings.AutoStrumBPM = (int)sldAutoStrum.Value;
         }
     }
 }

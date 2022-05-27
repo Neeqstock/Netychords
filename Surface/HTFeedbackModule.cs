@@ -168,7 +168,7 @@ namespace Netychords.Surface
                 Dead_midLine.X2 = Canvas.GetLeft(Occ) + Occ.ActualWidth / 2;
                 Dead_midLine.Y2 = Canvas.GetTop(Occ) + Occ.ActualHeight;
 
-                if (Rack.NetychordsDMIBox.InDeadZone)
+                if (R.NDB.InDeadZone)
                 {
                     Dead_midLine.Opacity = Dead_midLineActiveOpacity;
                 }
@@ -215,7 +215,7 @@ namespace Netychords.Surface
                     posPart = 0;
                 }
 
-                if (Rack.NetychordsDMIBox.InDeadZone)
+                if (R.NDB.InDeadZone)
                 {
                     Half_midLine.Opacity = Half_midLineActiveOpacity;
                 }

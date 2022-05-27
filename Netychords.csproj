@@ -169,9 +169,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\Eyetracker\BBDoubleClosePlayChord.cs" />
     <Compile Include="Behaviors\Eyetracker\BBDoubleCloseStopChords.cs" />
     <Compile Include="Behaviors\HeadSensor\HSreadSerial.cs" />
     <Compile Include="ControlMode.cs" />
+    <Compile Include="DMIbox\KeyboardBehaviors\KBautoStrum.cs" />
+    <Compile Include="DMIbox\KeyboardBehaviors\KBstopAutoScroller.cs" />
+    <Compile Include="DMIbox\KeyboardBehaviors\KBautoScroller.cs" />
+    <Compile Include="DMIbox\KeyboardBehaviors\KBstopEmulateMouse.cs" />
     <Compile Include="Surface\FlowerLayout\PlantFamilies.cs" />
     <Compile Include="Surface\FlowerLayout\Plant.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerButton.cs" />
@@ -189,10 +194,8 @@
     <Compile Include="Surface\ButtonsSettings\IButtonsSettings.cs" />
     <Compile Include="Surface\ColorCodes\ColorCodeStandard.cs" />
     <Compile Include="Surface\ColorCodes\IColorCode.cs" />
-    <Compile Include="Surface\Dimensions\DimensionCalibration.cs" />
-    <Compile Include="Surface\Dimensions\DimensionInvert.cs" />
-    <Compile Include="Surface\Dimensions\DimensionLaptop.cs" />
-    <Compile Include="Surface\Dimensions\IDimension.cs" />
+    <Compile Include="DMIbox\Settings\DefaultSettings.cs" />
+    <Compile Include="DMIbox\Settings\ISettings.cs" />
     <Compile Include="Surface\FlowerLayout\Flower.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerButtonPositions.cs" />
     <Compile Include="Surface\FlowerLayout\FlowerConfig.cs" />
@@ -220,7 +223,7 @@
     </Compile>
     <Compile Include="Controllers\Color\ColorManager.cs" />
     <Compile Include="DMIbox\KeyboardBehaviors\KBemulateMouse.cs" />
-    <Compile Include="DMIbox\Rack.cs" />
+    <Compile Include="DMIbox\R.cs" />
     <Compile Include="Libraries\MicroLibrary.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

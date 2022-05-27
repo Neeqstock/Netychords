@@ -1,10 +1,7 @@
-﻿using MicroLibrary;
-using NeeqDMIs.Eyetracking;
-using NeeqDMIs.Eyetracking.PointFilters;
+﻿using NeeqDMIs.Eyetracking.PointFilters;
 using System;
 using System.Drawing;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -16,33 +13,38 @@ namespace Netychords
     public class AutoScroller
     {
         #region Params
+
         private ScrollViewer scrollViewer;
         private int radiusThreshold;
         private int proportional;
         private IPointFilter filter;
-        #endregion
+
+        #endregion Params
 
         #region Scrollviewer params
+
         private System.Windows.Point scrollCenter;
         private System.Windows.Point basePosition;
-        #endregion
+
+        #endregion Scrollviewer params
 
         #region Internal counters
+
         private DispatcherTimer samplerTimer = new DispatcherTimer(DispatcherPriority.Render);
+
         // private Timer samplerTimer = new Timer();
         // private MicroTimer samplerTimer = new MicroTimer();
         private Point lastSampledPoint;
+
         private Point lastMean;
         private double Xdifference;
         private double Ydifference;
-        #endregion
 
-        private bool enabled = false;
-        public bool Enabled
-        {
-            get { return enabled; }
-            set { enabled = value; }
-        }
+        #endregion Internal counters
+
+
+        private System.Windows.Point temp = new System.Windows.Point();
+
         public AutoScroller(ScrollViewer scrollViewer, int radiusThreshold, int proportional, IPointFilter filter)
         {
             this.radiusThreshold = radiusThreshold;
@@ -62,9 +64,14 @@ namespace Netychords
             samplerTimer.Start();
         }
 
+        public bool Enabled
+        {
+            get; set;
+        } = false;
+
         private void ListenMouse(object sender, EventArgs e)
         {
-            if (enabled)
+            if (Enabled)
             {
                 lastSampledPoint.X = GetMousePos().X - (int)basePosition.X;
                 lastSampledPoint.Y = GetMousePos().Y - (int)basePosition.Y;
@@ -92,6 +99,10 @@ namespace Netychords
             temp = scrollViewer.PointToScreen(Mouse.GetPosition(scrollViewer));
             return new Point((int)temp.X, (int)temp.Y);
         }
-        private System.Windows.Point temp = new System.Windows.Point();
+        public void ScrollTo(int X, int Y)
+        {
+            scrollViewer.ScrollToVerticalOffset(Y / 2);
+            scrollViewer.ScrollToHorizontalOffset(X / 2);
+        }
     }
 }

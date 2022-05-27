@@ -104,7 +104,7 @@ namespace Netychords.Utils
             return name;
         }
 
-        public static MidiChord StringToChordFactory(string note, string octaveNumber, ChordType chordType)
+        public static MidiChord StandardAbsStringToChordFactory(string note, string octaveNumber, ChordType chordType)
         {
             string midiNote;
 
@@ -152,7 +152,7 @@ namespace Netychords.Utils
         {
             MidiNotes nextNote = (rootNote + 7);
             string tmp = nextNote.ToStandardString().Remove(nextNote.ToStandardString().Length - 1);
-            MidiChord nextFifth = StringToChordFactory(tmp, "2", chordType);
+            MidiChord nextFifth = StandardAbsStringToChordFactory(tmp, "2", chordType);
             return nextFifth;
         }
     };

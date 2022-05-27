@@ -2,6 +2,7 @@
 using NeeqDMIs.Eyetracking.Utils;
 using NeeqDMIs.Headtracking.NeeqHT;
 using NeeqDMIs.Keyboard;
+using NeeqDMIs.MicroLibrary;
 using NeeqDMIs.Music;
 using Netychords.Surface;
 using Netychords.Utils;
@@ -24,17 +25,11 @@ namespace Netychords
 
         public List<string> arbitraryLines = new List<string>();
 
-        public string firstNote = "C";
-
         public string isPlaying = "";
 
         public bool keyboardEmulator = true;
 
         public MidiChord lastChord;
-
-        public Layouts Layout = Layouts.FifthCircle;
-
-        
 
         public string octaveNumber = "2";
 
@@ -57,31 +52,37 @@ namespace Netychords
             get { return chord; }
             set
             {
-                if (keyboardEmulator)
+                try // LOL TODO TOFIX (generava problemi)
                 {
-                    if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
+                    if (keyboardEmulator)
                     {
-                        if (keyDown)
+                        if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
                         {
-                            StopChord(chord);
-                            PlayChord(value);
-                            isPlaying = "Playing";
-                            isEndedStrum = false;
+                            if (keyDown)
+                            {
+                                //StopChord(chord);
+                                //PlayChord(value);
+                                //isPlaying = "Playing";
+                                //isEndedStrum = false;
+                            }
+                            else
+                            {
+                                StopChord(chord);
+                                isPlaying = "";
+                            }
+                            chord = value;
                         }
-                        else
+                    }
+                    else
+                    {
+                        if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
                         {
-                            StopChord(chord);
-                            isPlaying = "";
+                            chord = value;
                         }
-                        chord = value;
                     }
                 }
-                else
+                catch
                 {
-                    if (!(value.chordType == chord.chordType && value.rootNote == chord.rootNote))
-                    {
-                        chord = value;
-                    }
                 }
             }
         }
@@ -93,7 +94,11 @@ namespace Netychords
             {
                 if (keyDown && !value)
                 {
-                    StopChord(chord);
+                    if (!R.UserSettings.KeyboardSustain)
+                    {
+                        StopChord(chord);
+                    }
+                    
                     keyDown = value;
                     isPlaying = "";
                 }
@@ -250,6 +255,12 @@ namespace Netychords
         private double lastYaw = 0;
         //private DateTime startingTime;
 
+        public enum DirectionStrum
+        {
+            Right,
+            Left
+        }
+
         //private double startStrum;
         public double CenterZone
         {
@@ -374,10 +385,35 @@ namespace Netychords
             }
         }
 
-        public enum DirectionStrum
+        private MicroTimer autoStrumTimer;
+        private bool autoStrumStarted = false;
+        public void StartAutostrum(int bpm)
         {
-            Right,
-            Left
+            if (!autoStrumStarted)
+            {
+                autoStrumTimer = new MicroTimer();
+                autoStrumTimer.Interval = (60_000_000 / bpm);
+                autoStrumTimer.MicroTimerElapsed += AutoStrumTimer_MicroTimerElapsed;
+                autoStrumTimer.Start();
+
+                autoStrumStarted = true;
+            }
+            
+        }
+
+        private void AutoStrumTimer_MicroTimerElapsed(object sender, MicroTimerEventArgs e)
+        {
+            StopChord(chord);
+            PlayChord(chord);
+        }
+
+        public void StopAutostrum()
+        {
+            if (autoStrumStarted)
+            {
+                autoStrumTimer.Abort();
+                autoStrumStarted = false;
+            }
         }
 
         #endregion HeadSensor

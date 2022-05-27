@@ -11,7 +11,7 @@ namespace Netychords.Behaviors.Eyetracker
     {
         public override void Event_doubleClose()
         {
-            Rack.NetychordsDMIBox.StopChord(Rack.NetychordsDMIBox.Chord);
+            R.NDB.StopChord(R.NDB.Chord);
         }
 
         public override void Event_doubleOpen()

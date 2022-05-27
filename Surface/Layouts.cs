@@ -1,7 +1,7 @@
 ﻿using NeeqDMIs.Music;
 using Netychords.Surface.FlowerLayout;
 using Netychords.Utils;
-using System.Windows;
+using System;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
@@ -16,11 +16,15 @@ namespace Netychords.Surface
         Jazz,
         Pop,
         Rock,
+        OnlyMajor,
+        Diatonic_3,
+        Diatonic_4,
         Flower
     }
 
     public static class LayoutsMethods
     {
+        private const double BACKGROUNDLINE_OPACITY = 0.25f;
         private static int buttonHeight;
         private static int buttonWidth;
         private static int horizontalSpacer;
@@ -35,6 +39,7 @@ namespace Netychords.Surface
         public static void Draw(this Layouts layout, MidiChord firstChord, Canvas canvas, NetychordsButton[,] NetychordsButtons)
         {
             canvas.Children.Clear();
+            LoadSettings();
 
             switch (layout)
             {
@@ -65,7 +70,26 @@ namespace Netychords.Surface
                 case Layouts.Flower:
                     DrawFlower(firstChord, canvas, NetychordsButtons);
                     break;
+                case Layouts.OnlyMajor:
+                    DrawOnlyMajor(firstChord, canvas, NetychordsButtons);
+                    break;
+
+                case Layouts.Diatonic_3:
+                    DrawDiatonic_3(firstChord, canvas, NetychordsButtons);
+                    break;
+
+                case Layouts.Diatonic_4:
+                    DrawDiatonic_4(firstChord, canvas, NetychordsButtons);
+                    break;
             }
+            ResetCanvasDimensions(canvas);
+            R.NDB.AutoScroller.ScrollTo(R.UserSettings.StartPositionX, R.UserSettings.StartPositionY);
+        }
+
+        private static void ResetCanvasDimensions(Canvas canvas)
+        {
+            canvas.Width = startPositionX * 2 + (horizontalSpacer + 13) * (nCols - 1);
+            canvas.Height = startPositionY * 2 + (Math.Abs(verticalSpacer) + 13) * (nRows - 1);
         }
 
         /// <summary>
@@ -87,25 +111,25 @@ namespace Netychords.Surface
             bool isPairRow;
 
             // OVERRIDE NUMERO RIGHE PER LAYOUTS SPECIFICI =====================
-            if (Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
+            if (R.NDB.arbitraryLines.Count != 0)
             {
-                nRows = Rack.NetychordsDMIBox.arbitraryLines.Count;
+                nRows = R.NDB.arbitraryLines.Count;
             }
             else
             {
-                if (Rack.NetychordsDMIBox.Layout == Layouts.Stradella || Rack.NetychordsDMIBox.Layout == Layouts.FifthCircle)
+                if (R.UserSettings.Layout == Layouts.Stradella || R.UserSettings.Layout == Layouts.FifthCircle)
                 {
                     nRows = 11;
                 }
-                else if (Rack.NetychordsDMIBox.Layout == Layouts.Jazz)
+                else if (R.UserSettings.Layout == Layouts.Jazz)
                 {
                     nRows = 7;
                 }
-                else if (Rack.NetychordsDMIBox.Layout == Layouts.Pop)
+                else if (R.UserSettings.Layout == Layouts.Pop)
                 {
                     nRows = 4;
                 }
-                else if (Rack.NetychordsDMIBox.Layout == Layouts.Rock)
+                else if (R.UserSettings.Layout == Layouts.Rock)
                 {
                     nRows = 5;
                 }
@@ -123,9 +147,9 @@ namespace Netychords.Surface
                 {
                     #region Is row pair?
 
-                    if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
                     {
-                        if (Rack.NetychordsDMIBox.Layout == Layouts.Stradella)
+                        if (R.UserSettings.Layout == Layouts.Stradella)
                         {
                             spacer = 100;
                             firstSpacer = row * spacer / 4;
@@ -144,30 +168,26 @@ namespace Netychords.Surface
                         {
                             isPairRow = true;
                         }
-                        verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
-                        spacer = 90;
+                        spacer = verticalSpacer;
                         firstSpacer = 0;
                         isPairRow = true;
-                        verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
                     #endregion Is row pair?
 
-                    netychordsButtons[row, col] = new NetychordsButton(Rack.NetychordsDMIBox.NetychordsSurface);
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
 
                     #region Define chordType of this chord and starter note of the row
 
                     ChordType thisChordType;
                     MidiNotes thisNote;
 
-                    if (Rack.NetychordsDMIBox.Layout == Layouts.Arbitrary && Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
+                    if (R.UserSettings.Layout == Layouts.Arbitrary && R.NDB.arbitraryLines.Count != 0)
                     {
-                        string type = Rack.NetychordsDMIBox.arbitraryLines[Rack.NetychordsDMIBox.arbitraryLines.Count - row - 1];
+                        string type = R.NDB.arbitraryLines[R.NDB.arbitraryLines.Count - row - 1];
 
                         switch (type)
                         {
@@ -461,7 +481,7 @@ namespace Netychords.Surface
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.Layout == Layouts.Pop)
+                    else if (R.UserSettings.Layout == Layouts.Pop)
                     {
                         switch (row)
                         {
@@ -548,7 +568,7 @@ namespace Netychords.Surface
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.Layout == Layouts.Rock)
+                    else if (R.UserSettings.Layout == Layouts.Rock)
                     {
                         switch (row)
                         {
@@ -659,7 +679,7 @@ namespace Netychords.Surface
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.Layout == Layouts.Jazz)
+                    else if (R.UserSettings.Layout == Layouts.Jazz)
                     {
                         switch (row)
                         {
@@ -823,7 +843,7 @@ namespace Netychords.Surface
                                 break;
                         }
                     }
-                    else if (Rack.NetychordsDMIBox.Layout != Layouts.Stradella)
+                    else if (R.UserSettings.Layout != Layouts.Stradella)
                     {
                         switch (row)
                         {
@@ -1295,7 +1315,7 @@ namespace Netychords.Surface
 
                     #region Draw the button on canvas
 
-                    if (Rack.NetychordsDMIBox.Layout != Layouts.Stradella)
+                    if (R.UserSettings.Layout != Layouts.Stradella)
                     {
                         if (!isPairRow)
                         {
@@ -1308,26 +1328,19 @@ namespace Netychords.Surface
                     }
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y;
-                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
-                    {
-                        Y = startPositionY + verticalSpacer * row;
-                    }
-                    else
-                    {
-                        Y = startPositionY - verticalSpacer * row;
-                    }
+                    int Y = startPositionY + verticalSpacer * row;
+
                     Canvas.SetLeft(netychordsButtons[row, col], X);
                     Canvas.SetTop(netychordsButtons[row, col], Y);
 
                     // OCCLUDER
-                    netychordsButtons[row, col].Occluder.Width = buttonWidth + occluderOffset * 2;
-                    netychordsButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
                     //NetychordsButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb(60, 0xFF, 0xFF, 0xFF)); //60 was (byte)occluderAlpha
                     netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
 
                     //OCCLUDER COLORS
-                    NoteToColor(netychordsButtons[row, col], actualChord);
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
 
                     Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
@@ -1358,9 +1371,9 @@ namespace Netychords.Surface
             bool isPairRow;
 
             // INIZIALIZZAZIONE NUMERO RIGHE =====================
-            if (Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
+            if (R.NDB.arbitraryLines.Count != 0)
             {
-                nRows = Rack.NetychordsDMIBox.arbitraryLines.Count;
+                nRows = R.NDB.arbitraryLines.Count;
             }
 
             // CICLO PRINCIPALE =====================
@@ -1372,7 +1385,7 @@ namespace Netychords.Surface
                 {
                     #region Is row pair?
 
-                    if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
                     {
                         spacer = horizontalSpacer;
                         firstSpacer = row * spacer / 2;
@@ -1385,30 +1398,26 @@ namespace Netychords.Surface
                         {
                             isPairRow = true;
                         }
-                        verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
-                        spacer = 90;
+                        spacer = verticalSpacer;
                         firstSpacer = 0;
                         isPairRow = true;
-                        verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
                     #endregion Is row pair?
 
-                    netychordsButtons[row, col] = new NetychordsButton(Rack.NetychordsDMIBox.NetychordsSurface);
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
 
                     #region Define chordType of this chord and starter note of the row
 
                     ChordType thisChordType;
                     MidiNotes thisNote;
 
-                    if (Rack.NetychordsDMIBox.arbitraryLines.Count != 0)
+                    if (R.NDB.arbitraryLines.Count != 0)
                     {
-                        string type = Rack.NetychordsDMIBox.arbitraryLines[Rack.NetychordsDMIBox.arbitraryLines.Count - row - 1];
+                        string type = R.NDB.arbitraryLines[R.NDB.arbitraryLines.Count - row - 1];
 
                         switch (type)
                         {
@@ -1708,26 +1717,18 @@ namespace Netychords.Surface
                     #region Draw the button on canvas
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y;
-                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
-                    {
-                        Y = startPositionY + verticalSpacer * row;
-                    }
-                    else
-                    {
-                        Y = startPositionY - verticalSpacer * row;
-                    }
+                    int Y = startPositionY + verticalSpacer * row;
+
                     Canvas.SetLeft(netychordsButtons[row, col], X);
                     Canvas.SetTop(netychordsButtons[row, col], Y);
 
                     // OCCLUDER
-                    netychordsButtons[row, col].Occluder.Width = buttonWidth + occluderOffset * 2;
-                    netychordsButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
-                    //NetychordsButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb(60, 0xFF, 0xFF, 0xFF)); //60 was (byte)occluderAlpha
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
                     netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
 
                     //OCCLUDER COLORS
-                    NoteToColor(netychordsButtons[row, col], actualChord);
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
 
                     Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
@@ -1744,11 +1745,11 @@ namespace Netychords.Surface
                 }
 
                 backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
-                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
                 backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
-                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
-                ChordTypeToColor(backgroundLine, actualChord);
-                backgroundLine.Opacity = 0.6;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
                 backgroundLine.StrokeThickness = 50;
                 canvas.Children.Add(backgroundLine);
             }
@@ -1778,7 +1779,7 @@ namespace Netychords.Surface
                 {
                     #region Is row pair?
 
-                    if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
                     {
                         spacer = horizontalSpacer;
                         firstSpacer = row * spacer / 2;
@@ -1791,21 +1792,17 @@ namespace Netychords.Surface
                         {
                             isPairRow = true;
                         }
-                        verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
-                        spacer = 90;
+                        spacer = verticalSpacer;
                         firstSpacer = 0;
                         isPairRow = true;
-                        verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
                     #endregion Is row pair?
 
-                    netychordsButtons[row, col] = new NetychordsButton(Rack.NetychordsDMIBox.NetychordsSurface);
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
 
                     #region Define chordType of this chord and starter note of the row
 
@@ -1821,16 +1818,10 @@ namespace Netychords.Surface
                                 thisNote = firstChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote - 5;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -1841,16 +1832,10 @@ namespace Netychords.Surface
                                 thisNote = firstChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote + 7;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -1861,16 +1846,10 @@ namespace Netychords.Surface
                                 thisNote = firstChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote + 7;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -1882,16 +1861,10 @@ namespace Netychords.Surface
                                 thisNote = firstChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote + 7;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -1902,16 +1875,10 @@ namespace Netychords.Surface
                                 thisNote = firstChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote + 7;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -1928,16 +1895,10 @@ namespace Netychords.Surface
                                 thisNote = actualChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote - 5;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -1948,16 +1909,10 @@ namespace Netychords.Surface
                                 thisNote = firstChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote + 7;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -1974,16 +1929,10 @@ namespace Netychords.Surface
                                 thisNote = actualChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote - 5;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -2000,16 +1949,10 @@ namespace Netychords.Surface
                                 thisNote = actualChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote + 7;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote - 5;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -2026,16 +1969,10 @@ namespace Netychords.Surface
                                 thisNote = actualChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote + 7;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -2052,16 +1989,10 @@ namespace Netychords.Surface
                                 thisNote = actualChord.rootNote;
                                 actualChord = new MidiChord(thisNote, thisChordType);
                             }
-                            /*else if (col % 2 != 0)
-                            {
-                                thisNote = actualChord.rootNote - 5;
-                            }*/
                             else
                             {
-                                //thisNote = actualChord.rootNote + 7;
                                 actualChord = actualChord.generateNextFifth();
                             };
-                            //actualChord = new MidiChord(thisNote, thisChordType);
                             netychordsButtons[row, col].Chord = actualChord;
                             break;
 
@@ -2083,26 +2014,18 @@ namespace Netychords.Surface
                     }
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y;
-                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
-                    {
-                        Y = startPositionY + verticalSpacer * row;
-                    }
-                    else
-                    {
-                        Y = startPositionY - verticalSpacer * row;
-                    }
+                    int Y = startPositionY + verticalSpacer * row;
+
                     Canvas.SetLeft(netychordsButtons[row, col], X);
                     Canvas.SetTop(netychordsButtons[row, col], Y);
 
                     // OCCLUDER
-                    netychordsButtons[row, col].Occluder.Width = buttonWidth + occluderOffset * 2;
-                    netychordsButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
-                    //NetychordsButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb(60, 0xFF, 0xFF, 0xFF)); //60 was (byte)occluderAlpha
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
                     netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
 
                     //OCCLUDER COLORS
-                    NoteToColor(netychordsButtons[row, col], actualChord);
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
 
                     Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
@@ -2119,11 +2042,11 @@ namespace Netychords.Surface
                 }
 
                 backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
-                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
                 backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
-                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
-                ChordTypeToColor(backgroundLine, actualChord);
-                backgroundLine.Opacity = 0.6;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
                 backgroundLine.StrokeThickness = 50;
                 canvas.Children.Add(backgroundLine);
             }
@@ -2134,7 +2057,7 @@ namespace Netychords.Surface
             LoadSettings();
 
             FlowerButton.DimButton = buttonWidth;
-            FlowerButton.DimOccluder = buttonWidth + occluderOffset * 2;
+            FlowerButton.DimOccluder = buttonWidth;
 
             System.Drawing.Point center = new System.Drawing.Point(6, 4);
             FlowerGridDimensions gridDim = new FlowerGridDimensions(82, 82);
@@ -2183,7 +2106,7 @@ namespace Netychords.Surface
                 {
                     #region Is row pair?
 
-                    if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
                     {
                         spacer = horizontalSpacer;
                         firstSpacer = row * spacer / 2;
@@ -2196,21 +2119,17 @@ namespace Netychords.Surface
                         {
                             isPairRow = true;
                         }
-                        verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
-                        spacer = 90;
+                        spacer = verticalSpacer;
                         firstSpacer = 0;
                         isPairRow = true;
-                        verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
                     #endregion Is row pair?
 
-                    netychordsButtons[row, col] = new NetychordsButton(Rack.NetychordsDMIBox.NetychordsSurface);
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
 
                     #region Define chordType of this chord and starter note of the row
 
@@ -2393,26 +2312,19 @@ namespace Netychords.Surface
                     }
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y;
-                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
-                    {
-                        Y = startPositionY + verticalSpacer * row;
-                    }
-                    else
-                    {
-                        Y = startPositionY - verticalSpacer * row;
-                    }
+                    int Y = startPositionY + verticalSpacer * row;
+
                     Canvas.SetLeft(netychordsButtons[row, col], X);
                     Canvas.SetTop(netychordsButtons[row, col], Y);
 
                     // OCCLUDER
-                    netychordsButtons[row, col].Occluder.Width = buttonWidth + occluderOffset * 2;
-                    netychordsButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
                     //NetychordsButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb(60, 0xFF, 0xFF, 0xFF)); //60 was (byte)occluderAlpha
                     netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
 
                     //OCCLUDER COLORS
-                    NoteToColor(netychordsButtons[row, col], actualChord);
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
 
                     Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
@@ -2429,11 +2341,11 @@ namespace Netychords.Surface
                 }
 
                 backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
-                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
                 backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
-                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
-                ChordTypeToColor(backgroundLine, actualChord);
-                backgroundLine.Opacity = 0.6;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
                 backgroundLine.StrokeThickness = 50;
                 canvas.Children.Add(backgroundLine);
             }
@@ -2458,15 +2370,13 @@ namespace Netychords.Surface
 
             for (int row = 0; row < nRows; row++)
             {
-                //System.Windows.Shapes.Rectangle background = new System.Windows.Shapes.Rectangle();
                 Line backgroundLine = new Line();
-                //Color backgroundColor = new Color();
 
                 for (int col = 0; col < nCols; col++)
                 {
                     #region Is row pair?
 
-                    if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
                     {
                         spacer = horizontalSpacer;
                         firstSpacer = row * spacer / 2;
@@ -2479,21 +2389,17 @@ namespace Netychords.Surface
                         {
                             isPairRow = true;
                         }
-                        verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
-                        spacer = 90;
+                        spacer = verticalSpacer; //90;
                         firstSpacer = 0;
                         isPairRow = true;
-                        verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
                     #endregion Is row pair?
 
-                    netychordsButtons[row, col] = new NetychordsButton(Rack.NetychordsDMIBox.NetychordsSurface);
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
 
                     #region Define chordType of this chord and starter note of the row
 
@@ -2599,26 +2505,18 @@ namespace Netychords.Surface
                     }
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y;
-                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
-                    {
-                        Y = startPositionY + verticalSpacer * row;
-                    }
-                    else
-                    {
-                        Y = startPositionY - verticalSpacer * row;
-                    }
+                    int Y = startPositionY + verticalSpacer * row;
+
                     Canvas.SetLeft(netychordsButtons[row, col], X);
                     Canvas.SetTop(netychordsButtons[row, col], Y);
 
                     // OCCLUDER
-                    netychordsButtons[row, col].Occluder.Width = buttonWidth + occluderOffset * 2;
-                    netychordsButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
-                    //NetychordsButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb(60, 0xFF, 0xFF, 0xFF)); //60 was (byte)occluderAlpha
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
                     netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
 
                     //OCCLUDER COLORS
-                    NoteToColor(netychordsButtons[row, col], actualChord);
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
 
                     Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
@@ -2634,22 +2532,14 @@ namespace Netychords.Surface
                     #endregion Draw the button on canvas
                 }
 
-                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0])+7;
-                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11])+7;
-                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0])+7;
-                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11])+7;
-                ChordTypeToColor(backgroundLine, actualChord);
-                backgroundLine.Opacity = 0.6;
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
                 backgroundLine.StrokeThickness = 50;
                 canvas.Children.Add(backgroundLine);
-
-                /*background.Width = startPositionX + firstSpacer + 11 * spacer;
-                background.Height = buttonHeight + occluderOffset * 2;
-                background.Fill = new SolidColorBrush(Colors.GreenYellow);
-                Panel.SetZIndex(background, 1);
-                Canvas.SetLeft(background, startPositionX + firstSpacer * spacer);
-                canvas.Children.Add(background);
-                Canvas.SetTop(background, startPositionY + verticalSpacer/2 * row);*/
             }
         }
 
@@ -2678,7 +2568,7 @@ namespace Netychords.Surface
                 {
                     #region Is row pair?
 
-                    if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
                     {
                         spacer = horizontalSpacer;
                         firstSpacer = row * spacer / 2;
@@ -2691,21 +2581,17 @@ namespace Netychords.Surface
                         {
                             isPairRow = true;
                         }
-                        verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
-                        spacer = 90;
+                        spacer = verticalSpacer;
                         firstSpacer = 0;
                         isPairRow = true;
-                        verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
                     #endregion Is row pair?
 
-                    netychordsButtons[row, col] = new NetychordsButton(Rack.NetychordsDMIBox.NetychordsSurface);
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
 
                     #region Define chordType of this chord and starter note of the row
 
@@ -2811,26 +2697,19 @@ namespace Netychords.Surface
                     }
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y;
-                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
-                    {
-                        Y = startPositionY + verticalSpacer * row;
-                    }
-                    else
-                    {
-                        Y = startPositionY - verticalSpacer * row;
-                    }
+                    int Y = startPositionY + verticalSpacer * row;
+
                     Canvas.SetLeft(netychordsButtons[row, col], X);
                     Canvas.SetTop(netychordsButtons[row, col], Y);
 
                     // OCCLUDER
-                    netychordsButtons[row, col].Occluder.Width = buttonWidth + occluderOffset * 2;
-                    netychordsButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
                     //NetychordsButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb(60, 0xFF, 0xFF, 0xFF)); //60 was (byte)occluderAlpha
                     netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
 
                     //OCCLUDER COLORS
-                    NoteToColor(netychordsButtons[row, col], actualChord);
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
 
                     Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
@@ -2847,11 +2726,11 @@ namespace Netychords.Surface
                 }
 
                 backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
-                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
                 backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
-                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
-                ChordTypeToColor(backgroundLine, actualChord);
-                backgroundLine.Opacity = 0.6;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
                 backgroundLine.StrokeThickness = 50;
                 canvas.Children.Add(backgroundLine);
             }
@@ -2880,7 +2759,7 @@ namespace Netychords.Surface
                 {
                     #region Is row pair?
 
-                    if ((int)Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
                     {
                         spacer = 100;
                         firstSpacer = row * spacer / 4;
@@ -2893,21 +2772,18 @@ namespace Netychords.Surface
                         {
                             isPairRow = true;
                         }
-                        verticalSpacer = -70;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
                     else
                     {
-                        spacer = 90;
+                        spacer = verticalSpacer;
                         firstSpacer = 0;
                         isPairRow = true;
-                        verticalSpacer = 90;
-                        canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
+                        //canvas.Height = startPositionY * 2 + (verticalSpacer + 13) * (nRows - 1);
                     }
 
                     #endregion Is row pair?
 
-                    netychordsButtons[row, col] = new NetychordsButton(Rack.NetychordsDMIBox.NetychordsSurface);
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
 
                     #region Define chordType of this chord and starter note of the row
 
@@ -3147,26 +3023,19 @@ namespace Netychords.Surface
                     #region Draw the button on canvas
 
                     int X = startPositionX + firstSpacer + col * spacer;
-                    int Y;
-                    if (Rack.NetychordsDMIBox.MainWindow.Margins.Value == 1)
-                    {
-                        Y = startPositionY + verticalSpacer * row;
-                    }
-                    else
-                    {
-                        Y = startPositionY - verticalSpacer * row;
-                    }
+                    int Y = startPositionY + verticalSpacer * row;
+
                     Canvas.SetLeft(netychordsButtons[row, col], X);
                     Canvas.SetTop(netychordsButtons[row, col], Y);
 
                     // OCCLUDER
-                    netychordsButtons[row, col].Occluder.Width = buttonWidth + occluderOffset * 2;
-                    netychordsButtons[row, col].Occluder.Height = buttonHeight + occluderOffset * 2;
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
                     //NetychordsButtons[row, col].Occluder.Fill = new SolidColorBrush(Color.FromArgb(60, 0xFF, 0xFF, 0xFF)); //60 was (byte)occluderAlpha
                     netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
 
                     //OCCLUDER COLORS
-                    NoteToColor(netychordsButtons[row, col], actualChord);
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
 
                     Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
                     Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
@@ -3183,11 +3052,11 @@ namespace Netychords.Surface
                 }
 
                 backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
-                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, 11]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
                 backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
-                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, 11]) + 7;
-                ChordTypeToColor(backgroundLine, actualChord);
-                backgroundLine.Opacity = 0.65;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
                 backgroundLine.StrokeThickness = 50;
                 canvas.Children.Add(backgroundLine);
             }
@@ -3195,19 +3064,21 @@ namespace Netychords.Surface
 
         private static void LoadSettings()
         {
-            horizontalSpacer = Rack.NetychordsDMIBox.NetychordsSurface.Dimension.HorizontalSpacer;
-            verticalSpacer = Rack.NetychordsDMIBox.NetychordsSurface.Dimension.VerticalSpacer;
-            startPositionY = Rack.NetychordsDMIBox.NetychordsSurface.ButtonSettings.StartPositionY;
-            startPositionX = Rack.NetychordsDMIBox.NetychordsSurface.ButtonSettings.StartPositionX;
-            nRows = Rack.NetychordsDMIBox.NetychordsSurface.ButtonSettings.NRows;
-            nCols = Rack.NetychordsDMIBox.NetychordsSurface.ButtonSettings.NCols;
-            occluderOffset = Rack.NetychordsDMIBox.NetychordsSurface.Dimension.OccluderOffset;
-            buttonWidth = Rack.NetychordsDMIBox.NetychordsSurface.Dimension.ButtonWidth;
-            buttonHeight = Rack.NetychordsDMIBox.NetychordsSurface.Dimension.ButtonHeight;
-            occluderAlpha = Rack.NetychordsDMIBox.NetychordsSurface.ButtonSettings.OccluderAlpha;
+            horizontalSpacer = R.UserSettings.HorizontalSpacer;
+            verticalSpacer = R.UserSettings.VerticalSpacer;
+            startPositionY = R.UserSettings.StartPositionY;
+            startPositionX = R.UserSettings.StartPositionX;
+            nRows = R.UserSettings.NRows;
+            nCols = R.UserSettings.NCols;
+            occluderOffset = R.UserSettings.OccluderOffset;
+            buttonWidth = R.UserSettings.ButtonWidth;
+            buttonHeight = R.UserSettings.ButtonHeight;
+            occluderAlpha = R.UserSettings.OccluderAlpha;
+
+            //startPositionY = startPositionY + Math.Abs(verticalSpacer) * nRows; // FIX TEMPORANEO
         }
 
-        private static void NoteToColor(NetychordsButton button, MidiChord actualChord)
+        private static void SetButtonColor(NetychordsButton button, MidiChord actualChord)
         {
             string n = actualChord.rootNote.ToStandardString();
             switch (n.Remove(n.Length - 1))
@@ -3217,15 +3088,15 @@ namespace Netychords.Surface
                     break;
 
                 case "C#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xa9, 0x8a, 0x4d));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(128, 0xFF, 0x00, 0x00));
                     break;
 
                 case "D":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xA5, 0x00));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x99, 0x00));
                     break;
 
                 case "D#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xD7, 0x00));//
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(128, 0xFF, 0x99, 0x00));//
                     break;
 
                 case "E":
@@ -3233,31 +3104,31 @@ namespace Netychords.Surface
                     break;
 
                 case "F":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x90, 0xEE, 0x90));//
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x99, 0xFF, 0x66));//
                     break;
 
                 case "F#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0xFF, 0x00));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(128, 0x99, 0xFF, 0x66));
                     break;
 
                 case "G":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0xFF, 0xFF));
-                    break;
-
-                case "G#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0x00, 0xFF));
-                    break;
-
-                case "A":
                     button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x00, 0x00, 0xFF));
                     break;
 
+                case "G#":
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(128, 0x99, 0xFF, 0x66));
+                    break;
+
+                case "A":
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x66, 0x00, 0xFF));
+                    break;
+
                 case "A#":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xC0, 0xCB));//
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(128, 0x66, 0x00, 0xFF));//
                     break;
 
                 case "B":
-                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0x6F, 0x00, 0xFF));
+                    button.Occluder.Fill = new SolidColorBrush(Color.FromArgb(255, 0xFF, 0xCC, 0x99));
                     break;
 
                 default:
@@ -3266,7 +3137,7 @@ namespace Netychords.Surface
             }
         }
 
-        private static void ChordTypeToColor(Line background, MidiChord actualChord)
+        private static void SetChordLineColor(Line background, MidiChord actualChord)
         {
             ChordType n = actualChord.chordType;
             switch (n)
@@ -3314,6 +3185,487 @@ namespace Netychords.Surface
                 default:
                     background.Stroke = new SolidColorBrush(Colors.LightGray);
                     break;
+            }
+        }
+
+        private static void DrawDiatonic_4(MidiChord firstChord, Canvas canvas, NetychordsButton[,] netychordsButtons)
+        {
+            LoadSettings();
+
+            MidiChord actualChord = null;
+
+            int halfSpacer = horizontalSpacer / 2;
+            int spacer = horizontalSpacer;
+            int firstSpacer = 0;
+
+            bool isPairRow;
+
+            // OVERRIDE NUMERO RIGHE PER LAYOUTS SPECIFICI =====================
+            nRows = 4;
+
+            // CICLO PRINCIPALE =====================
+
+            for (int row = 0; row < nRows; row++)
+            {
+                Line backgroundLine = new Line();
+                for (int col = 0; col < nCols; col++)
+                {
+                    #region Is row pair?
+
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
+                    {
+                        spacer = horizontalSpacer;
+                        firstSpacer = row * spacer / 2;
+
+                        if (row % 2 != 0)
+                        {
+                            isPairRow = false;
+                        }
+                        else
+                        {
+                            isPairRow = true;
+                        }
+                    }
+                    else
+                    {
+                        spacer = verticalSpacer;
+                        firstSpacer = 0;
+                        isPairRow = true;
+                    }
+
+                    #endregion Is row pair?
+
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
+
+                    #region Define chordType of this chord and starter note of the row
+
+                    ChordType thisChordType;
+                    MidiNotes thisNote;
+
+                    switch (row)
+                    {
+                        case 0:
+                            thisChordType = ChordType.DominantSeventh;
+                            if (firstChord.chordType != ChordType.DominantSeventh)
+                            {
+                                actualChord = new MidiChord(firstChord.rootNote - 5, ChordType.DominantSeventh);
+                                firstChord.chordType = ChordType.DominantSeventh;
+                            };
+
+                            if (col == 0)
+                            {
+                                thisNote = actualChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+
+                        case 1:
+                            thisChordType = ChordType.Major;
+                            if (col == 0)
+                            {
+                                thisNote = firstChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+
+                        case 2:
+                            thisChordType = ChordType.Minor;
+                            if (firstChord.chordType != ChordType.Minor)
+                            {
+                                actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.Minor);
+                                firstChord.chordType = ChordType.Minor;
+                            };
+
+                            if (col == 0)
+                            {
+                                thisNote = actualChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+
+                        case 3:
+                            thisChordType = ChordType.SemiDiminished;
+                            if (firstChord.chordType != ChordType.SemiDiminished)
+                            {
+                                actualChord = new MidiChord(firstChord.rootNote - 1, ChordType.SemiDiminished);
+                                firstChord.chordType = ChordType.SemiDiminished;
+                            };
+
+                            if (col == 0)
+                            {
+                                thisNote = actualChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    #endregion Define chordType of this chord and starter note of the row
+
+                    #region Draw the button on canvas
+
+                    if (!isPairRow)
+                    {
+                        firstSpacer = 0;
+                    }
+                    else
+                    {
+                        firstSpacer = spacer / 2;
+                    }
+
+                    int X = startPositionX + firstSpacer + col * spacer;
+                    int Y = startPositionY + verticalSpacer * row;
+
+                    Canvas.SetLeft(netychordsButtons[row, col], X);
+                    Canvas.SetTop(netychordsButtons[row, col], Y);
+
+                    // OCCLUDER
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
+                    netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
+
+                    //OCCLUDER COLORS
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
+
+                    Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
+                    Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
+
+                    Panel.SetZIndex(netychordsButtons[row, col], 30);
+                    Panel.SetZIndex(netychordsButtons[row, col].Occluder, 2);
+                    canvas.Children.Add(netychordsButtons[row, col]);
+                    canvas.Children.Add(netychordsButtons[row, col].Occluder);
+
+                    netychordsButtons[row, col].Width = buttonWidth;
+                    netychordsButtons[row, col].Height = buttonHeight;
+
+                    #endregion Draw the button on canvas
+                }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
+            }
+        }
+
+        private static void DrawDiatonic_3(MidiChord firstChord, Canvas canvas, NetychordsButton[,] netychordsButtons)
+        {
+            LoadSettings();
+
+            MidiChord actualChord = null;
+
+            int halfSpacer = horizontalSpacer / 2;
+            int spacer = horizontalSpacer;
+            int firstSpacer = 0;
+
+            bool isPairRow;
+
+            // OVERRIDE NUMERO RIGHE PER LAYOUTS SPECIFICI =====================
+            nRows = 3;
+
+            // CICLO PRINCIPALE =====================
+
+            for (int row = 0; row < nRows; row++)
+            {
+                Line backgroundLine = new Line();
+                for (int col = 0; col < nCols; col++)
+                {
+                    #region Is row pair?
+
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
+                    {
+                        spacer = horizontalSpacer;
+                        firstSpacer = row * spacer / 2;
+
+                        if (row % 2 != 0)
+                        {
+                            isPairRow = false;
+                        }
+                        else
+                        {
+                            isPairRow = true;
+                        }
+                    }
+                    else
+                    {
+                        spacer = verticalSpacer;
+                        firstSpacer = 0;
+                        isPairRow = true;
+                    }
+
+                    #endregion Is row pair?
+
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
+
+                    #region Define chordType of this chord and starter note of the row
+
+                    ChordType thisChordType;
+                    MidiNotes thisNote;
+
+                    switch (row)
+                    {
+                        
+
+                        case 0:
+                            thisChordType = ChordType.Major;
+                            if (col == 0)
+                            {
+                                thisNote = firstChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+
+                        case 1:
+                            thisChordType = ChordType.Minor;
+                            if (firstChord.chordType != ChordType.Minor)
+                            {
+                                actualChord = new MidiChord(firstChord.rootNote - 3, ChordType.Minor);
+                                firstChord.chordType = ChordType.Minor;
+                            };
+
+                            if (col == 0)
+                            {
+                                thisNote = actualChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+                        case 2:
+                            thisChordType = ChordType.SemiDiminished;
+                            if (firstChord.chordType != ChordType.SemiDiminished)
+                            {
+                                actualChord = new MidiChord(firstChord.rootNote - 1, ChordType.SemiDiminished);
+                                firstChord.chordType = ChordType.SemiDiminished;
+                            };
+
+                            if (col == 0)
+                            {
+                                thisNote = actualChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    #endregion Define chordType of this chord and starter note of the row
+
+                    #region Draw the button on canvas
+
+                    if (!isPairRow)
+                    {
+                        firstSpacer = 0;
+                    }
+                    else
+                    {
+                        firstSpacer = spacer / 2;
+                    }
+
+                    int X = startPositionX + firstSpacer + col * spacer;
+                    int Y = startPositionY + verticalSpacer * row;
+
+                    Canvas.SetLeft(netychordsButtons[row, col], X);
+                    Canvas.SetTop(netychordsButtons[row, col], Y);
+
+                    // OCCLUDER
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
+                    netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
+
+                    //OCCLUDER COLORS
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
+
+                    Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
+                    Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
+
+                    Panel.SetZIndex(netychordsButtons[row, col], 30);
+                    Panel.SetZIndex(netychordsButtons[row, col].Occluder, 2);
+                    canvas.Children.Add(netychordsButtons[row, col]);
+                    canvas.Children.Add(netychordsButtons[row, col].Occluder);
+
+                    netychordsButtons[row, col].Width = buttonWidth;
+                    netychordsButtons[row, col].Height = buttonHeight;
+
+                    #endregion Draw the button on canvas
+                }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
+            }
+        }
+
+                private static void DrawOnlyMajor(MidiChord firstChord, Canvas canvas, NetychordsButton[,] netychordsButtons)
+        {
+            LoadSettings();
+
+            MidiChord actualChord = null;
+
+            int halfSpacer = horizontalSpacer / 2;
+            int spacer = horizontalSpacer;
+            int firstSpacer = 0;
+
+            bool isPairRow;
+
+            // OVERRIDE NUMERO RIGHE PER LAYOUTS SPECIFICI =====================
+            nRows = 1;
+
+            // CICLO PRINCIPALE =====================
+
+            for (int row = 0; row < nRows; row++)
+            {
+                Line backgroundLine = new Line();
+                for (int col = 0; col < nCols; col++)
+                {
+                    #region Is row pair?
+
+                    if ((int)R.NDB.MainWindow.Margins.Value == 1)
+                    {
+                        spacer = horizontalSpacer;
+                        firstSpacer = row * spacer / 2;
+
+                        if (row % 2 != 0)
+                        {
+                            isPairRow = false;
+                        }
+                        else
+                        {
+                            isPairRow = true;
+                        }
+                    }
+                    else
+                    {
+                        spacer = verticalSpacer;
+                        firstSpacer = 0;
+                        isPairRow = true;
+                    }
+
+                    #endregion Is row pair?
+
+                    netychordsButtons[row, col] = new NetychordsButton(R.NDB.NetychordsSurface);
+
+                    #region Define chordType of this chord and starter note of the row
+
+                    ChordType thisChordType;
+                    MidiNotes thisNote;
+
+                    switch (row)
+                    {
+                        
+
+                        case 0:
+                            thisChordType = ChordType.Major;
+                            if (col == 0)
+                            {
+                                thisNote = firstChord.rootNote;
+                                actualChord = new MidiChord(thisNote, thisChordType);
+                            }
+                            else
+                            {
+                                actualChord = actualChord.generateNextFifth();
+                            };
+                            netychordsButtons[row, col].Chord = actualChord;
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                    #endregion Define chordType of this chord and starter note of the row
+
+                    #region Draw the button on canvas
+
+                    if (!isPairRow)
+                    {
+                        firstSpacer = 0;
+                    }
+                    else
+                    {
+                        firstSpacer = spacer / 2;
+                    }
+
+                    int X = startPositionX + firstSpacer + col * spacer;
+                    int Y = startPositionY + verticalSpacer * row;
+
+                    Canvas.SetLeft(netychordsButtons[row, col], X);
+                    Canvas.SetTop(netychordsButtons[row, col], Y);
+
+                    // OCCLUDER
+                    netychordsButtons[row, col].Occluder.Width = buttonWidth;
+                    netychordsButtons[row, col].Occluder.Height = buttonHeight;
+                    netychordsButtons[row, col].Occluder.Stroke = new SolidColorBrush(Color.FromArgb((byte)occluderAlpha, 0, 0, 0));
+
+                    //OCCLUDER COLORS
+                    SetButtonColor(netychordsButtons[row, col], actualChord);
+
+                    Canvas.SetLeft(netychordsButtons[row, col].Occluder, X - occluderOffset);
+                    Canvas.SetTop(netychordsButtons[row, col].Occluder, Y - occluderOffset);
+
+                    Panel.SetZIndex(netychordsButtons[row, col], 30);
+                    Panel.SetZIndex(netychordsButtons[row, col].Occluder, 2);
+                    canvas.Children.Add(netychordsButtons[row, col]);
+                    canvas.Children.Add(netychordsButtons[row, col].Occluder);
+
+                    netychordsButtons[row, col].Width = buttonWidth;
+                    netychordsButtons[row, col].Height = buttonHeight;
+
+                    #endregion Draw the button on canvas
+                }
+
+                backgroundLine.X1 = Canvas.GetLeft(netychordsButtons[row, 0]) + 7;
+                backgroundLine.X2 = Canvas.GetLeft(netychordsButtons[row, nCols - 1]) + 7;
+                backgroundLine.Y1 = Canvas.GetTop(netychordsButtons[row, 0]) + 7;
+                backgroundLine.Y2 = Canvas.GetTop(netychordsButtons[row, nCols - 1]) + 7;
+                SetChordLineColor(backgroundLine, actualChord);
+                backgroundLine.Opacity = BACKGROUNDLINE_OPACITY;
+                backgroundLine.StrokeThickness = 50;
+                canvas.Children.Add(backgroundLine);
             }
         }
 

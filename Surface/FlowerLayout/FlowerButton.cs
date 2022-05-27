@@ -12,7 +12,7 @@ namespace Netychords.Surface.FlowerLayout
         private const int ZIndexOccluder = 2;
         public Point Coordinates { get; set; }
 
-        public FlowerButton(Point coordinates) : base(Rack.NetychordsDMIBox.NetychordsSurface)
+        public FlowerButton(Point coordinates) : base(R.NDB.NetychordsSurface)
         {
             Coordinates = coordinates;
 

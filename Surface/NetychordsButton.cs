@@ -13,10 +13,10 @@ namespace Netychords
 
         private MidiChord chord;
         private NetychordsSurface NetychordsDrawer;
-        private Rectangle occluder;
+        private Ellipse occluder;
         public MidiChord Chord { get { return chord; } set { chord = value; } }
 
-        public Rectangle Occluder
+        public Ellipse Occluder
         {
             get
             {
@@ -35,16 +35,17 @@ namespace Netychords
         {
             this.NetychordsDrawer = netychordsSurface;
 
-            occluder = new Rectangle();
+            occluder = new Ellipse();
             occluder.Stroke = Brushes.Transparent;
             occluder.Fill = Brushes.Transparent;
             occluder.Stroke = new SolidColorBrush(Color.FromArgb(40, 0, 0, 0));
             occluder.Fill = new SolidColorBrush(Color.FromArgb(120, 255, 0, 0));
             occluder.StrokeThickness = 1;
-            occluder.HorizontalAlignment = HorizontalAlignment.Left;
+            occluder.HorizontalAlignment = HorizontalAlignment.Center;
             occluder.VerticalAlignment = VerticalAlignment.Center;
 
             occluder.MouseEnter += OccluderMouseEnterBehavior;
+            Visibility = Visibility.Hidden;
         }
 
         private void OccluderMouseEnterBehavior(object sender, MouseEventArgs e)
